@@ -3,4 +3,12 @@
     <string name="backdrop">Backdrop</string>
     <string name="poster">Poster</string>
     <string name="rating">%s 🌟 from %d votes</string>
+    <string name="footer">TDP Batch 3 - Android Session</string>
+    <string name="cta">Find Your Favorite Movie Here</string>
+    <string name="search_movie">Search Movie</string>
+    <string name="main_menu">Main Menu</string>
+    <string name="movie_detail">Movie Detail</string>
+    <string name="err">Did not receive any movie data!</string>
+    <string name="load_one_randomly">Would you like to load one randomly?</string>
+    <string name="feeling_lucky">I\'m feeling lucky!</string>
 </resources>

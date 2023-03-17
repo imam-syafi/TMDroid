@@ -98,6 +98,52 @@
             tools:ignore="VisualLintLongText"
             tools:text="@tools:sample/lorem/random" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="backdrop, poster_card, title, release_date, rating, overview" />
+
+        <TextView
+            android:id="@+id/err"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:background="?attr/colorError"
+            android:padding="8dp"
+            android:paddingHorizontal="16dp"
+            android:text="@string/err"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnError"
+            android:textStyle="italic"
+            app:layout_constraintBottom_toTopOf="@id/empty_msg"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <TextView
+            android:id="@+id/empty_msg"
+            style="@style/TextAppearance.MaterialComponents.Subtitle1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:text="@string/load_one_randomly"
+            android:textAlignment="center"
+            android:textColor="?attr/colorOnPrimary"
+            app:layout_constraintBottom_toTopOf="@id/load_random"
+            app:layout_constraintTop_toBottomOf="@id/err"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <Button
+            android:id="@+id/load_random"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/feeling_lucky"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/empty_msg" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

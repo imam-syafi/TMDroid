@@ -1,7 +1,10 @@
 package com.edts.tmdroid.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ActivityDetailBinding
@@ -21,7 +24,17 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.poster.setOnClickListener {
+        val title = intent.getStringExtra(PAGE_TITLE)
+        supportActionBar?.title = title
+
+        val movie = intent.getParcelableExtra<Movie>(DETAIL_INFO)
+        binding.setup()
+        binding.render(movie)
+    }
+
+    private fun ActivityDetailBinding.setup() {
+        // go through movies collection
+        posterCard.setOnClickListener {
             index = if (index < Movie.SAMPLES.lastIndex) {
                 index + 1
             } else {
@@ -29,16 +42,38 @@ class DetailActivity : AppCompatActivity() {
             }
         }
 
-        // to trigger delegate
-        index = 0
+        loadRandom.setOnClickListener {
+            index = (0..Movie.SAMPLES.lastIndex).random()
+        }
     }
 
-    private fun ActivityDetailBinding.render(movie: Movie) {
-        backdrop.setImageResource(movie.backdrop)
-        poster.setImageResource(movie.poster)
-        title.text = movie.title
-        releaseDate.text = movie.releaseDate
-        rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)
-        overview.text = movie.overview
+    private fun ActivityDetailBinding.render(movie: Movie?) {
+        content.isVisible = movie != null
+        err.isVisible = movie == null
+        emptyMsg.isVisible = movie == null
+        loadRandom.isVisible = movie == null
+
+        if (movie != null) {
+            backdrop.setImageResource(movie.backdrop)
+            poster.setImageResource(movie.poster)
+            title.text = movie.title
+            releaseDate.text = movie.releaseDate
+            rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)
+            overview.text = movie.overview
+        }
+    }
+
+    companion object {
+        const val PAGE_TITLE = "page_title"
+        const val DETAIL_INFO = "detail_info"
+
+        fun open(activity: AppCompatActivity, title: String, movie: Movie? = null) {
+            val intent = Intent(activity, DetailActivity::class.java).apply {
+                putExtra(PAGE_TITLE, title)
+                putExtra(DETAIL_INFO, movie)
+            }
+
+            ActivityCompat.startActivity(activity, intent, null)
+        }
     }
 }

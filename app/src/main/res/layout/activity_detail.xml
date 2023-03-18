@@ -117,6 +117,7 @@
             android:textAlignment="center"
             android:textColor="?attr/colorOnError"
             android:textStyle="italic"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/empty_msg"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
@@ -130,15 +131,16 @@
             android:text="@string/load_one_randomly"
             android:textAlignment="center"
             android:textColor="?attr/colorOnPrimary"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/load_random"
-            app:layout_constraintTop_toBottomOf="@id/err"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@id/err" />
 
         <Button
             android:id="@+id/load_random"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/feeling_lucky"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

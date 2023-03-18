@@ -24,6 +24,8 @@ class DetailActivity : AppCompatActivity() {
         binding = ActivityDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.setup()
+
         val title = intent.getStringExtra(PAGE_TITLE)
         supportActionBar?.let {
             it.title = title
@@ -31,7 +33,6 @@ class DetailActivity : AppCompatActivity() {
         }
 
         val movie = intent.getParcelableExtra<Movie>(DETAIL_INFO)
-        binding.setup()
         binding.render(movie)
     }
 

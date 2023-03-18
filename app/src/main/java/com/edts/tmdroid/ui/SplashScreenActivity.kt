@@ -1,4 +1,4 @@
-package com.edts.tmdroid
+package com.edts.tmdroid.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -32,6 +32,5 @@ class SplashScreenActivity : AppCompatActivity() {
 
                 finish()
             }
-
     }
 }

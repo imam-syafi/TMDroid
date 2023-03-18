@@ -20,10 +20,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.render()
+        binding.setup()
     }
 
-    private fun ActivityMainBinding.render() {
+    private fun ActivityMainBinding.setup() {
         menuGrid.adapter = IconMenuAdapter(
             listOf(
                 IconMenu(

@@ -91,7 +91,9 @@
                 android:paddingBottom="48dp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/search_layout"
-                app:spanCount="4" />
+                app:spanCount="4"
+                tools:itemCount="9"
+                tools:listitem="@layout/item_icon_menu" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

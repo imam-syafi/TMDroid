@@ -22,15 +22,15 @@ class IconMenuAdapter(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IconMenuViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
+        val inflater = LayoutInflater.from(parent.context)
 
-        val inflate: (LayoutInflater) -> ViewBinding = when (viewType) {
+        val inflate: (LayoutInflater, ViewGroup, Boolean) -> ViewBinding = when (viewType) {
             TYPE_HEADER -> ItemHeaderBinding::inflate
             TYPE_ICON -> ItemIconMenuBinding::inflate
             else -> throw IllegalArgumentException("Invalid type")
         }
 
-        return IconMenuViewHolder(inflate(layoutInflater))
+        return IconMenuViewHolder(inflate(inflater, parent, false))
     }
 
     override fun getItemCount(): Int = itemList.size

@@ -22,6 +22,7 @@ class ListActivity : AppCompatActivity() {
         val title = intent.getStringExtra(PAGE_TITLE)
         supportActionBar?.let {
             it.title = title
+            it.setDisplayHomeAsUpEnabled(true)
         }
 
         binding.setup()
@@ -41,6 +42,11 @@ class ListActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
     }
 
     companion object {

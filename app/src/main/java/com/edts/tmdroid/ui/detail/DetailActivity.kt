@@ -67,6 +67,11 @@ class DetailActivity : AppCompatActivity() {
         }
     }
 
+    override fun onSupportNavigateUp(): Boolean {
+        finish()
+        return true
+    }
+
     companion object {
         const val PAGE_TITLE = "page_title"
         const val DETAIL_INFO = "detail_info"

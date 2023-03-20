@@ -30,11 +30,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.detail.DetailActivity"
-            android:exported="true">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.main.MainActivity" />
-        </activity>
+            android:exported="true" />
     </application>
 
 </manifest>

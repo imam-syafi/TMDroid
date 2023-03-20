@@ -66,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                 action = ::todo,
             ),
             IconMenu(
-                title = "Top Rated",
+                title = getString(R.string.top_rated),
                 icon = R.drawable.icons8_popcorn_64,
                 action = ::todo,
             ),
@@ -108,11 +108,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleSearch(query: String) {
         if (query.isNotBlank()) {
-            Toast.makeText(
-                this@MainActivity,
-                "Search for: $query",
-                Toast.LENGTH_SHORT
-            ).show()
+            ListActivity.open(
+                this,
+                getString(R.string.search_result, query),
+                query
+            )
+        } else {
+            Toast.makeText(this, getString(R.string.empty_query), Toast.LENGTH_SHORT).show()
         }
     }
 

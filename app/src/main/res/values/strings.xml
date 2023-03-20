@@ -12,4 +12,7 @@
     <string name="load_one_randomly">Would you like to load one randomly?</string>
     <string name="feeling_lucky">I\'m feeling lucky!</string>
     <string name="top_rated">Top Rated</string>
+    <string name="zero_result">Empty result</string>
+    <string name="search_result">Search Result for: %s</string>
+    <string name="empty_query">Search query can\'t be empty!</string>
 </resources>

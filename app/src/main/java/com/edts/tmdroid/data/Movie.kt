@@ -18,6 +18,7 @@ data class Movie(
     val voteCount: Int,
 ) : Parcelable {
     companion object {
+
         val SAMPLES: List<Movie> = listOf(
             Movie(
                 id = 299534,
@@ -75,5 +76,13 @@ data class Movie(
                 voteCount = 6573,
             ),
         )
+
+        fun search(query: String): List<Movie> {
+            val q = query.lowercase()
+
+            return SAMPLES.filter {
+                it.title.contains(q, ignoreCase = true)
+            }
+        }
     }
 }

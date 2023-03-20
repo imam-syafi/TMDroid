@@ -26,4 +26,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:listitem="@layout/item_movie" />
 
+    <TextView
+        android:id="@+id/err"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorError"
+        android:padding="8dp"
+        android:text="@string/zero_result"
+        android:textAlignment="center"
+        android:textColor="?attr/colorOnError"
+        android:textStyle="italic"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

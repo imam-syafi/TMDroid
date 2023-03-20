@@ -7,11 +7,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ActivityMainBinding
-import com.edts.tmdroid.ui.detail.DetailActivity
 import com.edts.tmdroid.ext.on
 import com.edts.tmdroid.ext.onEndIconClick
+import com.edts.tmdroid.ui.detail.DetailActivity
+import com.edts.tmdroid.ui.list.ListActivity
 import com.edts.tmdroid.ui.main.menu.GridItem.Header
 import com.edts.tmdroid.ui.main.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.main.menu.IconMenuAdapter
@@ -33,16 +33,10 @@ class MainActivity : AppCompatActivity() {
         val items = listOf(
             Header(title = "Movies"),
             IconMenu(
-                title = "Top Rated",
+                title = getString(R.string.top_rated),
                 icon = R.drawable.icons8_imovie_50,
                 action = {
-                    val topRatedMovie = Movie.SAMPLES.maxBy(Movie::voteAverage)
-
-                    DetailActivity.open(
-                        this@MainActivity,
-                        getString(R.string.movie_detail),
-                        topRatedMovie
-                    )
+                    ListActivity.open(this@MainActivity, getString(R.string.top_rated))
                 },
             ),
             IconMenu(

@@ -11,4 +11,5 @@
     <string name="err">Did not receive any movie data!</string>
     <string name="load_one_randomly">Would you like to load one randomly?</string>
     <string name="feeling_lucky">I\'m feeling lucky!</string>
+    <string name="top_rated">Top Rated</string>
 </resources>

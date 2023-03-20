@@ -1,6 +1,7 @@
 package com.edts.tmdroid.ui.main
 
 import android.os.Bundle
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
@@ -9,6 +10,8 @@ import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ActivityMainBinding
 import com.edts.tmdroid.ui.detail.DetailActivity
+import com.edts.tmdroid.ext.on
+import com.edts.tmdroid.ext.onEndIconClick
 import com.edts.tmdroid.ui.main.menu.GridItem.Header
 import com.edts.tmdroid.ui.main.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.main.menu.IconMenuAdapter
@@ -103,6 +106,19 @@ class MainActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+
+        searchLayout.onEndIconClick(::handleSearch)
+        searchField.on(EditorInfo.IME_ACTION_SEARCH, ::handleSearch)
+    }
+
+    private fun handleSearch(query: String) {
+        if (query.isNotBlank()) {
+            Toast.makeText(
+                this@MainActivity,
+                "Search for: $query",
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

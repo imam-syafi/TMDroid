@@ -14,10 +14,6 @@ class DetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityDetailBinding
 
-    private var index by observable(initialValue = -1) { _, _, curr ->
-        binding.render(Movie.SAMPLES[curr])
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,18 +33,6 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun ActivityDetailBinding.setup() {
-        // go through movies collection
-        posterCard.setOnClickListener {
-            index = if (index < Movie.SAMPLES.lastIndex) {
-                index + 1
-            } else {
-                0
-            }
-        }
-
-        loadRandom.setOnClickListener {
-            index = (0..Movie.SAMPLES.lastIndex).random()
-        }
     }
 
     private fun ActivityDetailBinding.render(movie: Movie?) {
@@ -58,8 +42,8 @@ class DetailActivity : AppCompatActivity() {
         loadRandom.isVisible = movie == null
 
         if (movie != null) {
-            backdrop.setImageResource(movie.backdrop)
-            poster.setImageResource(movie.poster)
+            // backdrop.setImageResource(movie.backdrop)
+            // poster.setImageResource(movie.poster)
             title.text = movie.title
             releaseDate.text = movie.releaseDate
             rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)

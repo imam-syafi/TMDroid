@@ -38,7 +38,7 @@ class MovieAdapter : Adapter<MovieAdapter.MovieViewHolder>() {
         fun bind(item: Movie) = with(binding) {
             val resources = itemView.resources
 
-            ivPoster.setImageResource(item.poster)
+            // ivPoster.setImageResource(item.poster)
             tvTitle.text = item.title
             tvOverview.text = item.overview
             tvRating.text = resources.getString(

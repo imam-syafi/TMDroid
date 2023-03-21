@@ -2,13 +2,19 @@ package com.edts.tmdroid.ui.list
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ActivityListBinding
+import com.edts.tmdroid.service.TmdbService
+import com.edts.tmdroid.service.response.GetMoviesResponse
 import com.edts.tmdroid.ui.detail.DetailActivity
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ListActivity : AppCompatActivity() {
 
@@ -48,11 +54,45 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun ActivityListBinding.render(query: String?) {
-        val movieList = if (query != null) Movie.search(query) else Movie.SAMPLES
-        movieAdapter.setData(movieList)
+        val call = if (query != null) {
+            TmdbService.instance.searchMovies(query)
+        } else {
+            TmdbService.instance.getTopRatedMovies()
+        }
 
-        rvMovies.isVisible = movieList.isNotEmpty()
-        err.isVisible = movieList.isEmpty()
+        call.enqueue(object : Callback<GetMoviesResponse> {
+            override fun onResponse(
+                call: Call<GetMoviesResponse>,
+                response: Response<GetMoviesResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val body = response.body()
+
+                    if (body != null) {
+                        Log.d("foo", "count: ${body.results.size}")
+                    } else {
+                        handleError(response.message())
+                    }
+                } else {
+                    handleError(response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
+                handleError(t.message)
+            }
+        })
+    }
+
+    private fun ActivityListBinding.handleError(_message: CharSequence? = null) {
+        val message = _message
+            ?.trim()
+            ?.ifBlank { null } ?: getString(R.string.default_error_message)
+
+        rvMovies.isVisible = false
+        err.isVisible = true
+
+        err.text = message
     }
 
     override fun onSupportNavigateUp(): Boolean {

@@ -15,4 +15,5 @@
     <string name="zero_result">Empty result</string>
     <string name="search_result">Search Result for: %s</string>
     <string name="empty_query">Search query can\'t be empty!</string>
+    <string name="default_error_message">Something went wrong</string>
 </resources>

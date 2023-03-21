@@ -2,7 +2,6 @@ package com.edts.tmdroid.ui.list
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
@@ -71,7 +70,10 @@ class ListActivity : AppCompatActivity() {
                     if (body != null) {
                         val movieList = body.results.map(Movie::from)
 
-                        Log.d("foo", "count: ${movieList.size}")
+                        rvMovies.isVisible = movieList.isNotEmpty()
+                        err.isVisible = movieList.isEmpty()
+
+                        movieAdapter.setData(movieList)
                     } else {
                         handleError(response.message())
                     }

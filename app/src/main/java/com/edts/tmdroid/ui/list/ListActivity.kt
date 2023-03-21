@@ -69,7 +69,9 @@ class ListActivity : AppCompatActivity() {
                     val body = response.body()
 
                     if (body != null) {
-                        Log.d("foo", "count: ${body.results.size}")
+                        val movieList = body.results.map(Movie::from)
+
+                        Log.d("foo", "count: ${movieList.size}")
                     } else {
                         handleError(response.message())
                     }

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ItemMovieBinding
+import com.edts.tmdroid.ext.loadFromUrl
 
 class MovieAdapter : Adapter<MovieAdapter.MovieViewHolder>() {
 
@@ -38,7 +39,7 @@ class MovieAdapter : Adapter<MovieAdapter.MovieViewHolder>() {
         fun bind(item: Movie) = with(binding) {
             val resources = itemView.resources
 
-            // ivPoster.setImageResource(item.poster)
+            ivPoster.loadFromUrl(item.posterUrl)
             tvTitle.text = item.title
             tvOverview.text = item.overview
             tvRating.text = resources.getString(

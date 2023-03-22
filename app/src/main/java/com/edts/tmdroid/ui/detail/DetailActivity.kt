@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ActivityDetailBinding
-import kotlin.properties.Delegates.observable
+import com.edts.tmdroid.ext.loadFromUrl
 
 class DetailActivity : AppCompatActivity() {
 
@@ -42,8 +42,8 @@ class DetailActivity : AppCompatActivity() {
         loadRandom.isVisible = movie == null
 
         if (movie != null) {
-            // backdrop.setImageResource(movie.backdrop)
-            // poster.setImageResource(movie.poster)
+            backdrop.loadFromUrl(movie.backdropUrl)
+            poster.loadFromUrl(movie.posterUrl)
             title.text = movie.title
             releaseDate.text = movie.releaseDate
             rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)

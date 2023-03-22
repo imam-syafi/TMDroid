@@ -23,9 +23,10 @@
         <ImageView
             android:id="@+id/backdrop"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
+            android:layout_height="0dp"
+            android:background="@color/greyish"
             android:contentDescription="@string/backdrop"
+            app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/avengers_bd" />
 
@@ -36,13 +37,14 @@
             android:layout_marginStart="16dp"
             app:cardCornerRadius="8dp"
             app:layout_constraintBottom_toBottomOf="@id/release_date"
-            app:layout_constraintDimensionRatio="H, 2:3"
+            app:layout_constraintDimensionRatio="2:3"
             app:layout_constraintStart_toStartOf="@id/backdrop">
 
             <ImageView
                 android:id="@+id/poster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@color/greyish"
                 android:contentDescription="@string/poster"
                 tools:src="@drawable/avengers_poster" />
 

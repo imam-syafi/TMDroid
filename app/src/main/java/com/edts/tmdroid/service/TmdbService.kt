@@ -10,17 +10,17 @@ import retrofit2.http.Query
 interface TmdbService {
 
     @GET("movie/top_rated")
-    fun getTopRatedMovies(
+    suspend fun getTopRatedMovies(
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = LANGUAGE,
-    ): Call<GetMoviesResponse>
+    ): GetMoviesResponse
 
     @GET("search/movie")
-    fun searchMovies(
+    suspend fun searchMovies(
         @Query("query") query: String,
         @Query("api_key") apiKey: String = API_KEY,
         @Query("language") language: String = LANGUAGE,
-    ): Call<GetMoviesResponse>
+    ): GetMoviesResponse
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"

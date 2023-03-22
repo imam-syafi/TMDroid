@@ -43,6 +43,9 @@ dependencies {
     implementation "androidx.constraintlayout:constraintlayout:2.1.4"
     implementation "com.google.android.material:material:1.8.0"
 
+    def lifecycle_version = "2.6.0"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version"
+
     implementation "com.facebook.shimmer:shimmer:0.5.0"
 
     def glide_version = "4.15.0"

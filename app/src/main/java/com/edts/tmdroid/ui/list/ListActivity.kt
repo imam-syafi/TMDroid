@@ -5,15 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ActivityListBinding
 import com.edts.tmdroid.service.TmdbService
-import com.edts.tmdroid.service.response.GetMoviesResponse
 import com.edts.tmdroid.ui.detail.DetailActivity
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.launch
 
 class ListActivity : AppCompatActivity() {
 
@@ -53,42 +51,26 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun ActivityListBinding.render(query: String?) {
-        val call = if (query != null) {
-            TmdbService.instance.searchMovies(query)
-        } else {
-            TmdbService.instance.getTopRatedMovies()
-        }
-
-        call.enqueue(object : Callback<GetMoviesResponse> {
-            override fun onResponse(
-                call: Call<GetMoviesResponse>,
-                response: Response<GetMoviesResponse>
-            ) {
-                stopLoading()
-
-                if (response.isSuccessful) {
-                    val body = response.body()
-
-                    if (body != null) {
-                        val movieList = body.results.map(Movie::from)
-
-                        rvMovies.isVisible = movieList.isNotEmpty()
-                        err.isVisible = movieList.isEmpty()
-
-                        movieAdapter.setData(movieList)
-                    } else {
-                        handleError(response.message())
-                    }
+        lifecycleScope.launch {
+            try {
+                val response = if (query != null) {
+                    TmdbService.instance.searchMovies(query)
                 } else {
-                    handleError(response.message())
+                    TmdbService.instance.getTopRatedMovies()
                 }
-            }
 
-            override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
-                stopLoading()
+                val movieList = response.results.map(Movie::from)
+
+                rvMovies.isVisible = movieList.isNotEmpty()
+                err.isVisible = movieList.isEmpty()
+
+                movieAdapter.setData(movieList)
+            } catch (t: Throwable) {
                 handleError(t.message)
+            } finally {
+                stopLoading()
             }
-        })
+        }
     }
 
     private fun ActivityListBinding.handleError(_message: CharSequence? = null) {

@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 class ListActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityListBinding
-    private val movieAdapter = MovieAdapter()
+    private val movieListAdapter = MovieListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class ListActivity : AppCompatActivity() {
     }
 
     private fun ActivityListBinding.setup() {
-        rvMovies.adapter = movieAdapter.apply {
+        rvMovies.adapter = movieListAdapter.apply {
             delegate = object : MovieDelegate {
                 override fun onMovieClicked(movie: Movie) {
                     DetailActivity.open(
@@ -64,7 +64,7 @@ class ListActivity : AppCompatActivity() {
                 rvMovies.isVisible = movieList.isNotEmpty()
                 err.isVisible = movieList.isEmpty()
 
-                movieAdapter.setData(movieList)
+                movieListAdapter.submitList(movieList)
             } catch (t: Throwable) {
                 handleError(t.message)
             } finally {

@@ -2,6 +2,8 @@ package com.edts.tmdroid.service
 
 import com.edts.tmdroid.BuildConfig
 import com.edts.tmdroid.service.response.GetMoviesResponse
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -10,24 +12,37 @@ import retrofit2.http.Query
 interface TmdbService {
 
     @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(
-        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
-        @Query("language") language: String = LANGUAGE,
-    ): GetMoviesResponse
+    suspend fun getTopRatedMovies(): GetMoviesResponse
 
     @GET("search/movie")
     suspend fun searchMovies(
         @Query("query") query: String,
-        @Query("api_key") apiKey: String = BuildConfig.TMDB_API_KEY,
-        @Query("language") language: String = LANGUAGE,
     ): GetMoviesResponse
 
     companion object {
         private const val BASE_URL = "https://api.themoviedb.org/3/"
-        private const val LANGUAGE = "en-US"
+
+        private val auth = Interceptor { chain ->
+            val original = chain.request()
+            val url = original.url.newBuilder()
+                .addQueryParameter("api_key", BuildConfig.TMDB_API_KEY)
+                .addQueryParameter("language", "en-US")
+                .build()
+
+            val request = original.newBuilder()
+                .url(url)
+                .build()
+
+            chain.proceed(request)
+        }
+
+        private val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(auth)
+            .build()
 
         private val retrofit = Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

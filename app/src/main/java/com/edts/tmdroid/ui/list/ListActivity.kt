@@ -64,6 +64,8 @@ class ListActivity : AppCompatActivity() {
                 call: Call<GetMoviesResponse>,
                 response: Response<GetMoviesResponse>
             ) {
+                stopLoading()
+
                 if (response.isSuccessful) {
                     val body = response.body()
 
@@ -83,6 +85,7 @@ class ListActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<GetMoviesResponse>, t: Throwable) {
+                stopLoading()
                 handleError(t.message)
             }
         })
@@ -97,6 +100,11 @@ class ListActivity : AppCompatActivity() {
         err.isVisible = true
 
         err.text = message
+    }
+
+    private fun ActivityListBinding.stopLoading() {
+        flShimmer.stopShimmer()
+        svShimmer.isVisible = false
     }
 
     override fun onSupportNavigateUp(): Boolean {

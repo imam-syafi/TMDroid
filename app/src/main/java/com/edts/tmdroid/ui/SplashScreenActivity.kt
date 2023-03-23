@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivitySplashScreenBinding
+import com.edts.tmdroid.ext.getPrefs
 import com.edts.tmdroid.ui.login.LoginActivity
 import com.edts.tmdroid.ui.main.MainActivity
 
@@ -33,7 +34,11 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     private fun authenticate() {
-        val isLoggedIn = false
+        val prefs = getPrefs()
+        val isLoggedIn = prefs.getBoolean(
+            getString(R.string.is_logged_in_key),
+            false
+        )
 
         if (isLoggedIn) {
             MainActivity.open(this)

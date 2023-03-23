@@ -4,7 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
+import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivityLoginBinding
+import com.edts.tmdroid.ext.getPrefs
 import com.edts.tmdroid.ui.main.MainActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -25,6 +28,11 @@ class LoginActivity : AppCompatActivity() {
 
     private fun ActivityLoginBinding.setup() {
         btnLogin.setOnClickListener {
+            val prefs = getPrefs()
+            prefs.edit(commit = true) {
+                putBoolean(getString(R.string.is_logged_in_key), true)
+            }
+
             MainActivity.open(this@LoginActivity)
             finish()
         }

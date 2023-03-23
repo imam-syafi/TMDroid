@@ -55,5 +55,17 @@ data class Movie(
             voteAverage = dto.vote_average,
             voteCount = dto.vote_count,
         )
+
+        fun from(entity: FavoriteMovieEntity): Movie = Movie(
+            id = entity.id,
+            title = entity.title,
+            overview = entity.overview,
+            releaseDate = entity.releaseDate,
+            backdropUrl = entity.backdropUrl,
+            posterUrl = entity.posterUrl,
+            popularity = entity.popularity,
+            voteAverage = entity.voteAverage,
+            voteCount = entity.voteCount,
+        )
     }
 }

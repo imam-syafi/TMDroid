@@ -4,8 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.view.isVisible
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
+import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.ActivityFavoriteBinding
 import com.edts.tmdroid.ui.detail.DetailActivity
 import com.edts.tmdroid.ui.list.MovieDelegate
@@ -29,6 +31,15 @@ class FavoriteActivity : AppCompatActivity() {
         }
 
         binding.setup()
+
+        AppDatabase
+            .getInstance(this)
+            .favoriteMovieDao()
+            .getAll()
+            .observe(this) { entities ->
+                val movieList = entities.map(Movie::from)
+                binding.render(movieList)
+            }
     }
 
     private fun ActivityFavoriteBinding.setup() {
@@ -43,6 +54,11 @@ class FavoriteActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun ActivityFavoriteBinding.render(movieList: List<Movie>) {
+        tvEmpty.isVisible = movieList.isEmpty()
+        movieListAdapter.submitList(movieList)
     }
 
     override fun onSupportNavigateUp(): Boolean {

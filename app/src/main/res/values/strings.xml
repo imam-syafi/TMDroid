@@ -18,4 +18,7 @@
     <string name="default_error_message">Something went wrong</string>
     <string name="empty_favorite">You haven\'t favorite\'d any movie</string>
     <string name="favorite_movies">Favorite Movies</string>
+    <string name="toggle_favorite">Toggle Favorite</string>
+    <string name="add_to_favorite">Add to Favorite</string>
+    <string name="remove_from_favorite">Remove from Favorite</string>
 </resources>

@@ -100,11 +100,23 @@
             tools:ignore="VisualLintLongText"
             tools:text="@tools:sample/lorem/random" />
 
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/fabFavorite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:contentDescription="@string/toggle_favorite"
+            android:text="@string/add_to_favorite"
+            app:icon="@drawable/ic_favorite"
+            app:layout_constraintTop_toBottomOf="@id/overview"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
         <androidx.constraintlayout.widget.Group
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:constraint_referenced_ids="backdrop, poster_card, title, release_date, rating, overview" />
+            app:constraint_referenced_ids="backdrop, poster_card, title, release_date, rating, overview, fabFavorite" />
 
         <TextView
             android:id="@+id/err"

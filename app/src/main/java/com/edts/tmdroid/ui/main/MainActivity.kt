@@ -2,19 +2,24 @@ package com.edts.tmdroid.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivityMainBinding
+import com.edts.tmdroid.ext.getPrefs
 import com.edts.tmdroid.ext.on
 import com.edts.tmdroid.ext.onEndIconClick
 import com.edts.tmdroid.ui.detail.DetailActivity
 import com.edts.tmdroid.ui.favorite.FavoriteActivity
 import com.edts.tmdroid.ui.list.ListActivity
+import com.edts.tmdroid.ui.login.LoginActivity
 import com.edts.tmdroid.ui.main.menu.GridItem.Header
 import com.edts.tmdroid.ui.main.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.main.menu.IconMenuAdapter
@@ -133,6 +138,28 @@ class MainActivity : AppCompatActivity() {
 
     private fun todo() {
         Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.action_logout -> {
+                val prefs = getPrefs()
+
+                prefs.edit {
+                    remove(getString(R.string.is_logged_in_key))
+                }
+
+                LoginActivity.open(this, getString(R.string.login))
+                finish()
+            }
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 
     companion object {

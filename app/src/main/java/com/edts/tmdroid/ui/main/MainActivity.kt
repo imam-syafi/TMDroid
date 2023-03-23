@@ -11,6 +11,7 @@ import com.edts.tmdroid.databinding.ActivityMainBinding
 import com.edts.tmdroid.ext.on
 import com.edts.tmdroid.ext.onEndIconClick
 import com.edts.tmdroid.ui.detail.DetailActivity
+import com.edts.tmdroid.ui.favorite.FavoriteActivity
 import com.edts.tmdroid.ui.list.ListActivity
 import com.edts.tmdroid.ui.main.menu.GridItem.Header
 import com.edts.tmdroid.ui.main.menu.GridItem.IconMenu
@@ -37,6 +38,16 @@ class MainActivity : AppCompatActivity() {
                 icon = R.drawable.icons8_imovie_50,
                 action = {
                     ListActivity.open(this@MainActivity, getString(R.string.top_rated))
+                },
+            ),
+            IconMenu(
+                title = "Favorite",
+                icon = R.drawable.icons8_favorite_48,
+                action = {
+                    FavoriteActivity.open(
+                        this@MainActivity,
+                        getString(R.string.favorite_movies),
+                    )
                 },
             ),
             IconMenu(

@@ -21,4 +21,7 @@
     <string name="toggle_favorite">Toggle Favorite</string>
     <string name="add_to_favorite">Add to Favorite</string>
     <string name="remove_from_favorite">Remove from Favorite</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
 </resources>

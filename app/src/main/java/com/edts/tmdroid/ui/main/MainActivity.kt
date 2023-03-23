@@ -1,9 +1,11 @@
 package com.edts.tmdroid.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
@@ -131,5 +133,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun todo() {
         Toast.makeText(this, "Coming Soon", Toast.LENGTH_SHORT).show()
+    }
+
+    companion object {
+
+        fun open(activity: AppCompatActivity) {
+            val intent = Intent(activity, MainActivity::class.java)
+            ActivityCompat.startActivity(activity, intent, null)
+        }
     }
 }

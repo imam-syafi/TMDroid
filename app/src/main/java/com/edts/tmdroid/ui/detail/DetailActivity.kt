@@ -5,10 +5,13 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.Movie
+import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.ActivityDetailBinding
 import com.edts.tmdroid.ext.loadFromUrl
+import kotlinx.coroutines.launch
 
 class DetailActivity : AppCompatActivity() {
 
@@ -48,6 +51,33 @@ class DetailActivity : AppCompatActivity() {
             releaseDate.text = movie.releaseDate
             rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)
             overview.text = movie.overview
+
+            val favoriteMovieDao = AppDatabase
+                .getInstance(this@DetailActivity)
+                .favoriteMovieDao()
+
+            favoriteMovieDao
+                .isSaved(movie.id)
+                .observe(this@DetailActivity) { isMovieSaved ->
+                    with(fabFavorite) {
+                        if (isMovieSaved) {
+                            setText(R.string.remove_from_favorite)
+                            setIconResource(R.drawable.ic_favorite_filled)
+                        } else {
+                            setText(R.string.add_to_favorite)
+                            setIconResource(R.drawable.ic_favorite)
+                        }
+
+                        setOnClickListener {
+                            val entity = movie.toEntity()
+
+                            lifecycleScope.launch {
+                                if (isMovieSaved) favoriteMovieDao.delete(entity)
+                                else favoriteMovieDao.save(entity)
+                            }
+                        }
+                    }
+                }
         }
     }
 

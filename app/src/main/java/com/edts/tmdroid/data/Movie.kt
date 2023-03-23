@@ -2,6 +2,7 @@ package com.edts.tmdroid.data
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
+import com.edts.tmdroid.data.local.entity.FavoriteMovieEntity
 import com.edts.tmdroid.service.TmdbService
 import com.edts.tmdroid.service.response.MovieDto
 import kotlinx.parcelize.Parcelize
@@ -18,6 +19,19 @@ data class Movie(
     val voteAverage: Double,
     val voteCount: Int,
 ) : Parcelable {
+
+    fun toEntity(): FavoriteMovieEntity = FavoriteMovieEntity(
+        id,
+        title,
+        overview,
+        releaseDate,
+        backdropUrl,
+        posterUrl,
+        popularity,
+        voteAverage,
+        voteCount,
+    )
+
     companion object {
 
         val DIFFER = object : DiffUtil.ItemCallback<Movie>() {

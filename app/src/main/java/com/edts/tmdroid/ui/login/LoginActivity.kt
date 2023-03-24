@@ -1,10 +1,14 @@
 package com.edts.tmdroid.ui.login
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
+import androidx.core.content.res.ResourcesCompat
+import androidx.core.widget.doAfterTextChanged
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivityLoginBinding
 import com.edts.tmdroid.ext.getPrefs
@@ -27,6 +31,20 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun ActivityLoginBinding.setup() {
+        etEmail.doAfterTextChanged { editable ->
+            val email = editable.toString()
+            val isValid = email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
+            tilEmail.error = if (isValid) null else getString(R.string.email_invalid)
+            validate()
+        }
+
+        etPassword.doAfterTextChanged { editable ->
+            val password = editable.toString()
+            val isValid = password.isNotBlank()
+            tilPassword.error = if (isValid) null else getString(R.string.password_invalid)
+            validate()
+        }
+
         btnLogin.setOnClickListener {
             val prefs = getPrefs()
             prefs.edit(commit = true) {
@@ -35,6 +53,24 @@ class LoginActivity : AppCompatActivity() {
 
             MainActivity.open(this@LoginActivity)
             finish()
+        }
+    }
+
+    private fun ActivityLoginBinding.validate() {
+        val validated = listOf(
+            tilEmail.error,
+            tilPassword.error,
+        ).all(CharSequence?::isNullOrBlank)
+
+        with(btnLogin) {
+            isEnabled = validated
+            backgroundTintList = ColorStateList.valueOf(
+                ResourcesCompat.getColor(
+                    resources,
+                    if (validated) R.color.teal_700 else android.R.color.darker_gray,
+                    theme,
+                )
+            )
         }
     }
 

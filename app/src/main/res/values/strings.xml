@@ -27,4 +27,6 @@
     <string name="shared_prefs_key">tmdroid_prefs</string>
     <string name="is_logged_in_key">tmdroid_prefs_is_logged_in</string>
     <string name="logout">Log out</string>
+    <string name="email_invalid">Not a valid email address</string>
+    <string name="password_invalid">Password can not be blank</string>
 </resources>

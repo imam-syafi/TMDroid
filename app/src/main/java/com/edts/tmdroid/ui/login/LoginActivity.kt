@@ -3,12 +3,10 @@ package com.edts.tmdroid.ui.login
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Patterns
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
-import androidx.core.widget.doAfterTextChanged
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivityLoginBinding
 import com.edts.tmdroid.ext.getPrefs
@@ -31,18 +29,18 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun ActivityLoginBinding.setup() {
-        etEmail.doAfterTextChanged { editable ->
-            val email = editable.toString()
-            val isValid = email.isNotBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches()
-            tilEmail.error = if (isValid) null else getString(R.string.email_invalid)
-            validate()
+        cvEmail.onChange = { email, isValid ->
+            // TODO: Do something with [email]
+
+            // Ignore [isValid], for now, evaluate validation result manually
+            evaluate()
         }
 
-        etPassword.doAfterTextChanged { editable ->
-            val password = editable.toString()
-            val isValid = password.isNotBlank()
-            tilPassword.error = if (isValid) null else getString(R.string.password_invalid)
-            validate()
+        cvPassword.onChange = { password, isValid ->
+            // TODO: Do something with [password]
+
+            // Ignore [isValid], for now, evaluate validation result manually
+            evaluate()
         }
 
         btnLogin.setOnClickListener {
@@ -56,11 +54,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun ActivityLoginBinding.validate() {
+    private fun ActivityLoginBinding.evaluate() {
         val validated = listOf(
-            tilEmail.error,
-            tilPassword.error,
-        ).all(CharSequence?::isNullOrBlank)
+            cvEmail.isValid,
+            cvPassword.isValid,
+        ).all { it }
 
         with(btnLogin) {
             isEnabled = validated

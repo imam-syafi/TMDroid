@@ -13,6 +13,9 @@ interface FavoriteMovieDao {
     @Query("SELECT * FROM t_favorite_movie")
     fun getAll(): LiveData<List<FavoriteMovieEntity>>
 
+    @Query("SELECT COUNT(*) FROM t_favorite_movie")
+    fun count(): LiveData<Int>
+
     @Query("SELECT EXISTS(SELECT * FROM t_favorite_movie WHERE id = :movieId)")
     fun isSaved(movieId: Int): LiveData<Boolean>
 

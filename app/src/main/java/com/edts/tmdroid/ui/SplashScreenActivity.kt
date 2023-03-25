@@ -6,7 +6,7 @@ import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivitySplashScreenBinding
 import com.edts.tmdroid.ext.getPrefs
 import com.edts.tmdroid.ui.login.LoginActivity
-import com.edts.tmdroid.ui.main.MainActivity
+import com.edts.tmdroid.ui.home.HomeActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -41,7 +41,7 @@ class SplashScreenActivity : AppCompatActivity() {
         )
 
         if (isLoggedIn) {
-            MainActivity.open(this)
+            HomeActivity.open(this)
         } else {
             LoginActivity.open(this, getString(R.string.login))
         }

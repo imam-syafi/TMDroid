@@ -1,4 +1,4 @@
-package com.edts.tmdroid.service.response
+package com.edts.tmdroid.data.remote.response
 
 data class GetMoviesResponse(
     val results: List<MovieDto>,

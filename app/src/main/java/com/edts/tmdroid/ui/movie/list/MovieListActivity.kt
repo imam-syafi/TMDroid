@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.list
+package com.edts.tmdroid.ui.movie.list
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,21 +7,21 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.Movie
-import com.edts.tmdroid.databinding.ActivityListBinding
-import com.edts.tmdroid.service.TmdbService
-import com.edts.tmdroid.ui.detail.DetailActivity
+import com.edts.tmdroid.data.remote.TmdbService
+import com.edts.tmdroid.databinding.ActivityMovieListBinding
+import com.edts.tmdroid.ui.model.Movie
+import com.edts.tmdroid.ui.movie.detail.MovieDetailActivity
 import kotlinx.coroutines.launch
 
-class ListActivity : AppCompatActivity() {
+class MovieListActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityListBinding
+    private lateinit var binding: ActivityMovieListBinding
     private val movieListAdapter = MovieListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityListBinding.inflate(layoutInflater)
+        binding = ActivityMovieListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val title = intent.getStringExtra(PAGE_TITLE)
@@ -36,12 +36,12 @@ class ListActivity : AppCompatActivity() {
         binding.render(query)
     }
 
-    private fun ActivityListBinding.setup() {
+    private fun ActivityMovieListBinding.setup() {
         rvMovies.adapter = movieListAdapter.apply {
             delegate = object : MovieDelegate {
                 override fun onMovieClicked(movie: Movie) {
-                    DetailActivity.open(
-                        this@ListActivity,
+                    MovieDetailActivity.open(
+                        this@MovieListActivity,
                         getString(R.string.movie_detail),
                         movie
                     )
@@ -50,7 +50,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun ActivityListBinding.render(query: String?) {
+    private fun ActivityMovieListBinding.render(query: String?) {
         lifecycleScope.launch {
             try {
                 val response = if (query != null) {
@@ -73,7 +73,7 @@ class ListActivity : AppCompatActivity() {
         }
     }
 
-    private fun ActivityListBinding.handleError(_message: CharSequence? = null) {
+    private fun ActivityMovieListBinding.handleError(_message: CharSequence? = null) {
         val message = _message
             ?.trim()
             ?.ifBlank { null } ?: getString(R.string.default_error_message)
@@ -84,7 +84,7 @@ class ListActivity : AppCompatActivity() {
         err.text = message
     }
 
-    private fun ActivityListBinding.stopLoading() {
+    private fun ActivityMovieListBinding.stopLoading() {
         flShimmer.stopShimmer()
         svShimmer.isVisible = false
     }
@@ -99,7 +99,7 @@ class ListActivity : AppCompatActivity() {
         const val SEARCH_QUERY = "search_query"
 
         fun open(activity: AppCompatActivity, title: String, query: String? = null) {
-            val intent = Intent(activity, ListActivity::class.java).apply {
+            val intent = Intent(activity, MovieListActivity::class.java).apply {
                 putExtra(PAGE_TITLE, title)
                 putExtra(SEARCH_QUERY, query)
             }

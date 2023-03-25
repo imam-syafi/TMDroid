@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.favorite
+package com.edts.tmdroid.ui.movie.favorite
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,22 +6,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.data.local.AppDatabase
-import com.edts.tmdroid.databinding.ActivityFavoriteBinding
-import com.edts.tmdroid.ui.detail.DetailActivity
-import com.edts.tmdroid.ui.list.MovieDelegate
-import com.edts.tmdroid.ui.list.MovieListAdapter
+import com.edts.tmdroid.databinding.ActivityMovieFavoriteBinding
+import com.edts.tmdroid.ui.model.Movie
+import com.edts.tmdroid.ui.movie.detail.MovieDetailActivity
+import com.edts.tmdroid.ui.movie.list.MovieDelegate
+import com.edts.tmdroid.ui.movie.list.MovieListAdapter
 
-class FavoriteActivity : AppCompatActivity() {
+class MovieFavoriteActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityFavoriteBinding
+    private lateinit var binding: ActivityMovieFavoriteBinding
     private val movieListAdapter = MovieListAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityFavoriteBinding.inflate(layoutInflater)
+        binding = ActivityMovieFavoriteBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val title = intent.getStringExtra(PAGE_TITLE)
@@ -42,12 +42,12 @@ class FavoriteActivity : AppCompatActivity() {
             }
     }
 
-    private fun ActivityFavoriteBinding.setup() {
+    private fun ActivityMovieFavoriteBinding.setup() {
         rvMovies.adapter = movieListAdapter.apply {
             delegate = object : MovieDelegate {
                 override fun onMovieClicked(movie: Movie) {
-                    DetailActivity.open(
-                        this@FavoriteActivity,
+                    MovieDetailActivity.open(
+                        this@MovieFavoriteActivity,
                         getString(R.string.movie_detail),
                         movie
                     )
@@ -56,7 +56,7 @@ class FavoriteActivity : AppCompatActivity() {
         }
     }
 
-    private fun ActivityFavoriteBinding.render(movieList: List<Movie>) {
+    private fun ActivityMovieFavoriteBinding.render(movieList: List<Movie>) {
         tvEmpty.isVisible = movieList.isEmpty()
         movieListAdapter.submitList(movieList)
     }
@@ -70,7 +70,7 @@ class FavoriteActivity : AppCompatActivity() {
         const val PAGE_TITLE = "page_title"
 
         fun open(activity: AppCompatActivity, title: String) {
-            val intent = Intent(activity, FavoriteActivity::class.java).apply {
+            val intent = Intent(activity, MovieFavoriteActivity::class.java).apply {
                 putExtra(PAGE_TITLE, title)
             }
 

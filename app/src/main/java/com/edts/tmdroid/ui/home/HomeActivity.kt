@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.main
+package com.edts.tmdroid.ui.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,47 +12,47 @@ import androidx.core.content.edit
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
-import com.edts.tmdroid.databinding.ActivityMainBinding
+import com.edts.tmdroid.databinding.ActivityHomeBinding
 import com.edts.tmdroid.ext.getPrefs
 import com.edts.tmdroid.ext.on
 import com.edts.tmdroid.ext.onEndIconClick
-import com.edts.tmdroid.ui.detail.DetailActivity
-import com.edts.tmdroid.ui.favorite.FavoriteActivity
-import com.edts.tmdroid.ui.list.ListActivity
+import com.edts.tmdroid.ui.movie.detail.MovieDetailActivity
+import com.edts.tmdroid.ui.movie.favorite.MovieFavoriteActivity
+import com.edts.tmdroid.ui.movie.list.MovieListActivity
 import com.edts.tmdroid.ui.login.LoginActivity
-import com.edts.tmdroid.ui.main.menu.GridItem.Header
-import com.edts.tmdroid.ui.main.menu.GridItem.IconMenu
-import com.edts.tmdroid.ui.main.menu.IconMenuAdapter
+import com.edts.tmdroid.ui.home.menu.GridItem.Header
+import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
+import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
 
-class MainActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.setup()
     }
 
-    private fun ActivityMainBinding.setup() {
+    private fun ActivityHomeBinding.setup() {
         val items = listOf(
             Header(title = "Movies"),
             IconMenu(
                 title = getString(R.string.top_rated),
                 icon = R.drawable.icons8_imovie_50,
                 action = {
-                    ListActivity.open(this@MainActivity, getString(R.string.top_rated))
+                    MovieListActivity.open(this@HomeActivity, getString(R.string.top_rated))
                 },
             ),
             IconMenu(
                 title = "Favorite",
                 icon = R.drawable.icons8_favorite_48,
                 action = {
-                    FavoriteActivity.open(
-                        this@MainActivity,
+                    MovieFavoriteActivity.open(
+                        this@HomeActivity,
                         getString(R.string.favorite_movies),
                     )
                 },
@@ -61,8 +61,8 @@ class MainActivity : AppCompatActivity() {
                 title = "Upcoming",
                 icon = R.drawable.icons8_movie_projector_50,
                 action = {
-                    DetailActivity.open(
-                        this@MainActivity,
+                    MovieDetailActivity.open(
+                        this@HomeActivity,
                         getString(R.string.movie_detail),
                     )
                 },
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun handleSearch(query: String) {
         if (query.isNotBlank()) {
-            ListActivity.open(
+            MovieListActivity.open(
                 this,
                 getString(R.string.search_result, query),
                 query
@@ -165,7 +165,7 @@ class MainActivity : AppCompatActivity() {
     companion object {
 
         fun open(activity: AppCompatActivity) {
-            val intent = Intent(activity, MainActivity::class.java)
+            val intent = Intent(activity, HomeActivity::class.java)
             ActivityCompat.startActivity(activity, intent, null)
         }
     }

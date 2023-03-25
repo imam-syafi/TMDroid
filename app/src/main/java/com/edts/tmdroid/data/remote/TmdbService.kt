@@ -1,7 +1,7 @@
-package com.edts.tmdroid.service
+package com.edts.tmdroid.data.remote
 
 import com.edts.tmdroid.BuildConfig
-import com.edts.tmdroid.service.response.GetMoviesResponse
+import com.edts.tmdroid.data.remote.response.GetMoviesResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

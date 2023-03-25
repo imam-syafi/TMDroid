@@ -1,10 +1,10 @@
-package com.edts.tmdroid.data
+package com.edts.tmdroid.ui.model
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import com.edts.tmdroid.data.local.entity.FavoriteMovieEntity
-import com.edts.tmdroid.service.TmdbService
-import com.edts.tmdroid.service.response.MovieDto
+import com.edts.tmdroid.data.remote.TmdbService
+import com.edts.tmdroid.data.remote.response.MovieDto
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.main.menu
+package com.edts.tmdroid.ui.home.menu
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,8 +8,8 @@ import androidx.viewbinding.ViewBinding
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ItemHeaderBinding
 import com.edts.tmdroid.databinding.ItemIconMenuBinding
-import com.edts.tmdroid.ui.main.menu.GridItem.Header
-import com.edts.tmdroid.ui.main.menu.GridItem.IconMenu
+import com.edts.tmdroid.ui.home.menu.GridItem.Header
+import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 
 class IconMenuAdapter(
     private val itemList: List<GridItem>,

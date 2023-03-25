@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.detail
+package com.edts.tmdroid.ui.movie.detail
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,27 +10,27 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.data.local.entity.FavoriteMovieDao
-import com.edts.tmdroid.databinding.ActivityDetailBinding
+import com.edts.tmdroid.databinding.ActivityMovieDetailBinding
 import com.edts.tmdroid.ext.loadFromUrl
-import com.edts.tmdroid.ui.favorite.FavoriteActivity
+import com.edts.tmdroid.ui.model.Movie
+import com.edts.tmdroid.ui.movie.favorite.MovieFavoriteActivity
 import com.google.android.material.badge.BadgeDrawable
 import com.google.android.material.badge.BadgeUtils
 import com.google.android.material.badge.ExperimentalBadgeUtils
 import kotlinx.coroutines.launch
 
-class DetailActivity : AppCompatActivity() {
+class MovieDetailActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityDetailBinding
+    private lateinit var binding: ActivityMovieDetailBinding
     private lateinit var favoriteMovieDao: FavoriteMovieDao
     private var savedCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityDetailBinding.inflate(layoutInflater)
+        binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         binding.setup()
@@ -42,7 +42,7 @@ class DetailActivity : AppCompatActivity() {
         }
 
         favoriteMovieDao = AppDatabase
-            .getInstance(this@DetailActivity)
+            .getInstance(this@MovieDetailActivity)
             .favoriteMovieDao()
 
         favoriteMovieDao
@@ -56,10 +56,10 @@ class DetailActivity : AppCompatActivity() {
         binding.render(movie)
     }
 
-    private fun ActivityDetailBinding.setup() {
+    private fun ActivityMovieDetailBinding.setup() {
     }
 
-    private fun ActivityDetailBinding.render(movie: Movie?) {
+    private fun ActivityMovieDetailBinding.render(movie: Movie?) {
         content.isVisible = movie != null
         err.isVisible = movie == null
         emptyMsg.isVisible = movie == null
@@ -75,7 +75,7 @@ class DetailActivity : AppCompatActivity() {
 
             favoriteMovieDao
                 .isSaved(movie.id)
-                .observe(this@DetailActivity) { isMovieSaved ->
+                .observe(this@MovieDetailActivity) { isMovieSaved ->
                     with(fabFavorite) {
                         if (isMovieSaved) {
                             setText(R.string.remove_from_favorite)
@@ -120,7 +120,7 @@ class DetailActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.action_fave -> {
-                FavoriteActivity.open(
+                MovieFavoriteActivity.open(
                     this,
                     getString(R.string.favorite_movies),
                 )
@@ -140,7 +140,7 @@ class DetailActivity : AppCompatActivity() {
         const val DETAIL_INFO = "detail_info"
 
         fun open(activity: AppCompatActivity, title: String, movie: Movie? = null) {
-            val intent = Intent(activity, DetailActivity::class.java).apply {
+            val intent = Intent(activity, MovieDetailActivity::class.java).apply {
                 putExtra(PAGE_TITLE, title)
                 putExtra(DETAIL_INFO, movie)
             }

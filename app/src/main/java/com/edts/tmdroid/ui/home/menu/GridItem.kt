@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.main.menu
+package com.edts.tmdroid.ui.home.menu
 
 import androidx.annotation.DrawableRes
 

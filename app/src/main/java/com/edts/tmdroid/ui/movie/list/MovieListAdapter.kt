@@ -1,13 +1,13 @@
-package com.edts.tmdroid.ui.list
+package com.edts.tmdroid.ui.movie.list
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.Movie
 import com.edts.tmdroid.databinding.ItemMovieBinding
 import com.edts.tmdroid.ext.loadFromUrl
+import com.edts.tmdroid.ui.model.Movie
 
 class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(Movie.DIFFER) {
 

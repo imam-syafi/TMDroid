@@ -123,7 +123,7 @@ class HomeActivity : AppCompatActivity() {
             MovieListActivity.open(
                 this,
                 getString(R.string.search_result, query),
-                query
+                query,
             )
         } else {
             Toast.makeText(this, getString(R.string.empty_query), Toast.LENGTH_SHORT).show()

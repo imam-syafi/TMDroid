@@ -49,7 +49,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
                     MovieDetailActivity.open(
                         this@MovieFavoriteActivity,
                         getString(R.string.movie_detail),
-                        movie
+                        movie,
                     )
                 }
             }

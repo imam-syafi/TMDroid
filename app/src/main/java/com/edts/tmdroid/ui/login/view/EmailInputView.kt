@@ -41,8 +41,8 @@ class EmailInputView @JvmOverloads constructor(
                             resources,
                             R.color.white,
                             context.theme,
-                        )
-                    )
+                        ),
+                    ),
                 )
             },
         )
@@ -59,7 +59,7 @@ class EmailInputView @JvmOverloads constructor(
     override fun onSaveInstanceState(): Parcelable {
         return bundleOf(
             "inputText" to editText?.text.toString(),
-            "superState" to super.onSaveInstanceState()
+            "superState" to super.onSaveInstanceState(),
         )
     }
 

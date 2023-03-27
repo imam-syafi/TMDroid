@@ -43,7 +43,7 @@ class MovieListActivity : AppCompatActivity() {
                     MovieDetailActivity.open(
                         this@MovieListActivity,
                         getString(R.string.movie_detail),
-                        movie
+                        movie,
                     )
                 }
             }

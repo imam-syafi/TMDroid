@@ -67,7 +67,7 @@ class LoginActivity : AppCompatActivity() {
                     resources,
                     if (validated) R.color.teal_700 else android.R.color.darker_gray,
                     theme,
-                )
+                ),
             )
         }
     }

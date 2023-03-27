@@ -32,7 +32,7 @@ abstract class AppDatabase : RoomDatabase() {
         private fun buildDatabase(context: Context): AppDatabase = Room.databaseBuilder(
             context.applicationContext,
             AppDatabase::class.java,
-            "tmdroid.db"
+            "tmdroid.db",
         ).build()
     }
 }

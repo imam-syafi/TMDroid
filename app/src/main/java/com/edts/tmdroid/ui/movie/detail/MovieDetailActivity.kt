@@ -86,8 +86,11 @@ class MovieDetailActivity : AppCompatActivity() {
                         val entity = movie.toEntity()
 
                         lifecycleScope.launch {
-                            if (isMovieSaved) favoriteMovieDao.delete(entity)
-                            else favoriteMovieDao.save(entity)
+                            if (isMovieSaved) {
+                                favoriteMovieDao.delete(entity)
+                            } else {
+                                favoriteMovieDao.save(entity)
+                            }
                         }
                     }
                 }

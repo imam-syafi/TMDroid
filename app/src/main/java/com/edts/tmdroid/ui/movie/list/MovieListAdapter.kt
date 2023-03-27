@@ -37,7 +37,7 @@ class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(Mo
             tvRating.text = resources.getString(
                 R.string.rating,
                 item.voteAverage.toString(),
-                item.voteCount
+                item.voteCount,
             )
 
             itemView.setOnClickListener {

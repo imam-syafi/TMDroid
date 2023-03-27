@@ -2,7 +2,7 @@
     <string name="app_name">TMDroid</string>
     <string name="backdrop">Backdrop</string>
     <string name="poster">Poster</string>
-    <string name="rating">%s 🌟 from %d votes</string>
+    <string name="rating">%1$s 🌟 from %2$d votes</string>
     <string name="footer">TDP Batch 3 - Android Session</string>
     <string name="cta">Find Your Favorite Movie Here</string>
     <string name="search_movie">Search Movie</string>

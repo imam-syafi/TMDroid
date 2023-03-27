@@ -4,7 +4,7 @@ import com.diffplug.gradle.spotless.SpotlessExtensionPredeclare
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     dependencies {
-        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
+        classpath(libs.secretsGradlePlugin)
     }
 }
 
@@ -24,7 +24,7 @@ subprojects {
             kotlin {
                 target("**/*.kt")
                 targetExclude("$buildDir/**/*.kt", "bin/**/*.kt")
-                ktlint("0.48.2")
+                ktlint(libs.versions.ktlint.get())
                 trimTrailingWhitespace()
                 endWithNewline()
             }
@@ -46,6 +46,6 @@ configure<SpotlessExtension> {
 
 configure<SpotlessExtensionPredeclare> {
     kotlin {
-        ktlint("0.48.2")
+        ktlint(libs.versions.ktlint.get())
     }
 }

@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "TMDroid"
-include ":app"
+include(":app")

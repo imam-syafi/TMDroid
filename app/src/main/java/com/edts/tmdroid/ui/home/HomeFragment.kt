@@ -12,6 +12,7 @@ import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.FragmentHomeBinding
 import com.edts.tmdroid.ext.on
 import com.edts.tmdroid.ext.onEndIconClick
+import com.edts.tmdroid.ext.setupOptionsMenu
 import com.edts.tmdroid.ext.showToast
 import com.edts.tmdroid.ui.home.menu.GridItem
 import com.edts.tmdroid.ui.home.menu.GridItem.Header
@@ -39,6 +40,17 @@ class HomeFragment : Fragment() {
     }
 
     private fun FragmentHomeBinding.setup() {
+        // Setup options menu
+        setupOptionsMenu(R.menu.menu_main) { menuId ->
+            when (menuId) {
+                R.id.action_logout -> {
+                    // TODO: Handle logout
+                    true
+                }
+                else -> false
+            }
+        }
+
         // Handle search input
         tilSearch.onEndIconClick(::handleSearch)
         etSearch.on(EditorInfo.IME_ACTION_SEARCH, ::handleSearch)

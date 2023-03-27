@@ -16,13 +16,12 @@ import com.edts.tmdroid.databinding.ActivityHomeBinding
 import com.edts.tmdroid.ext.getPrefs
 import com.edts.tmdroid.ext.on
 import com.edts.tmdroid.ext.onEndIconClick
-import com.edts.tmdroid.ui.movie.detail.MovieDetailActivity
-import com.edts.tmdroid.ui.movie.favorite.MovieFavoriteActivity
-import com.edts.tmdroid.ui.movie.list.MovieListActivity
-import com.edts.tmdroid.ui.login.LoginActivity
 import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
+import com.edts.tmdroid.ui.login.LoginActivity
+import com.edts.tmdroid.ui.movie.favorite.MovieFavoriteActivity
+import com.edts.tmdroid.ui.movie.list.MovieListActivity
 
 class HomeActivity : AppCompatActivity() {
 
@@ -60,12 +59,7 @@ class HomeActivity : AppCompatActivity() {
             IconMenu(
                 title = "Upcoming",
                 icon = R.drawable.icons8_movie_projector_50,
-                action = {
-                    MovieDetailActivity.open(
-                        this@HomeActivity,
-                        getString(R.string.movie_detail),
-                    )
-                },
+                action = ::todo,
             ),
             IconMenu(
                 title = "Now Playing",

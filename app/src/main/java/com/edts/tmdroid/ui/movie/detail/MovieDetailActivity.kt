@@ -7,7 +7,6 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.local.AppDatabase
@@ -33,8 +32,6 @@ class MovieDetailActivity : AppCompatActivity() {
         binding = ActivityMovieDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.setup()
-
         val title = intent.getStringExtra(PAGE_TITLE)
         supportActionBar?.let {
             it.title = title
@@ -52,50 +49,41 @@ class MovieDetailActivity : AppCompatActivity() {
                 invalidateOptionsMenu()
             }
 
-        val movie = intent.getParcelableExtra<Movie>(DETAIL_INFO)
-        binding.render(movie)
+        intent.getParcelableExtra<Movie>(DETAIL_INFO)?.let { movie ->
+            binding.render(movie)
+        }
     }
 
-    private fun ActivityMovieDetailBinding.setup() {
-    }
+    private fun ActivityMovieDetailBinding.render(movie: Movie) {
+        backdrop.loadFromUrl(movie.backdropUrl)
+        poster.loadFromUrl(movie.posterUrl)
+        title.text = movie.title
+        releaseDate.text = movie.releaseDate
+        rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)
+        overview.text = movie.overview
 
-    private fun ActivityMovieDetailBinding.render(movie: Movie?) {
-        content.isVisible = movie != null
-        err.isVisible = movie == null
-        emptyMsg.isVisible = movie == null
-        loadRandom.isVisible = movie == null
+        favoriteMovieDao
+            .isSaved(movie.id)
+            .observe(this@MovieDetailActivity) { isMovieSaved ->
+                with(fabFavorite) {
+                    if (isMovieSaved) {
+                        setText(R.string.remove_from_favorite)
+                        setIconResource(R.drawable.ic_favorite_filled)
+                    } else {
+                        setText(R.string.add_to_favorite)
+                        setIconResource(R.drawable.ic_favorite)
+                    }
 
-        if (movie != null) {
-            backdrop.loadFromUrl(movie.backdropUrl)
-            poster.loadFromUrl(movie.posterUrl)
-            title.text = movie.title
-            releaseDate.text = movie.releaseDate
-            rating.text = getString(R.string.rating, movie.voteAverage.toString(), movie.voteCount)
-            overview.text = movie.overview
+                    setOnClickListener {
+                        val entity = movie.toEntity()
 
-            favoriteMovieDao
-                .isSaved(movie.id)
-                .observe(this@MovieDetailActivity) { isMovieSaved ->
-                    with(fabFavorite) {
-                        if (isMovieSaved) {
-                            setText(R.string.remove_from_favorite)
-                            setIconResource(R.drawable.ic_favorite_filled)
-                        } else {
-                            setText(R.string.add_to_favorite)
-                            setIconResource(R.drawable.ic_favorite)
-                        }
-
-                        setOnClickListener {
-                            val entity = movie.toEntity()
-
-                            lifecycleScope.launch {
-                                if (isMovieSaved) favoriteMovieDao.delete(entity)
-                                else favoriteMovieDao.save(entity)
-                            }
+                        lifecycleScope.launch {
+                            if (isMovieSaved) favoriteMovieDao.delete(entity)
+                            else favoriteMovieDao.save(entity)
                         }
                     }
                 }
-        }
+            }
     }
 
     @ExperimentalBadgeUtils
@@ -139,7 +127,7 @@ class MovieDetailActivity : AppCompatActivity() {
         const val PAGE_TITLE = "page_title"
         const val DETAIL_INFO = "detail_info"
 
-        fun open(activity: AppCompatActivity, title: String, movie: Movie? = null) {
+        fun open(activity: AppCompatActivity, title: String, movie: Movie) {
             val intent = Intent(activity, MovieDetailActivity::class.java).apply {
                 putExtra(PAGE_TITLE, title)
                 putExtra(DETAIL_INFO, movie)

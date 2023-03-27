@@ -50,6 +50,9 @@ dependencies {
 
     implementation(AndroidX.lifecycle.runtime.ktx)
 
+    implementation(AndroidX.navigation.fragmentKtx)
+    implementation(AndroidX.navigation.uiKtx)
+
     implementation(AndroidX.room.ktx)
     kapt(AndroidX.room.compiler)
 

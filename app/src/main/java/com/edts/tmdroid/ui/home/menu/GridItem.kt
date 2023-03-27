@@ -1,16 +1,17 @@
 package com.edts.tmdroid.ui.home.menu
 
 import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
 
 sealed interface GridItem {
 
     data class Header(
-        val title: String,
+        @StringRes val title: Int,
     ) : GridItem
 
     data class IconMenu(
-        val title: String,
+        @StringRes val title: Int,
         @DrawableRes val icon: Int,
-        val action: () -> Unit,
+        val onClick: () -> Unit,
     ) : GridItem
 }

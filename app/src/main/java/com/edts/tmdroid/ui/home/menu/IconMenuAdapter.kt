@@ -30,8 +30,9 @@ class IconMenuAdapter(
             R.layout.item_icon_menu -> ItemIconMenuBinding::inflate
             else -> throw IllegalArgumentException("Invalid type")
         }
+        val binding = inflate(inflater, parent, false)
 
-        return IconMenuViewHolder(inflate(inflater, parent, false))
+        return IconMenuViewHolder(binding)
     }
 
     override fun getItemCount(): Int = itemList.size
@@ -48,16 +49,16 @@ class IconMenuAdapter(
     ) : ViewHolder(binding.root) {
 
         fun bindHeader(item: Header) = with(binding as ItemHeaderBinding) {
-            title.text = item.title
+            title.setText(item.title)
         }
 
         fun bindIcon(item: IconMenu) = with(binding as ItemIconMenuBinding) {
-            root.setOnClickListener {
-                item.action()
+            itemView.setOnClickListener {
+                item.onClick()
             }
 
             icon.setImageResource(item.icon)
-            title.text = item.title
+            title.setText(item.title)
         }
     }
 }

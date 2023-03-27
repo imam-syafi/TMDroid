@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivitySplashScreenBinding
 import com.edts.tmdroid.ext.getPrefs
-import com.edts.tmdroid.ui.home.HomeActivity
 import com.edts.tmdroid.ui.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
@@ -41,7 +40,7 @@ class SplashScreenActivity : AppCompatActivity() {
         )
 
         if (isLoggedIn) {
-            HomeActivity.open(this)
+            // TODO: Navigate to home screen
         } else {
             LoginActivity.open(this, getString(R.string.login))
         }

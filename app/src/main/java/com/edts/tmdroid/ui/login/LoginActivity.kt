@@ -10,7 +10,6 @@ import androidx.core.content.res.ResourcesCompat
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivityLoginBinding
 import com.edts.tmdroid.ext.getPrefs
-import com.edts.tmdroid.ui.home.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -49,7 +48,7 @@ class LoginActivity : AppCompatActivity() {
                 putBoolean(getString(R.string.is_logged_in_key), true)
             }
 
-            HomeActivity.open(this@LoginActivity)
+            // TODO: Navigate to home screen
             finish()
         }
     }

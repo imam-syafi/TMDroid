@@ -8,14 +8,8 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <!--
-        Color opacity HEX codes:
-            100% — FF   95% — F2    90% — E6    85% — D9    80% — CC    75% — BF    70% — B3
-            65% — A6    60% — 99    55% — 8C    50% — 80    45% — 73    40% — 66    35% — 59
-            30% — 4D    25% — 40    20% — 33    15% — 26    10% — 1A     5% — 0D    0% — 00
-    -->
     <color name="greyish">#59808080</color>
-
-    <color name="mtrl_textinput_default_box_stroke_color">@color/white</color>
     <color name="shimmer">#C2C2C2</color>
+
+    <color name="fade">#59808080</color>
 </resources>

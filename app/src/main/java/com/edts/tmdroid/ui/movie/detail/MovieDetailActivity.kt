@@ -23,8 +23,11 @@ import kotlinx.coroutines.launch
 class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieDetailBinding
+
+    private lateinit var toolbar: Toolbar
+    private lateinit var badge: BadgeDrawable
+
     private lateinit var favoriteMovieDao: FavoriteMovieDao
-    private var savedCount = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,12 @@ class MovieDetailActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
         }
 
+        toolbar = findViewById(androidx.appcompat.R.id.action_bar)
+        badge = BadgeDrawable.create(this).apply {
+            horizontalOffset = 20
+            verticalOffset = 8
+        }
+
         favoriteMovieDao = AppDatabase
             .getInstance(this@MovieDetailActivity)
             .favoriteMovieDao()
@@ -45,8 +54,7 @@ class MovieDetailActivity : AppCompatActivity() {
         favoriteMovieDao
             .count()
             .observe(this) {
-                savedCount = it
-                invalidateOptionsMenu()
+                badge.number = it
             }
 
         intent.getParcelableExtra<Movie>(DETAIL_INFO)?.let { movie ->
@@ -86,23 +94,15 @@ class MovieDetailActivity : AppCompatActivity() {
             }
     }
 
-    @ExperimentalBadgeUtils
-    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
-        val toolbar = findViewById<Toolbar>(androidx.appcompat.R.id.action_bar)
-        val badge = BadgeDrawable.create(this).apply {
-            horizontalOffset = 20
-            verticalOffset = 8
-            number = savedCount
-        }
-
-        BadgeUtils.attachBadgeDrawable(badge, toolbar, R.id.action_fave)
-
-        return super.onPrepareOptionsMenu(menu)
-    }
-
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_fave, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    @ExperimentalBadgeUtils
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        BadgeUtils.attachBadgeDrawable(badge, toolbar, R.id.action_fave)
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

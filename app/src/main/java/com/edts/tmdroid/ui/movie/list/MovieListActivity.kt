@@ -7,7 +7,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.remote.TmdbService
+import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.ActivityMovieListBinding
 import com.edts.tmdroid.ui.model.Movie
 import com.edts.tmdroid.ui.movie.detail.MovieDetailActivity
@@ -54,9 +54,9 @@ class MovieListActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val response = if (query != null) {
-                    TmdbService.instance.searchMovies(query)
+                    NetworkModule.tmdbService.searchMovies(query)
                 } else {
-                    TmdbService.instance.getTopRatedMovies()
+                    NetworkModule.tmdbService.getTopRatedMovies()
                 }
 
                 val movieList = response.results.map(Movie::from)

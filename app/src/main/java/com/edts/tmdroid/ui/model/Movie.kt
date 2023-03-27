@@ -3,7 +3,7 @@ package com.edts.tmdroid.ui.model
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
 import com.edts.tmdroid.data.local.entity.FavoriteMovieEntity
-import com.edts.tmdroid.data.remote.TmdbService
+import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.data.remote.response.MovieDto
 import kotlinx.parcelize.Parcelize
 
@@ -49,8 +49,8 @@ data class Movie(
             title = dto.title,
             overview = dto.overview ?: "Overview is undefined",
             releaseDate = dto.release_date ?: "Release date is undefined",
-            backdropUrl = "${TmdbService.BASE_IMG_URL}${dto.backdrop_path}",
-            posterUrl = "${TmdbService.BASE_IMG_URL}${dto.poster_path}",
+            backdropUrl = "${NetworkModule.BASE_IMG_URL}${dto.backdrop_path}",
+            posterUrl = "${NetworkModule.BASE_IMG_URL}${dto.poster_path}",
             popularity = dto.popularity,
             voteAverage = dto.vote_average,
             voteCount = dto.vote_count,

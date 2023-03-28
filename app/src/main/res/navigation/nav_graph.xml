@@ -57,6 +57,28 @@
         android:id="@+id/personListFragment"
         android:name="com.edts.tmdroid.ui.person.list.PersonListFragment"
         android:label="@string/popular_people"
-        tools:layout="@layout/fragment_person_list" />
+        tools:layout="@layout/fragment_person_list">
+
+        <action
+            android:id="@+id/to_personDetailFragment"
+            app:destination="@id/personDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/personDetailFragment"
+        android:name="com.edts.tmdroid.ui.person.detail.PersonDetailFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_person_detail">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="person"
+            app:argType="com.edts.tmdroid.ui.model.Person" />
+
+    </fragment>
 
 </navigation>

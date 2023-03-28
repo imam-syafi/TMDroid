@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentPersonListBinding
-import com.edts.tmdroid.ext.showToast
 
 class PersonListFragment : Fragment() {
 
@@ -43,8 +43,12 @@ class PersonListFragment : Fragment() {
     private fun FragmentPersonListBinding.setup() {
         val personListAdapter = PersonListAdapter(
             onClick = { person ->
-                // TODO: Navigate to detail screen
-                showToast(person.name)
+                val directions = PersonListFragmentDirections.toPersonDetailFragment(
+                    title = person.name,
+                    person = person,
+                )
+
+                findNavController().navigate(directions)
             },
         ).also(rvPeople::setAdapter)
 

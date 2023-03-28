@@ -4,6 +4,7 @@ import com.diffplug.gradle.spotless.SpotlessExtensionPredeclare
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
     dependencies {
+        classpath(AndroidX.navigation.safeArgsGradlePlugin)
         classpath(libs.secretsGradlePlugin)
     }
 }

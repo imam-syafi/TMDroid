@@ -33,6 +33,12 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.edts.tmdroid.ui.movie.detail.MovieDetailFragment"
         android:label="@string/movie_detail"
-        tools:layout="@layout/fragment_movie_detail" />
+        tools:layout="@layout/fragment_movie_detail">
+
+        <argument
+            android:name="movie"
+            app:argType="com.edts.tmdroid.ui.model.Movie" />
+
+    </fragment>
 
 </navigation>

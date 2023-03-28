@@ -49,7 +49,8 @@ class MovieListFragment : Fragment() {
                 delegate = object : MovieDelegate {
 
                     override fun onMovieClicked(movie: Movie) {
-                        findNavController().navigate(R.id.to_movieDetailFragment)
+                        val directions = MovieListFragmentDirections.toMovieDetailFragment(movie)
+                        findNavController().navigate(directions)
                     }
                 }
             }

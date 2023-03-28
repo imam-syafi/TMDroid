@@ -106,7 +106,10 @@ class HomeFragment : Fragment() {
                 IconMenu(
                     title = R.string.popular,
                     icon = R.drawable.icons8_charlie_chaplin_64,
-                    onClick = ::todo,
+                    onClick = {
+                        val directions = HomeFragmentDirections.toPersonListFragment()
+                        findNavController().navigate(directions)
+                    },
                 ),
             )
 

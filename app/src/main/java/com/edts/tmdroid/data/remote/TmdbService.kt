@@ -1,6 +1,7 @@
 package com.edts.tmdroid.data.remote
 
 import com.edts.tmdroid.data.remote.response.GetMoviesResponse
+import com.edts.tmdroid.data.remote.response.GetPeopleResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -20,4 +21,7 @@ interface TmdbService {
 
     @GET("search/movie")
     suspend fun searchMovies(@Query("query") query: String): GetMoviesResponse
+
+    @GET("person/popular")
+    suspend fun getPopularPeople(): GetPeopleResponse
 }

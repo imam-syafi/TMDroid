@@ -15,6 +15,10 @@
             android:id="@+id/to_movieListFragment"
             app:destination="@id/movieListFragment" />
 
+        <action
+            android:id="@+id/to_personListFragment"
+            app:destination="@id/personListFragment" />
+
     </fragment>
 
     <fragment
@@ -48,5 +52,11 @@
             app:argType="com.edts.tmdroid.ui.model.Movie" />
 
     </fragment>
+
+    <fragment
+        android:id="@+id/personListFragment"
+        android:name="com.edts.tmdroid.ui.person.list.PersonListFragment"
+        android:label="@string/popular_people"
+        tools:layout="@layout/fragment_person_list" />
 
 </navigation>

@@ -1,16 +1,12 @@
 package com.edts.tmdroid.ui.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.FragmentHomeBinding
+import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.on
 import com.edts.tmdroid.ui.ext.onEndIconClick
 import com.edts.tmdroid.ui.ext.setupOptionsMenu
@@ -21,27 +17,11 @@ import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
 import com.edts.tmdroid.ui.movie.list.MovieListType
 
-class HomeFragment : Fragment() {
+class HomeFragment : BaseFragment<FragmentHomeBinding>(
+    FragmentHomeBinding::inflate,
+) {
 
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.setup()
-    }
-
-    private fun FragmentHomeBinding.setup() {
+    override fun FragmentHomeBinding.setup() {
         // Setup options menu
         setupOptionsMenu(R.menu.menu_main) { menuId ->
             when (menuId) {
@@ -158,10 +138,5 @@ class HomeFragment : Fragment() {
 
     private fun todo() {
         showToast("Coming Soon")
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

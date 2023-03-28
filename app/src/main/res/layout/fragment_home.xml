@@ -13,15 +13,6 @@
         android:focusableInTouchMode="true">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="64dp"
             android:layout_height="64dp"

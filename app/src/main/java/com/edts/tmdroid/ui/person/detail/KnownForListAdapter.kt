@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.edts.tmdroid.databinding.ItemKnownForBinding
-import com.edts.tmdroid.ext.loadFromUrl
+import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.model.KnownFor
 import com.edts.tmdroid.ui.person.detail.KnownForListAdapter.KnownForViewHolder
 

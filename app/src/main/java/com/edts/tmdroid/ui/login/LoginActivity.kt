@@ -9,7 +9,7 @@ import androidx.core.content.edit
 import androidx.core.content.res.ResourcesCompat
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivityLoginBinding
-import com.edts.tmdroid.ext.getPrefs
+import com.edts.tmdroid.ui.ext.getPrefs
 
 class LoginActivity : AppCompatActivity() {
 

@@ -4,7 +4,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivitySplashScreenBinding
-import com.edts.tmdroid.ext.getPrefs
+import com.edts.tmdroid.ui.ext.getPrefs
 import com.edts.tmdroid.ui.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.FragmentMovieDetailBinding
-import com.edts.tmdroid.ext.loadFromUrl
+import com.edts.tmdroid.ui.ext.loadFromUrl
 
 class MovieDetailFragment : Fragment() {
 

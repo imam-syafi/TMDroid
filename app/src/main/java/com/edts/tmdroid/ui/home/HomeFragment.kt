@@ -11,10 +11,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.FragmentHomeBinding
-import com.edts.tmdroid.ext.on
-import com.edts.tmdroid.ext.onEndIconClick
-import com.edts.tmdroid.ext.setupOptionsMenu
-import com.edts.tmdroid.ext.showToast
+import com.edts.tmdroid.ui.ext.on
+import com.edts.tmdroid.ui.ext.onEndIconClick
+import com.edts.tmdroid.ui.ext.setupOptionsMenu
+import com.edts.tmdroid.ui.ext.showToast
 import com.edts.tmdroid.ui.home.menu.GridItem
 import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu

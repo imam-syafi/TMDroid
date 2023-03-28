@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ext
+package com.edts.tmdroid.ui.ext
 
 import android.view.Menu
 import android.view.MenuInflater

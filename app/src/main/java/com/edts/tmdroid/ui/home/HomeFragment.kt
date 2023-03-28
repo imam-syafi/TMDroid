@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
@@ -62,7 +63,7 @@ class HomeFragment : Fragment() {
                 IconMenu(
                     title = R.string.top_rated,
                     icon = R.drawable.icons8_imovie_50,
-                    onClick = ::todo,
+                    onClick = ::toMovieList,
                 ),
                 IconMenu(
                     title = R.string.upcoming,
@@ -130,6 +131,10 @@ class HomeFragment : Fragment() {
         } else {
             showToast(R.string.empty_query)
         }
+    }
+
+    private fun toMovieList() {
+        findNavController().navigate(R.id.to_movieListFragment)
     }
 
     private fun todo() {

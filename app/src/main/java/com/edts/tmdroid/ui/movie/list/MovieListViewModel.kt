@@ -23,6 +23,7 @@ class MovieListViewModel(
             MovieListType.Upcoming -> tmdbService::getUpcomingMovies
             MovieListType.NowPlaying -> tmdbService::getNowPlayingMovies
             MovieListType.Popular -> tmdbService::getPopularMovies
+            is MovieListType.Search -> suspend { tmdbService.searchMovies(movieListType.query) }
         }
 
         fetchData(call)

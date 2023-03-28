@@ -9,4 +9,8 @@ sealed class MovieListType : Parcelable {
     object Upcoming : MovieListType()
     object NowPlaying : MovieListType()
     object Popular : MovieListType()
+
+    data class Search(
+        val query: String,
+    ) : MovieListType()
 }

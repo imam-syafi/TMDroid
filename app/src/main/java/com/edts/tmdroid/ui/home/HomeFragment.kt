@@ -127,21 +127,28 @@ class HomeFragment : Fragment() {
 
     private fun handleSearch(query: String) {
         if (query.isNotBlank()) {
-            // TODO: Navigate to movie list screen
-            showToast(query)
+            toMovieList(MovieListType.Search(query))
         } else {
             showToast(R.string.empty_query)
         }
     }
 
     private fun toMovieList(movieListType: MovieListType) {
-        val resId = when (movieListType) {
-            MovieListType.TopRated -> R.string.top_rated
-            MovieListType.Upcoming -> R.string.upcoming
-            MovieListType.NowPlaying -> R.string.now_playing
-            MovieListType.Popular -> R.string.popular
+        val title = when (movieListType) {
+            is MovieListType.Search -> getString(R.string.search_result, movieListType.query)
+            else -> {
+                val resId = when (movieListType) {
+                    MovieListType.TopRated -> R.string.top_rated
+                    MovieListType.Upcoming -> R.string.upcoming
+                    MovieListType.NowPlaying -> R.string.now_playing
+                    MovieListType.Popular -> R.string.popular
+                    else -> throw IllegalArgumentException("Invalid type")
+                }
+
+                getString(R.string.movie_list_title, getString(resId))
+            }
         }
-        val title = getString(R.string.movie_list_title, getString(resId))
+
         val directions = HomeFragmentDirections.toMovieListFragment(title, movieListType)
         findNavController().navigate(directions)
     }

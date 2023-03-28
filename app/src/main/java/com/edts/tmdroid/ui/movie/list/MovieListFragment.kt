@@ -9,9 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.fragment.findNavController
+import com.edts.tmdroid.R
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentMovieListBinding
-import com.edts.tmdroid.ext.showToast
 import com.edts.tmdroid.ui.model.Movie
 
 class MovieListFragment : Fragment() {
@@ -48,8 +49,7 @@ class MovieListFragment : Fragment() {
                 delegate = object : MovieDelegate {
 
                     override fun onMovieClicked(movie: Movie) {
-                        // TODO: Navigate to detail screen
-                        showToast(movie.title)
+                        findNavController().navigate(R.id.to_movieDetailFragment)
                     }
                 }
             }

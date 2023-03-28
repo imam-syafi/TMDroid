@@ -36,9 +36,6 @@
         <activity
             android:name=".ui.movie.favorite.MovieFavoriteActivity"
             android:exported="false" />
-        <activity
-            android:name=".ui.movie.detail.MovieDetailActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

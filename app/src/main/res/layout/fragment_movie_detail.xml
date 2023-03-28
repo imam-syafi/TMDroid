@@ -5,112 +5,87 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.movie.detail.MovieDetailActivity">
+    tools:context=".ui.movie.detail.MovieDetailFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/ivBackdrop"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/backdrop"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="@color/greyish"
+            android:background="@color/fade"
             android:contentDescription="@string/backdrop"
             app:layout_constraintDimensionRatio="16:9"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@drawable/avengers_bd" />
 
         <androidx.cardview.widget.CardView
-            android:id="@+id/poster_card"
+            android:id="@+id/cvPoster"
             android:layout_width="128dp"
             android:layout_height="0dp"
             android:layout_marginStart="16dp"
             app:cardCornerRadius="8dp"
-            app:layout_constraintBottom_toBottomOf="@id/release_date"
+            app:layout_constraintBottom_toBottomOf="@+id/tvReleaseDate"
             app:layout_constraintDimensionRatio="2:3"
-            app:layout_constraintStart_toStartOf="@id/backdrop">
+            app:layout_constraintStart_toStartOf="@id/ivBackdrop">
 
             <ImageView
-                android:id="@+id/poster"
+                android:id="@+id/ivPoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/greyish"
+                android:background="@color/fade"
                 android:contentDescription="@string/poster"
                 tools:src="@drawable/avengers_poster" />
 
         </androidx.cardview.widget.CardView>
 
         <TextView
-            android:id="@+id/title"
+            android:id="@+id/tvTitle"
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"
             android:ellipsize="end"
             android:maxLines="2"
-            android:textColor="?attr/colorOnPrimary"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/poster_card"
-            app:layout_constraintTop_toBottomOf="@id/backdrop"
+            app:layout_constraintStart_toEndOf="@id/cvPoster"
+            app:layout_constraintTop_toBottomOf="@id/ivBackdrop"
             tools:text="Avengers: Endgame" />
 
         <TextView
-            android:id="@+id/rating"
+            android:id="@+id/tvRating"
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="4dp"
-            android:textColor="?attr/colorOnPrimary"
             android:textSize="12sp"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/title"
-            tools:text="8.3 🌟" />
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            tools:text="8.3 🌟 from 123 votes" />
 
         <TextView
-            android:id="@+id/release_date"
+            android:id="@+id/tvReleaseDate"
             style="@style/TextAppearance.MaterialComponents.Overline"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintStart_toStartOf="@id/title"
-            app:layout_constraintTop_toBottomOf="@id/rating"
+            app:layout_constraintStart_toStartOf="@id/tvTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvRating"
             tools:text="2019-04-24" />
 
         <TextView
-            android:id="@+id/overview"
+            android:id="@+id/tvOverview"
             style="@style/TextAppearance.MaterialComponents.Caption"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingHorizontal="16dp"
             android:paddingVertical="24dp"
             android:textAlignment="center"
-            android:textColor="?attr/colorOnPrimary"
-            app:layout_constraintTop_toBottomOf="@id/poster_card"
+            app:layout_constraintTop_toBottomOf="@id/cvPoster"
             tools:ignore="VisualLintLongText"
             tools:text="@tools:sample/lorem/random" />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/fabFavorite"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:contentDescription="@string/toggle_favorite"
-            android:text="@string/add_to_favorite"
-            app:icon="@drawable/ic_favorite"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/overview" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

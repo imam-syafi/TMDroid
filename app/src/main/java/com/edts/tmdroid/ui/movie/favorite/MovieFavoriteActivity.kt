@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import com.edts.tmdroid.R
 import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.ActivityMovieFavoriteBinding
 import com.edts.tmdroid.ui.model.Movie
-import com.edts.tmdroid.ui.movie.detail.MovieDetailActivity
 import com.edts.tmdroid.ui.movie.list.MovieDelegate
 import com.edts.tmdroid.ui.movie.list.MovieListAdapter
 
@@ -46,11 +44,7 @@ class MovieFavoriteActivity : AppCompatActivity() {
         rvMovies.adapter = movieListAdapter.apply {
             delegate = object : MovieDelegate {
                 override fun onMovieClicked(movie: Movie) {
-                    MovieDetailActivity.open(
-                        this@MovieFavoriteActivity,
-                        getString(R.string.movie_detail),
-                        movie,
-                    )
+                    // TODO: Navigate to detail screen
                 }
             }
         }

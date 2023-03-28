@@ -52,6 +52,24 @@
             android:layout_marginStart="16dp"
             android:paddingTop="14dp"
             android:paddingBottom="8dp"
+            android:text="@string/biography"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/tvBio"
+            style="@style/TextAppearance.MaterialComponents.Caption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fade"
+            android:padding="16dp" />
+
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="8dp"
             android:text="@string/known_for"
             android:textSize="16sp" />
 

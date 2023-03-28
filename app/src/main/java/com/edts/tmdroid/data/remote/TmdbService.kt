@@ -2,7 +2,9 @@ package com.edts.tmdroid.data.remote
 
 import com.edts.tmdroid.data.remote.response.GetMoviesResponse
 import com.edts.tmdroid.data.remote.response.GetPeopleResponse
+import com.edts.tmdroid.data.remote.response.PersonDetailDto
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TmdbService {
@@ -24,4 +26,7 @@ interface TmdbService {
 
     @GET("person/popular")
     suspend fun getPopularPeople(): GetPeopleResponse
+
+    @GET("person/{id}")
+    suspend fun getPerson(@Path("id") id: Int): PersonDetailDto
 }

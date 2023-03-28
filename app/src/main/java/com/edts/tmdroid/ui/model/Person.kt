@@ -11,6 +11,7 @@ data class Person(
     val id: Int,
     val name: String,
     val profileUrl: String,
+    val knownFor: List<KnownFor>,
 ) : Parcelable {
 
     companion object {
@@ -29,6 +30,7 @@ data class Person(
             id = dto.id,
             name = dto.name,
             profileUrl = "${NetworkModule.BASE_IMG_URL}${dto.profile_path}",
+            knownFor = dto.known_for.map(KnownFor::from),
         )
     }
 }

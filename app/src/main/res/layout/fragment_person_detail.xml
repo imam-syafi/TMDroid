@@ -44,6 +44,27 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <TextView
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:paddingTop="14dp"
+            android:paddingBottom="8dp"
+            android:text="@string/known_for"
+            android:textSize="16sp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvKnownFor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/fade"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:paddingHorizontal="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/item_known_for" />
+
     </LinearLayout>
 
 </androidx.core.widget.NestedScrollView>

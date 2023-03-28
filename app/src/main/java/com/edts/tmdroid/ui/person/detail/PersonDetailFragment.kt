@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.databinding.FragmentPersonDetailBinding
 import com.edts.tmdroid.ext.loadFromUrl
+import com.edts.tmdroid.ext.showToast
 
 class PersonDetailFragment : Fragment() {
 
@@ -36,6 +37,13 @@ class PersonDetailFragment : Fragment() {
 
         ivProfile.loadFromUrl(person.profileUrl)
         tvName.text = person.name
+
+        rvKnownFor.adapter = KnownForListAdapter(
+            onClick = { knownFor ->
+                // TODO: Navigate to detail screen
+                showToast(knownFor.title)
+            },
+        ).apply { submitList(person.knownFor) }
     }
 
     override fun onDestroyView() {

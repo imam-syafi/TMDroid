@@ -4,4 +4,5 @@ data class PersonDto(
     val id: Int,
     val name: String,
     val profile_path: String?,
+    val known_for: List<KnownForDto>,
 )

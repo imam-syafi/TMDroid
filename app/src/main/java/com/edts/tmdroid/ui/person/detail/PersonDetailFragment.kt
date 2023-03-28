@@ -61,7 +61,13 @@ class PersonDetailFragment : Fragment() {
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            tvBio.text = state.personDetail?.biography
+            state.personDetail?.let {
+                tvGenderAndDepartment.text = it.genderAndDepartment
+                tvAge.text = it.birthDayAndAge
+                tvBirthPlace.text = it.birthPlace
+                tvAka.text = it.alsoKnownAs
+                tvBio.text = it.biography
+            }
         }
     }
 

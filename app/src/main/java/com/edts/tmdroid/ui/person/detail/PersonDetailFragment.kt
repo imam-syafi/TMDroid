@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentPersonDetailBinding
 import com.edts.tmdroid.ui.ext.loadFromUrl
+import com.edts.tmdroid.ui.ext.setToggleMaxLines
 import com.edts.tmdroid.ui.ext.showToast
 
 class PersonDetailFragment : Fragment() {
@@ -49,6 +50,7 @@ class PersonDetailFragment : Fragment() {
 
         ivProfile.loadFromUrl(person.profileUrl)
         tvName.text = person.name
+        tvBio.setToggleMaxLines(initial = tvBio.maxLines)
 
         rvKnownFor.adapter = KnownForListAdapter(
             onClick = { knownFor ->

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
-import com.edts.tmdroid.R
+import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentMovieListBinding
 import com.edts.tmdroid.ui.model.Movie
@@ -20,10 +20,14 @@ class MovieListFragment : Fragment() {
     private var _binding: FragmentMovieListBinding? = null
     private val binding get() = _binding!!
 
+    private val args by navArgs<MovieListFragmentArgs>()
     private val viewModel by viewModels<MovieListViewModel> {
         viewModelFactory {
             initializer {
-                MovieListViewModel(NetworkModule.tmdbService)
+                MovieListViewModel(
+                    args.movieListType,
+                    NetworkModule.tmdbService,
+                )
             }
         }
     }

@@ -41,4 +41,5 @@
     <string name="airing_today">Airing Today</string>
     <string name="people">People</string>
     <string name="top_rated_movies">Top Rated Movies</string>
+    <string name="movie_list_title">%1$s Movies</string>
 </resources>

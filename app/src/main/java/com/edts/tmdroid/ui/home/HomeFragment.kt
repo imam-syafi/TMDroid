@@ -19,6 +19,7 @@ import com.edts.tmdroid.ui.home.menu.GridItem
 import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
+import com.edts.tmdroid.ui.movie.list.MovieListType
 
 class HomeFragment : Fragment() {
 
@@ -63,22 +64,22 @@ class HomeFragment : Fragment() {
                 IconMenu(
                     title = R.string.top_rated,
                     icon = R.drawable.icons8_imovie_50,
-                    onClick = ::toMovieList,
+                    onClick = { toMovieList(MovieListType.TopRated) },
                 ),
                 IconMenu(
                     title = R.string.upcoming,
                     icon = R.drawable.icons8_movie_projector_50,
-                    onClick = ::todo,
+                    onClick = { toMovieList(MovieListType.Upcoming) },
                 ),
                 IconMenu(
                     title = R.string.now_playing,
                     icon = R.drawable.icons8_movie_theater_64,
-                    onClick = ::todo,
+                    onClick = { toMovieList(MovieListType.NowPlaying) },
                 ),
                 IconMenu(
                     title = R.string.popular,
                     icon = R.drawable.icons8_movie_ticket_50,
-                    onClick = ::todo,
+                    onClick = { toMovieList(MovieListType.Popular) },
                 ),
                 Header(title = R.string.tv_shows),
                 IconMenu(
@@ -133,8 +134,16 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun toMovieList() {
-        findNavController().navigate(R.id.to_movieListFragment)
+    private fun toMovieList(movieListType: MovieListType) {
+        val resId = when (movieListType) {
+            MovieListType.TopRated -> R.string.top_rated
+            MovieListType.Upcoming -> R.string.upcoming
+            MovieListType.NowPlaying -> R.string.now_playing
+            MovieListType.Popular -> R.string.popular
+        }
+        val title = getString(R.string.movie_list_title, getString(resId))
+        val directions = HomeFragmentDirections.toMovieListFragment(title, movieListType)
+        findNavController().navigate(directions)
     }
 
     private fun todo() {

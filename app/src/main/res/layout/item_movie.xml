@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="8dp"
-    app:cardBackgroundColor="@color/greyish"
+    app:cardBackgroundColor="@color/fade"
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -27,7 +27,7 @@
                 android:id="@+id/ivPoster"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/greyish"
+                android:background="@color/fade"
                 android:contentDescription="@string/poster"
                 tools:src="@drawable/avengers_poster" />
 
@@ -39,7 +39,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
-            android:textColor="?attr/colorOnPrimary"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/cvPoster"
@@ -52,7 +51,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="8dp"
-            android:textColor="?attr/colorOnPrimary"
             android:textSize="12sp"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvTitle"
@@ -66,7 +64,6 @@
             android:layout_marginVertical="2dp"
             android:ellipsize="end"
             android:maxLines="4"
-            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="@id/tvTitle"
             app:layout_constraintTop_toBottomOf="@id/tvRating"

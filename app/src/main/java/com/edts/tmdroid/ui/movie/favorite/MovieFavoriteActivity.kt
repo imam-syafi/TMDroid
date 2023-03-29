@@ -42,10 +42,8 @@ class MovieFavoriteActivity : AppCompatActivity() {
 
     private fun ActivityMovieFavoriteBinding.setup() {
         rvMovies.adapter = movieListAdapter.apply {
-            delegate = object : MovieDelegate {
-                override fun onMovieClicked(movie: Movie) {
-                    // TODO: Navigate to detail screen
-                }
+            delegate = MovieDelegate {
+                // TODO: Navigate to detail screen
             }
         }
     }

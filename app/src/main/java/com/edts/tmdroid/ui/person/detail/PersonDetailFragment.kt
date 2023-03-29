@@ -3,7 +3,9 @@ package com.edts.tmdroid.ui.person.detail
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentPersonDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
@@ -35,8 +37,16 @@ class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
 
         rvKnownFor.adapter = KnownForListAdapter(
             onClick = { knownFor ->
-                // TODO: Navigate to detail screen
-                showToast(knownFor.title)
+                when (knownFor.type) {
+                    MediaType.Movie -> {
+                        val directions = PersonDetailFragmentDirections.toMovieDetailFragment(
+                            movieId = knownFor.id,
+                        )
+
+                        findNavController().navigate(directions)
+                    }
+                    MediaType.Tv -> showToast("TODO: Handle TV shows")
+                }
             },
         ).apply { submitList(person.knownFor) }
 

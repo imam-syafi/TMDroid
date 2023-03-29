@@ -79,6 +79,10 @@
             android:name="person"
             app:argType="com.edts.tmdroid.ui.model.Person" />
 
+        <action
+            android:id="@+id/to_movieDetailFragment"
+            app:destination="@id/movieDetailFragment" />
+
     </fragment>
 
 </navigation>

@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentMovieListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
-import com.edts.tmdroid.ui.model.Movie
 
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>(
     FragmentMovieListBinding::inflate,
@@ -28,14 +27,12 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(
     }
 
     override fun FragmentMovieListBinding.setup() {
-        val movieListAdapter = MovieListAdapter()
-            .apply {
-                delegate = MovieDelegate { movie ->
-                    val directions = MovieListFragmentDirections.toMovieDetailFragment(movie)
-                    findNavController().navigate(directions)
-                }
-            }
-            .also(rvMovie::setAdapter)
+        val movieListAdapter = MovieListAdapter(
+            onClick = { movie ->
+                val directions = MovieListFragmentDirections.toMovieDetailFragment(movie)
+                findNavController().navigate(directions)
+            },
+        ).also(rvMovie::setAdapter)
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->

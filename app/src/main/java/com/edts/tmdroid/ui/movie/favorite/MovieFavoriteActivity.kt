@@ -8,13 +8,12 @@ import androidx.core.view.isVisible
 import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.ActivityMovieFavoriteBinding
 import com.edts.tmdroid.ui.model.Movie
-import com.edts.tmdroid.ui.movie.list.MovieDelegate
 import com.edts.tmdroid.ui.movie.list.MovieListAdapter
 
 class MovieFavoriteActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMovieFavoriteBinding
-    private val movieListAdapter = MovieListAdapter()
+    private lateinit var movieListAdapter: MovieListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,11 +40,11 @@ class MovieFavoriteActivity : AppCompatActivity() {
     }
 
     private fun ActivityMovieFavoriteBinding.setup() {
-        rvMovies.adapter = movieListAdapter.apply {
-            delegate = MovieDelegate {
+        movieListAdapter = MovieListAdapter(
+            onClick = {
                 // TODO: Navigate to detail screen
-            }
-        }
+            },
+        ).also(rvMovies::setAdapter)
     }
 
     private fun ActivityMovieFavoriteBinding.render(movieList: List<Movie>) {

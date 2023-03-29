@@ -9,9 +9,9 @@ import com.edts.tmdroid.databinding.ItemMovieBinding
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.model.Movie
 
-class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(Movie.DIFFER) {
-
-    var delegate: MovieDelegate? = null
+class MovieListAdapter(
+    private val onClick: (Movie) -> Unit,
+) : ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(Movie.DIFFER) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -28,7 +28,16 @@ class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(Mo
         private val binding: ItemMovieBinding,
     ) : ViewHolder(binding.root) {
 
+        private var movie: Movie? = null
+
+        init {
+            itemView.setOnClickListener {
+                movie?.let(onClick)
+            }
+        }
+
         fun bind(item: Movie) = with(binding) {
+            movie = item
             val resources = itemView.resources
 
             ivPoster.loadFromUrl(item.posterUrl)
@@ -39,10 +48,6 @@ class MovieListAdapter : ListAdapter<Movie, MovieListAdapter.MovieViewHolder>(Mo
                 item.voteAverage.toString(),
                 item.voteCount,
             )
-
-            itemView.setOnClickListener {
-                delegate?.onMovieClicked(item)
-            }
         }
     }
 }

@@ -48,8 +48,8 @@
         tools:layout="@layout/fragment_movie_detail">
 
         <argument
-            android:name="movie"
-            app:argType="com.edts.tmdroid.ui.model.Movie" />
+            android:name="movieId"
+            app:argType="integer" />
 
     </fragment>
 

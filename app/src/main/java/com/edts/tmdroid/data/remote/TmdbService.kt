@@ -2,12 +2,16 @@ package com.edts.tmdroid.data.remote
 
 import com.edts.tmdroid.data.remote.response.GetMoviesResponse
 import com.edts.tmdroid.data.remote.response.GetPeopleResponse
+import com.edts.tmdroid.data.remote.response.MovieDto
 import com.edts.tmdroid.data.remote.response.PersonDetailDto
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface TmdbService {
+
+    @GET("movie/{id}")
+    suspend fun getMovie(@Path("id") id: Int): MovieDto
 
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(): GetMoviesResponse

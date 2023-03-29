@@ -30,7 +30,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(
     override fun FragmentMovieListBinding.setup() {
         val movieListAdapter = MovieListAdapter(
             onClick = { movie ->
-                val directions = MovieListFragmentDirections.toMovieDetailFragment(movie)
+                val directions = MovieListFragmentDirections.toMovieDetailFragment(movie.id)
                 findNavController().navigate(directions)
             },
         ).also(rvMovie::setAdapter)

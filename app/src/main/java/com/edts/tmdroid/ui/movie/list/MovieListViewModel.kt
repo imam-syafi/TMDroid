@@ -17,8 +17,10 @@ class MovieListViewModel(
     private val _state = MutableLiveData(MovieListState())
     val state: LiveData<MovieListState> = _state
 
+    private val call: suspend () -> GetMoviesResponse
+
     init {
-        val call = when (movieListType) {
+        call = when (movieListType) {
             MovieListType.TopRated -> tmdbService::getTopRatedMovies
             MovieListType.Upcoming -> tmdbService::getUpcomingMovies
             MovieListType.NowPlaying -> tmdbService::getNowPlayingMovies
@@ -26,12 +28,10 @@ class MovieListViewModel(
             is MovieListType.Search -> suspend { tmdbService.searchMovies(movieListType.query) }
         }
 
-        fetchData(call)
+        fetchData()
     }
 
-    private fun fetchData(
-        call: suspend () -> GetMoviesResponse,
-    ) {
+    private fun fetchData() {
         viewModelScope.launch {
             _state.value = _state.value?.copy(isLoading = true)
 
@@ -45,5 +45,10 @@ class MovieListViewModel(
                 movies = movies,
             )
         }
+    }
+
+    fun onRefresh() {
+        _state.value = _state.value?.copy(movies = emptyList())
+        fetchData()
     }
 }

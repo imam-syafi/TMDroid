@@ -34,4 +34,9 @@ class PersonListViewModel(
             )
         }
     }
+
+    fun onRefresh() {
+        _state.value = _state.value?.copy(people = emptyList())
+        fetchData()
+    }
 }

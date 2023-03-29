@@ -28,6 +28,14 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(
     }
 
     override fun FragmentMovieListBinding.setup() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+
+            // Hide it immediately, we've already got both shimmer & loading dialog to indicate
+            // busy state
+            swipeRefreshLayout.isRefreshing = false
+        }
+
         val movieListAdapter = MovieListAdapter(
             onClick = { movie ->
                 val directions = MovieListFragmentDirections.toMovieDetailFragment(movie.id)

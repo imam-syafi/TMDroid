@@ -60,6 +60,8 @@ dependencies {
     implementation(AndroidX.room.ktx)
     kapt(AndroidX.room.compiler)
 
+    implementation(AndroidX.swipeRefreshLayout)
+
     implementation(Square.okHttp3)
     implementation(Square.retrofit2)
     implementation(Square.retrofit2.converter.gson)

@@ -22,6 +22,11 @@ class PersonListFragment : BaseFragment<FragmentPersonListBinding>(
     }
 
     override fun FragmentPersonListBinding.setup() {
+        swipeRefreshLayout.setOnRefreshListener {
+            viewModel.onRefresh()
+            swipeRefreshLayout.isRefreshing = false
+        }
+
         val personListAdapter = PersonListAdapter(
             onClick = { person ->
                 val directions = PersonListFragmentDirections.toPersonDetailFragment(

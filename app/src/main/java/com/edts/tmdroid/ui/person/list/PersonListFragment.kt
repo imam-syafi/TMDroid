@@ -7,6 +7,7 @@ import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentPersonListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.showDialog
 
 class PersonListFragment : BaseFragment<FragmentPersonListBinding>(
     FragmentPersonListBinding::inflate,
@@ -34,6 +35,7 @@ class PersonListFragment : BaseFragment<FragmentPersonListBinding>(
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
+            loadingDialog.showDialog(state.isLoading)
             personListAdapter.submitList(state.people)
         }
     }

@@ -9,6 +9,7 @@ import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentMovieListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.showDialog
 
 class MovieListFragment : BaseFragment<FragmentMovieListBinding>(
     FragmentMovieListBinding::inflate,
@@ -38,6 +39,7 @@ class MovieListFragment : BaseFragment<FragmentMovieListBinding>(
         viewModel.state.observe(viewLifecycleOwner) { state ->
             svShimmer.isVisible = state.isLoading
             flShimmer.showShimmer(state.isLoading)
+            loadingDialog.showDialog(state.isLoading)
 
             rvMovie.isVisible = !state.isLoading
             movieListAdapter.submitList(state.movies)

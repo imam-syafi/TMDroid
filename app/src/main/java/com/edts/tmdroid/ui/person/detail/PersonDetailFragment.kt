@@ -9,6 +9,7 @@ import com.edts.tmdroid.databinding.FragmentPersonDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.setToggleMaxLines
+import com.edts.tmdroid.ui.ext.showDialog
 import com.edts.tmdroid.ui.ext.showToast
 
 class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
@@ -41,6 +42,7 @@ class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
+            loadingDialog.showDialog(state.isLoading)
             state.personDetail?.let {
                 tvGenderAndDepartment.text = it.genderAndDepartment
                 tvAge.text = it.birthDayAndAge

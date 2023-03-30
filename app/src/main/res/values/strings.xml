@@ -64,4 +64,6 @@
     <string name="delete">Delete</string>
     <string name="name_invalid">Name invalid</string>
     <string name="comment_invalid">Comment invalid</string>
+    <string name="edit_review">Edit Review</string>
+    <string name="update">Update</string>
 </resources>

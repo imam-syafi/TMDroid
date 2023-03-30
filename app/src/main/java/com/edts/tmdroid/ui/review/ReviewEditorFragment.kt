@@ -1,5 +1,6 @@
 package com.edts.tmdroid.ui.review
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
@@ -21,6 +22,7 @@ class ReviewEditorFragment : BaseFragment<FragmentReviewBinding>(
             initializer {
                 ReviewEditorViewModel(
                     movieId = args.movieId,
+                    review = args.review,
                     reviewDao = AppDatabase
                         .getInstance(requireContext())
                         .reviewDao(),
@@ -52,6 +54,16 @@ class ReviewEditorFragment : BaseFragment<FragmentReviewBinding>(
             )
 
             findNavController().navigateUp()
+        }
+
+        if (args.review != null) {
+            btnSubmit.setText(R.string.update)
+
+            btnDelete.isVisible = true
+            btnDelete.setOnClickListener {
+                viewModel.onDelete()
+                findNavController().navigateUp()
+            }
         }
 
         // UI = f(state)

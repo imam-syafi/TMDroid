@@ -14,6 +14,7 @@ import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.showDialog
 import com.edts.tmdroid.ui.ext.showToast
+import com.edts.tmdroid.ui.model.Review
 import com.edts.tmdroid.ui.review.ReviewListAdapter
 
 class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
@@ -65,9 +66,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
         }
 
         val reviewListAdapter = ReviewListAdapter(
-            onClick = { review ->
-                // TODO: Navigate to editor screen
-            },
+            onClick = ::toReviewEditorFragment,
         ).also(rvReviews::setAdapter)
 
         viewModel.reviews.observe(viewLifecycleOwner, reviewListAdapter::submitList)
@@ -87,10 +86,17 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
         }
     }
 
-    private fun toReviewEditorFragment() {
+    private fun toReviewEditorFragment(review: Review? = null) {
+        val resId = if (review != null) {
+            R.string.edit_review
+        } else {
+            R.string.add_new_review
+        }
+
         val directions = MovieDetailFragmentDirections.toReviewEditorFragment(
-            title = getString(R.string.add_new_review),
+            title = getString(resId),
             movieId = args.movieId,
+            review = review,
         )
 
         findNavController().navigate(directions)

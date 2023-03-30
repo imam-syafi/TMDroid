@@ -107,6 +107,11 @@
             android:name="movieId"
             app:argType="integer" />
 
+        <argument
+            android:name="review"
+            app:argType="com.edts.tmdroid.ui.model.Review"
+            app:nullable="true" />
+
     </fragment>
 
 </navigation>

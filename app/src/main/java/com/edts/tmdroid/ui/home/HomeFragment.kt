@@ -1,10 +1,15 @@
 package com.edts.tmdroid.ui.home
 
 import android.view.inputmethod.EditorInfo
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.viewmodel.initializer
+import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
+import com.edts.tmdroid.data.common.MediaType
+import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.FragmentHomeBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.on
@@ -20,6 +25,18 @@ import com.edts.tmdroid.ui.movie.list.MovieListType
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::inflate,
 ) {
+
+    private val viewModel by viewModels<HomeViewModel> {
+        viewModelFactory {
+            initializer {
+                val queueDao = AppDatabase
+                    .getInstance(requireContext())
+                    .queueDao()
+
+                HomeViewModel(queueDao)
+            }
+        }
+    }
 
     override fun FragmentHomeBinding.setup() {
         // Setup options menu
@@ -106,6 +123,26 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 }
             }
         }
+
+        // Setup watchlist
+        val watchListAdapter = WatchListAdapter(
+            onClick = { queue ->
+                when (queue.mediaType) {
+                    MediaType.Movie -> {
+                        val directions = HomeFragmentDirections.toMovieDetailFragment(queue.mediaId)
+                        findNavController().navigate(directions)
+                    }
+                    MediaType.Tv -> showToast("TODO: Handle TV shows")
+                }
+            },
+        ).also(rvWatchList::setAdapter)
+
+        tvShowAll.setOnClickListener {
+            showToast("TODO: Navigate to watch list")
+        }
+
+        // UI = f(state)
+        viewModel.watchList.observe(viewLifecycleOwner, watchListAdapter::submitList)
     }
 
     private fun handleSearch(query: String) {

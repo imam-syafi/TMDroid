@@ -81,6 +81,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
     private fun toReviewEditorFragment() {
         val directions = MovieDetailFragmentDirections.toReviewEditorFragment(
             title = getString(R.string.add_new_review),
+            movieId = args.movieId,
         )
 
         findNavController().navigate(directions)

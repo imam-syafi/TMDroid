@@ -103,6 +103,10 @@
             android:name="title"
             app:argType="string" />
 
+        <argument
+            android:name="movieId"
+            app:argType="integer" />
+
     </fragment>
 
 </navigation>

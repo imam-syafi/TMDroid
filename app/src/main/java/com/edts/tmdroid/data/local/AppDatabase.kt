@@ -8,10 +8,13 @@ import com.edts.tmdroid.data.local.entity.FavoriteMovieDao
 import com.edts.tmdroid.data.local.entity.FavoriteMovieEntity
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.QueueEntity
+import com.edts.tmdroid.data.local.entity.ReviewDao
+import com.edts.tmdroid.data.local.entity.ReviewEntity
 
 @Database(
     entities = [
         FavoriteMovieEntity::class,
+        ReviewEntity::class,
         QueueEntity::class,
     ],
     version = 1,
@@ -20,6 +23,8 @@ import com.edts.tmdroid.data.local.entity.QueueEntity
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun favoriteMovieDao(): FavoriteMovieDao
+
+    abstract fun reviewDao(): ReviewDao
 
     abstract fun queueDao(): QueueDao
 

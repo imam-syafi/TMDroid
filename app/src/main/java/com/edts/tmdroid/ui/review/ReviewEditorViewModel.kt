@@ -34,12 +34,15 @@ class ReviewEditorViewModel(
 
     fun onSubmit(name: String, comment: String) {
         viewModelScope.launch {
-            val entity = ReviewEntity(
-                media_id = movieId,
-                media_type = MediaType.Movie,
-                name = name,
-                comment = comment,
-            )
+            val entity = review
+                ?.copy(name = name, comment = comment)
+                ?.toReviewEntity()
+                ?: ReviewEntity(
+                    media_id = movieId,
+                    media_type = MediaType.Movie,
+                    name = name,
+                    comment = comment,
+                )
 
             reviewDao.upsert(entity)
         }

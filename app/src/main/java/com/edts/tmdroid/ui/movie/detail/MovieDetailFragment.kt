@@ -9,8 +9,10 @@ import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentMovieDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.ext.showToast
 
 class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate,
@@ -32,7 +34,21 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
 
     override fun FragmentMovieDetailBinding.setup() {
         btnToggle.setOnClickListener {
+            val isSaved = viewModel.isSaved.value == true
+
             viewModel.onToggle()
+
+            val successMessage = if (isSaved) {
+                R.string.queue_removed
+            } else {
+                R.string.queue_added
+            }
+
+            buildSnack(successMessage)
+                .setAction(R.string.show_all) {
+                    showToast("TODO: Navigate to watch list")
+                }
+                .show()
         }
 
         viewModel.isSaved.observe(viewLifecycleOwner) {

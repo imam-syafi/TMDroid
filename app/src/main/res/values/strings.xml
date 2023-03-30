@@ -51,4 +51,6 @@
     <string name="remove_from_watch_list">Remove from Watch List</string>
     <string name="your_watch_list">Your Watch List</string>
     <string name="show_all">Show All</string>
+    <string name="queue_removed">Removed from the watch list</string>
+    <string name="queue_added">Added to the watch list</string>
 </resources>

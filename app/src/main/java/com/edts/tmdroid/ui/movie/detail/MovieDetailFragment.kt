@@ -5,6 +5,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
+import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentMovieDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
@@ -20,15 +21,29 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
         viewModelFactory {
             initializer {
                 val movieId = args.movieId
-                MovieDetailViewModel(movieId, NetworkModule.tmdbService)
+                val queueDao = AppDatabase
+                    .getInstance(requireContext())
+                    .queueDao()
+
+                MovieDetailViewModel(movieId, NetworkModule.tmdbService, queueDao)
             }
         }
     }
 
     override fun FragmentMovieDetailBinding.setup() {
+        btnToggle.setOnClickListener {
+            viewModel.onToggle()
+        }
+
+        viewModel.isSaved.observe(viewLifecycleOwner) {
+            val resId = if (it) R.string.remove_from_watch_list else R.string.add_to_watch_list
+            btnToggle.setText(resId)
+        }
+
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             loadingDialog.showDialog(state.isLoading)
+
             state.movie?.let {
                 ivBackdrop.loadFromUrl(it.backdropUrl)
                 ivPoster.loadFromUrl(it.posterUrl)

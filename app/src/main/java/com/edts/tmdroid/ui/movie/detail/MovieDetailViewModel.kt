@@ -4,6 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.edts.tmdroid.data.common.MediaType
+import com.edts.tmdroid.data.local.entity.QueueDao
+import com.edts.tmdroid.data.local.entity.QueueEntity
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.Movie
 import kotlinx.coroutines.launch
@@ -11,13 +14,35 @@ import kotlinx.coroutines.launch
 class MovieDetailViewModel(
     private val movieId: Int,
     private val tmdbService: TmdbService,
+    private val queueDao: QueueDao,
 ) : ViewModel() {
 
     private val _state = MutableLiveData(MovieDetailState())
     val state: LiveData<MovieDetailState> = _state
 
+    val isSaved = queueDao.isMediaSaved(movieId, MediaType.Movie)
+
     init {
         fetchData()
+    }
+
+    fun onToggle() {
+        viewModelScope.launch {
+            _state.value?.movie?.let { movie ->
+                if (isSaved.value == true) {
+                    queueDao.deleteMedia(movieId, MediaType.Movie)
+                } else {
+                    val entity = QueueEntity(
+                        media_id = movieId,
+                        title = movie.title,
+                        poster_url = movie.posterUrl,
+                        media_type = MediaType.Movie,
+                    )
+
+                    queueDao.save(entity)
+                }
+            }
+        }
     }
 
     private fun fetchData() {

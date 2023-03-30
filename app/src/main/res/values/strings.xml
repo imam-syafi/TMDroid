@@ -47,4 +47,6 @@
     <string name="known_for">Known For</string>
     <string name="biography">Biography</string>
     <string name="loading_data">Loading Data</string>
+    <string name="add_to_watch_list">Add to Watch List</string>
+    <string name="remove_from_watch_list">Remove from Watch List</string>
 </resources>

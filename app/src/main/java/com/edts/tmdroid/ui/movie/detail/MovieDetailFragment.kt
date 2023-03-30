@@ -14,6 +14,7 @@ import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.showDialog
 import com.edts.tmdroid.ui.ext.showToast
+import com.edts.tmdroid.ui.review.ReviewListAdapter
 
 class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
     FragmentMovieDetailBinding::inflate,
@@ -62,6 +63,14 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
         tvWriteReview.setOnClickListener {
             toReviewEditorFragment()
         }
+
+        val reviewListAdapter = ReviewListAdapter(
+            onClick = { review ->
+                // TODO: Navigate to editor screen
+            },
+        ).also(rvReviews::setAdapter)
+
+        viewModel.reviews.observe(viewLifecycleOwner, reviewListAdapter::submitList)
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->

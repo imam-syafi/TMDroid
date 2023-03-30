@@ -3,6 +3,7 @@ package com.edts.tmdroid.ui.movie.detail
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.local.AppDatabase
@@ -22,12 +23,14 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
     private val viewModel by viewModels<MovieDetailViewModel> {
         viewModelFactory {
             initializer {
-                val movieId = args.movieId
-                val queueDao = AppDatabase
-                    .getInstance(requireContext())
-                    .queueDao()
+                val db = AppDatabase.getInstance(requireContext())
 
-                MovieDetailViewModel(movieId, NetworkModule.tmdbService, queueDao)
+                MovieDetailViewModel(
+                    movieId = args.movieId,
+                    tmdbService = NetworkModule.tmdbService,
+                    queueDao = db.queueDao(),
+                    reviewDao = db.reviewDao(),
+                )
             }
         }
     }
@@ -56,6 +59,10 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
             btnToggle.setText(resId)
         }
 
+        tvWriteReview.setOnClickListener {
+            toReviewEditorFragment()
+        }
+
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             loadingDialog.showDialog(state.isLoading)
@@ -69,5 +76,13 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                 tvOverview.text = it.overview
             }
         }
+    }
+
+    private fun toReviewEditorFragment() {
+        val directions = MovieDetailFragmentDirections.toReviewEditorFragment(
+            title = getString(R.string.add_new_review),
+        )
+
+        findNavController().navigate(directions)
     }
 }

@@ -55,6 +55,10 @@
             android:name="movieId"
             app:argType="integer" />
 
+        <action
+            android:id="@+id/to_reviewEditorFragment"
+            app:destination="@id/reviewEditorFragment" />
+
     </fragment>
 
     <fragment
@@ -86,6 +90,18 @@
         <action
             android:id="@+id/to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/reviewEditorFragment"
+        android:name="com.edts.tmdroid.ui.review.ReviewEditorFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_review">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
 
     </fragment>
 

@@ -53,4 +53,15 @@
     <string name="show_all">Show All</string>
     <string name="queue_removed">Removed from the watch list</string>
     <string name="queue_added">Added to the watch list</string>
+    <string name="comment_section">Comment Section</string>
+    <string name="write_review">Write Review</string>
+    <string name="add_new_review">Add New Review</string>
+    <string name="name">Name</string>
+    <string name="enter_your_name">Enter your name</string>
+    <string name="comment">Comment</string>
+    <string name="enter_your_comment">Enter your comment</string>
+    <string name="submit">Submit</string>
+    <string name="delete">Delete</string>
+    <string name="name_invalid">Name invalid</string>
+    <string name="comment_invalid">Comment invalid</string>
 </resources>

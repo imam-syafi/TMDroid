@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/svReview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".ui.review.ReviewEditorFragment">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:focusableInTouchMode="true">
+
+        <TextView
+            android:id="@+id/tvName"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/name"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/tilName"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilName"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/enter_your_name"
+            android:theme="@style/TextInputThemeOverlay"
+            app:expandedHintEnabled="false"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/tvName"
+            app:placeholderText="@string/enter_your_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvComment"
+            style="@style/TextAppearance.MaterialComponents.Headline6"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/comment"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/tilName"
+            app:layout_constraintTop_toBottomOf="@id/tilName" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilComment"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:hint="@string/enter_your_comment"
+            android:theme="@style/TextInputThemeOverlay"
+            app:expandedHintEnabled="false"
+            app:hintEnabled="false"
+            app:layout_constraintTop_toBottomOf="@id/tvComment"
+            app:placeholderText="@string/enter_your_comment">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="top|start"
+                android:inputType="textMultiLine"
+                android:minLines="4" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:id="@+id/btnSubmit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="24dp"
+            android:text="@string/submit"
+            app:layout_constraintTop_toBottomOf="@id/tilComment" />
+
+        <Button
+            android:id="@+id/btnDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:backgroundTint="?attr/colorError"
+            android:text="@string/delete"
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/btnSubmit"
+            tools:visibility="visible" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</ScrollView>

@@ -45,6 +45,7 @@ class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             loadingDialog.showDialog(state.isLoading)
+
             state.personDetail?.let {
                 tvGenderAndDepartment.text = it.genderAndDepartment
                 tvAge.text = it.birthDayAndAge

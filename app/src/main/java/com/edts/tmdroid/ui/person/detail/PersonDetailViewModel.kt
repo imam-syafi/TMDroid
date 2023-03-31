@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.PersonDetail
+import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -18,9 +20,19 @@ class PersonDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val args = PersonDetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    private val personId = args.person.id
 
-    private val _state = MutableLiveData(PersonDetailState())
-    val state: LiveData<PersonDetailState> = _state
+    // Backing properties
+    private val isLoading = MutableLiveData<Boolean>()
+    private val personDetail = MutableLiveData<PersonDetail>()
+
+    val state: LiveData<PersonDetailState> = combineTuple(isLoading, personDetail)
+        .map { (isLoading, personDetail) ->
+            PersonDetailState(
+                isLoading = isLoading ?: false,
+                personDetail = personDetail,
+            )
+        }
 
     init {
         fetchData()
@@ -28,17 +40,15 @@ class PersonDetailViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _state.value = _state.value?.copy(isLoading = true)
+            isLoading.value = true
 
             // Call API service
-            val response = tmdbService.getPerson(args.person.id)
-            val detail = response.let(PersonDetail::from)
+            val response = tmdbService.getPerson(personId)
 
             // Happy path
-            _state.value = _state.value?.copy(
-                isLoading = false,
-                personDetail = detail,
-            )
+            personDetail.value = response.let(PersonDetail::from)
+
+            isLoading.value = false
         }
     }
 }

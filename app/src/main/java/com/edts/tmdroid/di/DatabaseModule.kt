@@ -3,6 +3,7 @@ package com.edts.tmdroid.di
 import android.content.Context
 import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.data.local.entity.QueueDao
+import com.edts.tmdroid.data.local.entity.ReviewDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +19,11 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return AppDatabase.getInstance(appContext)
+    }
+
+    @Provides
+    fun provideReviewDao(database: AppDatabase): ReviewDao {
+        return database.reviewDao()
     }
 
     @Provides

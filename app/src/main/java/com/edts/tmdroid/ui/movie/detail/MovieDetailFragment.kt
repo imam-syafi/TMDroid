@@ -53,6 +53,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                     val directions = MovieDetailFragmentDirections.toWatchListFragment()
                     findNavController().navigate(directions)
                 }
+                .also { snackbar = it }
                 .show()
         }
 

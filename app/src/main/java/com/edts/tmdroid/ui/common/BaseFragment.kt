@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import com.edts.tmdroid.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import com.google.android.material.snackbar.Snackbar
 
 abstract class BaseFragment<VB : ViewBinding>(
     private val inflate: (LayoutInflater, ViewGroup?, Boolean) -> VB,
@@ -16,6 +17,8 @@ abstract class BaseFragment<VB : ViewBinding>(
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
+
+    protected var snackbar: Snackbar? = null
 
     protected val loadingDialog: AlertDialog by lazy {
         MaterialAlertDialogBuilder(requireContext())
@@ -43,5 +46,6 @@ abstract class BaseFragment<VB : ViewBinding>(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        snackbar?.dismiss()
     }
 }

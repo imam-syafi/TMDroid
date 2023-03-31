@@ -9,7 +9,6 @@ import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.setToggleMaxLines
 import com.edts.tmdroid.ui.ext.showDialog
-import com.edts.tmdroid.ui.ext.showToast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -29,16 +28,16 @@ class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
 
         rvKnownFor.adapter = KnownForListAdapter(
             onClick = { knownFor ->
-                when (knownFor.type) {
-                    MediaType.Movie -> {
-                        val directions = PersonDetailFragmentDirections.toMovieDetailFragment(
-                            movieId = knownFor.id,
-                        )
-
-                        findNavController().navigate(directions)
-                    }
-                    MediaType.Tv -> showToast("TODO: Handle TV shows")
+                val directions = when (knownFor.type) {
+                    MediaType.Movie -> PersonDetailFragmentDirections.toMovieDetailFragment(
+                        movieId = knownFor.id,
+                    )
+                    MediaType.Tv -> PersonDetailFragmentDirections.toTvDetailFragment(
+                        tvId = knownFor.id,
+                    )
                 }
+
+                findNavController().navigate(directions)
             },
         ).apply { submitList(person.knownFor) }
 

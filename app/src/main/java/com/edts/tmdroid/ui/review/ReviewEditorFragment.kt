@@ -2,34 +2,21 @@ package com.edts.tmdroid.ui.review
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.FragmentReviewBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.bind
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ReviewEditorFragment : BaseFragment<FragmentReviewBinding>(
     FragmentReviewBinding::inflate,
 ) {
 
     private val args by navArgs<ReviewEditorFragmentArgs>()
-    private val viewModel by viewModels<ReviewEditorViewModel> {
-        viewModelFactory {
-            initializer {
-                ReviewEditorViewModel(
-                    movieId = args.movieId,
-                    review = args.review,
-                    reviewDao = AppDatabase
-                        .getInstance(requireContext())
-                        .reviewDao(),
-                )
-            }
-        }
-    }
+    private val viewModel by viewModels<ReviewEditorViewModel>()
 
     override fun FragmentReviewBinding.setup() {
         // Sync up text input with view model, akin to controlled components in React

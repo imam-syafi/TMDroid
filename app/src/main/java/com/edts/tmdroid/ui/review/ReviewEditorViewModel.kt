@@ -2,19 +2,25 @@ package com.edts.tmdroid.ui.review
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.data.local.entity.ReviewDao
 import com.edts.tmdroid.data.local.entity.ReviewEntity
-import com.edts.tmdroid.ui.model.Review
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class ReviewEditorViewModel(
-    private val movieId: Int,
-    private val review: Review?,
+@HiltViewModel
+class ReviewEditorViewModel @Inject constructor(
+    savedStateHandle: SavedStateHandle,
     private val reviewDao: ReviewDao,
 ) : ViewModel() {
+
+    private val args = ReviewEditorFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    private val movieId = args.movieId
+    private val review = args.review
 
     private val _state = MutableLiveData(
         ReviewEditorState(

@@ -13,7 +13,6 @@ import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.showDialog
-import com.edts.tmdroid.ui.ext.showToast
 import com.edts.tmdroid.ui.model.Review
 import com.edts.tmdroid.ui.review.ReviewListAdapter
 
@@ -51,7 +50,8 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
 
             buildSnack(successMessage)
                 .setAction(R.string.show_all) {
-                    showToast("TODO: Navigate to watch list")
+                    val directions = MovieDetailFragmentDirections.toWatchListFragment()
+                    findNavController().navigate(directions)
                 }
                 .show()
         }

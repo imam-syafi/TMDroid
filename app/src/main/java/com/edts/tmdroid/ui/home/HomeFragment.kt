@@ -138,7 +138,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         ).also(rvWatchList::setAdapter)
 
         tvShowAll.setOnClickListener {
-            showToast("TODO: Navigate to watch list")
+            val directions = HomeFragmentDirections.toWatchListFragment()
+            findNavController().navigate(directions)
         }
 
         // UI = f(state)

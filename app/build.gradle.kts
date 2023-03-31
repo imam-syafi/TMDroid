@@ -4,6 +4,7 @@ plugins {
     id("org.jetbrains.kotlin.kapt")
     id("org.jetbrains.kotlin.plugin.parcelize")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+    id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs.kotlin")
 }
 
@@ -43,6 +44,10 @@ android {
     }
 }
 
+kapt {
+    correctErrorTypes = true
+}
+
 dependencies {
     coreLibraryDesugaring(Android.tools.desugarJdkLibs)
 
@@ -61,6 +66,9 @@ dependencies {
     kapt(AndroidX.room.compiler)
 
     implementation(AndroidX.swipeRefreshLayout)
+
+    implementation(Google.dagger.hilt.android)
+    kapt(Google.dagger.hilt.compiler)
 
     implementation(Square.okHttp3)
     implementation(Square.retrofit2)

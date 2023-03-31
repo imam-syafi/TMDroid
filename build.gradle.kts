@@ -5,6 +5,7 @@ import com.diffplug.gradle.spotless.SpotlessExtensionPredeclare
 buildscript {
     dependencies {
         classpath(AndroidX.navigation.safeArgsGradlePlugin)
+        classpath(Google.dagger.hilt.android.gradlePlugin)
         classpath(libs.secretsGradlePlugin)
     }
 }

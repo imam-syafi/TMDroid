@@ -11,6 +11,7 @@
     <color name="greyish">#59808080</color>
     <color name="shimmer">#C2C2C2</color>
 
+    <color name="lighter">#26FFFFFF</color>
     <color name="fade">#59808080</color>
     <color name="darker">#99000000</color>
 </resources>

@@ -4,10 +4,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
+import com.edts.tmdroid.R
 import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.FragmentWatchListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.addDivider
 
 class WatchListFragment : BaseFragment<FragmentWatchListBinding>(
     FragmentWatchListBinding::inflate,
@@ -42,7 +44,12 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>(
                 }
             },
             onDelete = viewModel::onDelete,
-        ).also(rvWatchList::setAdapter)
+        )
+
+        with(rvWatchList) {
+            addDivider(R.drawable.divider)
+            adapter = watchListAdapter
+        }
 
         viewModel.watchList.observe(viewLifecycleOwner, watchListAdapter::submitList)
     }

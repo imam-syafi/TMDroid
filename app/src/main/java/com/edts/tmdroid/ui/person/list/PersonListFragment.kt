@@ -1,25 +1,18 @@
 package com.edts.tmdroid.ui.person.list
 
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
-import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.databinding.FragmentPersonListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.showDialog
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class PersonListFragment : BaseFragment<FragmentPersonListBinding>(
     FragmentPersonListBinding::inflate,
 ) {
 
-    private val viewModel by viewModels<PersonListViewModel> {
-        viewModelFactory {
-            initializer {
-                PersonListViewModel(NetworkModule.tmdbService)
-            }
-        }
-    }
+    private val viewModel by viewModels<PersonListViewModel>()
 
     override fun FragmentPersonListBinding.setup() {
         swipeRefreshLayout.setOnRefreshListener {

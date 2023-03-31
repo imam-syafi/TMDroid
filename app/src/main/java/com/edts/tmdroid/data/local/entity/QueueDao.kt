@@ -6,6 +6,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.edts.tmdroid.data.common.MediaType
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface QueueDao {
@@ -29,7 +30,7 @@ interface QueueDao {
             )
         """,
     )
-    fun isMediaSaved(id: Int, type: MediaType): LiveData<Boolean>
+    fun isMediaSaved(id: Int, type: MediaType): Flow<Boolean>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun save(entity: QueueEntity)

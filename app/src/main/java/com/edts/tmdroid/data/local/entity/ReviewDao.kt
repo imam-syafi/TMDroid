@@ -1,11 +1,11 @@
 package com.edts.tmdroid.data.local.entity
 
-import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Upsert
 import com.edts.tmdroid.data.common.MediaType
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ReviewDao {
@@ -18,7 +18,7 @@ interface ReviewDao {
             AND ${ReviewEntity.MEDIA_TYPE_COLUMN} = :mediaType
         """,
     )
-    fun getByMedia(mediaId: Int, mediaType: MediaType): LiveData<List<ReviewEntity>>
+    fun getByMedia(mediaId: Int, mediaType: MediaType): Flow<List<ReviewEntity>>
 
     @Upsert
     suspend fun upsert(entity: ReviewEntity)

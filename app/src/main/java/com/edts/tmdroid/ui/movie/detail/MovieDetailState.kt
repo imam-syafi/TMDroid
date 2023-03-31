@@ -4,7 +4,8 @@ import com.edts.tmdroid.ui.model.Movie
 import com.edts.tmdroid.ui.model.Review
 
 data class MovieDetailState(
-    val isLoading: Boolean = false,
-    val movie: Movie? = null,
-    val reviews: List<Review> = emptyList(),
+    val isLoading: Boolean,
+    val isSaved: Boolean,
+    val movie: Movie?,
+    val reviews: List<Review>,
 )

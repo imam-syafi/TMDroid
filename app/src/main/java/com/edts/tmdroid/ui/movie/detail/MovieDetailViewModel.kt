@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.common.MediaType
@@ -13,8 +14,10 @@ import com.edts.tmdroid.data.local.entity.ReviewDao
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.Movie
 import com.edts.tmdroid.ui.model.Review
+import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 
 @HiltViewModel
@@ -26,14 +29,30 @@ class MovieDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val args = MovieDetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
+    private val movieId = args.movieId
 
-    private val _state = MutableLiveData(MovieDetailState())
-    val state: LiveData<MovieDetailState> = _state
+    // Backing properties
+    private val isLoading = MutableLiveData<Boolean>()
+    private val movie = MutableLiveData<Movie>()
 
-    val isSaved = queueDao.isMediaSaved(args.movieId, MediaType.Movie)
-    val reviews: LiveData<List<Review>> = reviewDao
-        .getByMedia(mediaId = args.movieId, mediaType = MediaType.Movie)
+    private val isSaved: LiveData<Boolean> = queueDao
+        .isMediaSaved(movieId, MediaType.Movie)
+        .asLiveData()
+
+    private val reviews: LiveData<List<Review>> = reviewDao
+        .getByMedia(mediaId = movieId, mediaType = MediaType.Movie)
         .map(Review::from)
+        .asLiveData()
+
+    val state: LiveData<MovieDetailState> = combineTuple(isLoading, isSaved, movie, reviews)
+        .map { (isLoading, isSaved, movie, reviews) ->
+            MovieDetailState(
+                isLoading = isLoading ?: false,
+                isSaved = isSaved ?: false,
+                movie = movie,
+                reviews = reviews ?: emptyList(),
+            )
+        }
 
     init {
         fetchData()
@@ -41,7 +60,7 @@ class MovieDetailViewModel @Inject constructor(
 
     fun onToggle() {
         viewModelScope.launch {
-            _state.value?.movie?.let { movie ->
+            movie.value?.let { movie ->
                 if (isSaved.value == true) {
                     queueDao.deleteMedia(args.movieId, MediaType.Movie)
                 } else {
@@ -60,17 +79,15 @@ class MovieDetailViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _state.value = _state.value?.copy(isLoading = true)
+            isLoading.value = true
 
             // Call API service
             val response = tmdbService.getMovie(args.movieId)
-            val movie = response.let(Movie::from)
 
             // Happy path
-            _state.value = _state.value?.copy(
-                isLoading = false,
-                movie = movie,
-            )
+            movie.value = response.let(Movie::from)
+
+            isLoading.value = false
         }
     }
 }

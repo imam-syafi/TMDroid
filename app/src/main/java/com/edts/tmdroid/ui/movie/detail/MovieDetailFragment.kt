@@ -23,7 +23,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
 
     override fun FragmentMovieDetailBinding.setup() {
         btnToggle.setOnClickListener {
-            val isSaved = viewModel.isSaved.value == true
+            val isSaved = viewModel.state.value?.isSaved == true
 
             viewModel.onToggle()
 
@@ -42,11 +42,6 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                 .show()
         }
 
-        viewModel.isSaved.observe(viewLifecycleOwner) {
-            val resId = if (it) R.string.remove_from_watch_list else R.string.add_to_watch_list
-            btnToggle.setText(resId)
-        }
-
         tvWriteReview.setOnClickListener {
             toReviewEditorFragment()
         }
@@ -55,11 +50,17 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
             onClick = ::toReviewEditorFragment,
         ).also(rvReviews::setAdapter)
 
-        viewModel.reviews.observe(viewLifecycleOwner, reviewListAdapter::submitList)
-
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             loadingDialog.showDialog(state.isLoading)
+
+            btnToggle.setText(
+                if (state.isSaved) {
+                    R.string.remove_from_watch_list
+                } else {
+                    R.string.add_to_watch_list
+                },
+            )
 
             state.movie?.let {
                 ivBackdrop.loadFromUrl(it.backdropUrl)
@@ -69,6 +70,8 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
                 tvRating.text = getString(R.string.rating, it.voteAverage.toString(), it.voteCount)
                 tvOverview.text = it.overview
             }
+
+            reviewListAdapter.submitList(state.reviews)
         }
     }
 

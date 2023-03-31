@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.edts.tmdroid.data.local.entity.FavoriteMovieDao
-import com.edts.tmdroid.data.local.entity.FavoriteMovieEntity
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.QueueEntity
 import com.edts.tmdroid.data.local.entity.ReviewDao
@@ -13,7 +11,6 @@ import com.edts.tmdroid.data.local.entity.ReviewEntity
 
 @Database(
     entities = [
-        FavoriteMovieEntity::class,
         ReviewEntity::class,
         QueueEntity::class,
     ],
@@ -21,8 +18,6 @@ import com.edts.tmdroid.data.local.entity.ReviewEntity
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
-
-    abstract fun favoriteMovieDao(): FavoriteMovieDao
 
     abstract fun reviewDao(): ReviewDao
 

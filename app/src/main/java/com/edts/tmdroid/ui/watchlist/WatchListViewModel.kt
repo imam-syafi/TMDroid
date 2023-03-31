@@ -6,9 +6,12 @@ import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.ui.model.Queue
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 import kotlinx.coroutines.launch
 
-class WatchListViewModel(
+@HiltViewModel
+class WatchListViewModel @Inject constructor(
     private val queueDao: QueueDao,
 ) : ViewModel() {
 

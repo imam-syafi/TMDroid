@@ -1,6 +1,7 @@
 package com.edts.tmdroid.ui.home
 
 import android.view.inputmethod.EditorInfo
+import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,6 +19,7 @@ import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
 import com.edts.tmdroid.ui.movie.list.MovieListType
+import com.edts.tmdroid.ui.tv.list.TvListType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -71,22 +73,22 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 IconMenu(
                     title = R.string.popular,
                     icon = R.drawable.icons8_retro_tv_filled_50,
-                    onClick = ::todo,
+                    onClick = { toTvList(TvListType.Popular, R.string.popular) },
                 ),
                 IconMenu(
                     title = R.string.top_rated,
                     icon = R.drawable.icons8_popcorn_64,
-                    onClick = ::todo,
+                    onClick = { toTvList(TvListType.TopRated, R.string.top_rated) },
                 ),
                 IconMenu(
                     title = R.string.on_the_air,
                     icon = R.drawable.icons8_clapperboard_50,
-                    onClick = ::todo,
+                    onClick = { toTvList(TvListType.OnTheAir, R.string.on_the_air) },
                 ),
                 IconMenu(
                     title = R.string.airing_today,
                     icon = R.drawable.icons8_cinema_50,
-                    onClick = ::todo,
+                    onClick = { toTvList(TvListType.AiringToday, R.string.airing_today) },
                 ),
                 Header(title = R.string.people),
                 IconMenu(
@@ -160,6 +162,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         }
 
         val directions = HomeFragmentDirections.toMovieListFragment(title, movieListType)
+        findNavController().navigate(directions)
+    }
+
+    private fun toTvList(tvListType: TvListType, @StringRes resId: Int) {
+        val title = getString(R.string.tv_list_title, getString(resId))
+
+        val directions = HomeFragmentDirections.toTvListFragment(
+            title = title,
+            tvListType = tvListType,
+        )
+
         findNavController().navigate(directions)
     }
 

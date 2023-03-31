@@ -42,6 +42,7 @@
     <string name="people">People</string>
     <string name="top_rated_movies">Top Rated Movies</string>
     <string name="movie_list_title">%1$s Movies</string>
+    <string name="tv_list_title">%1$s TV Shows</string>
     <string name="profile">Profile</string>
     <string name="popular_people">Popular People</string>
     <string name="known_for">Known For</string>

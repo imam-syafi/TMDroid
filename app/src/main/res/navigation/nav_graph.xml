@@ -16,6 +16,10 @@
             app:destination="@id/movieListFragment" />
 
         <action
+            android:id="@+id/to_tvListFragment"
+            app:destination="@id/tvListFragment" />
+
+        <action
             android:id="@+id/to_personListFragment"
             app:destination="@id/personListFragment" />
 
@@ -131,6 +135,22 @@
         <action
             android:id="@+id/to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/tvListFragment"
+        android:name="com.edts.tmdroid.ui.tv.list.TvListFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_media_list">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="tvListType"
+            app:argType="com.edts.tmdroid.ui.tv.list.TvListType" />
 
     </fragment>
 

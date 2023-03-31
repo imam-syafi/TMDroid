@@ -2,6 +2,7 @@ package com.edts.tmdroid.data.remote
 
 import com.edts.tmdroid.data.remote.response.GetMoviesResponse
 import com.edts.tmdroid.data.remote.response.GetPeopleResponse
+import com.edts.tmdroid.data.remote.response.GetTvShowsResponse
 import com.edts.tmdroid.data.remote.response.MovieDto
 import com.edts.tmdroid.data.remote.response.PersonDetailDto
 import retrofit2.http.GET
@@ -27,6 +28,18 @@ interface TmdbService {
 
     @GET("search/movie")
     suspend fun searchMovies(@Query("query") query: String): GetMoviesResponse
+
+    @GET("tv/popular")
+    suspend fun getPopularTvShows(): GetTvShowsResponse
+
+    @GET("tv/top_rated")
+    suspend fun getTopRatedTvShows(): GetTvShowsResponse
+
+    @GET("tv/on_the_air")
+    suspend fun getOnTheAirTvShows(): GetTvShowsResponse
+
+    @GET("tv/airing_today")
+    suspend fun getAiringTodayTvShows(): GetTvShowsResponse
 
     @GET("person/popular")
     suspend fun getPopularPeople(): GetPeopleResponse

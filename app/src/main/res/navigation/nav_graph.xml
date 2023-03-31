@@ -28,6 +28,10 @@
             app:destination="@id/movieDetailFragment" />
 
         <action
+            android:id="@+id/to_tvDetailFragment"
+            app:destination="@id/tvDetailFragment" />
+
+        <action
             android:id="@+id/to_watchListFragment"
             app:destination="@id/watchListFragment" />
 
@@ -103,6 +107,10 @@
             android:id="@+id/to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
 
+        <action
+            android:id="@+id/to_tvDetailFragment"
+            app:destination="@id/tvDetailFragment" />
+
     </fragment>
 
     <fragment
@@ -116,13 +124,17 @@
             app:argType="string" />
 
         <argument
-            android:name="movieId"
+            android:name="mediaId"
             app:argType="integer" />
 
         <argument
             android:name="review"
             app:argType="com.edts.tmdroid.ui.model.Review"
             app:nullable="true" />
+
+        <argument
+            android:name="mediaType"
+            app:argType="com.edts.tmdroid.data.common.MediaType" />
 
     </fragment>
 
@@ -135,6 +147,10 @@
         <action
             android:id="@+id/to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
+
+        <action
+            android:id="@+id/to_tvDetailFragment"
+            app:destination="@id/tvDetailFragment" />
 
     </fragment>
 
@@ -151,6 +167,30 @@
         <argument
             android:name="tvListType"
             app:argType="com.edts.tmdroid.ui.tv.list.TvListType" />
+
+        <action
+            android:id="@+id/to_tvDetailFragment"
+            app:destination="@id/tvDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/tvDetailFragment"
+        android:name="com.edts.tmdroid.ui.tv.detail.TvDetailFragment"
+        android:label="@string/tv_detail"
+        tools:layout="@layout/fragment_media_detail">
+
+        <argument
+            android:name="tvId"
+            app:argType="integer" />
+
+        <action
+            android:id="@+id/to_reviewEditorFragment"
+            app:destination="@id/reviewEditorFragment" />
+
+        <action
+            android:id="@+id/to_watchListFragment"
+            app:destination="@id/watchListFragment" />
 
     </fragment>
 

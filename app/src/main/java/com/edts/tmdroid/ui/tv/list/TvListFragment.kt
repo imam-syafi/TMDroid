@@ -2,6 +2,7 @@ package com.edts.tmdroid.ui.tv.list
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.databinding.FragmentMediaListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.showDialog
@@ -22,7 +23,8 @@ class TvListFragment : BaseFragment<FragmentMediaListBinding>(
 
         val tvListAdapter = TvListAdapter(
             onClick = { tv ->
-                // TODO: Navigate to detail screen
+                val directions = TvListFragmentDirections.toTvDetailFragment(tv.id)
+                findNavController().navigate(directions)
             },
         ).also(rvMedia::setAdapter)
 

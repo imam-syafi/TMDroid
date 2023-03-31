@@ -1,4 +1,4 @@
-package com.edts.tmdroid.ui.movie.detail
+package com.edts.tmdroid.ui.tv.detail
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -15,12 +15,12 @@ import com.edts.tmdroid.ui.review.ReviewListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
+class TvDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
     FragmentMediaDetailBinding::inflate,
 ) {
 
-    private val args by navArgs<MovieDetailFragmentArgs>()
-    private val viewModel by viewModels<MovieDetailViewModel>()
+    private val args by navArgs<TvDetailFragmentArgs>()
+    private val viewModel by viewModels<TvDetailViewModel>()
 
     override fun FragmentMediaDetailBinding.setup() {
         btnToggle.setOnClickListener {
@@ -36,7 +36,7 @@ class MovieDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
 
             buildSnack(successMessage)
                 .setAction(R.string.show_all) {
-                    val directions = MovieDetailFragmentDirections.toWatchListFragment()
+                    val directions = TvDetailFragmentDirections.toWatchListFragment()
                     findNavController().navigate(directions)
                 }
                 .also { snackbar = it }
@@ -63,11 +63,11 @@ class MovieDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
                 },
             )
 
-            state.movie?.let {
+            state.tv?.let {
                 ivBackdrop.loadFromUrl(it.backdropUrl)
                 ivPoster.loadFromUrl(it.posterUrl)
-                tvTitle.text = it.title
-                tvReleaseDate.text = it.releaseDate
+                tvTitle.text = it.name
+                tvReleaseDate.text = it.firstAirDate
                 tvRating.text = getString(R.string.rating, it.voteAverage.toString(), it.voteCount)
                 tvOverview.text = it.overview
             }
@@ -83,10 +83,10 @@ class MovieDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
             R.string.add_new_review
         }
 
-        val directions = MovieDetailFragmentDirections.toReviewEditorFragment(
+        val directions = TvDetailFragmentDirections.toReviewEditorFragment(
             title = getString(resId),
-            mediaId = args.movieId,
-            mediaType = MediaType.Movie,
+            mediaId = args.tvId,
+            mediaType = MediaType.Tv,
             review = review,
         )
 

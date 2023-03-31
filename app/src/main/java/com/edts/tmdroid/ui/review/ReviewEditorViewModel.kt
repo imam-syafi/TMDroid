@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.data.local.entity.ReviewDao
 import com.edts.tmdroid.data.local.entity.ReviewEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,7 +18,8 @@ class ReviewEditorViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val args = ReviewEditorFragmentArgs.fromSavedStateHandle(savedStateHandle)
-    private val movieId = args.movieId
+    private val mediaId = args.mediaId
+    private val mediaType = args.mediaType
     private val review = args.review
 
     private val _state = MutableLiveData(
@@ -44,8 +44,8 @@ class ReviewEditorViewModel @Inject constructor(
                 ?.copy(name = name, comment = comment)
                 ?.toReviewEntity()
                 ?: ReviewEntity(
-                    media_id = movieId,
-                    media_type = MediaType.Movie,
+                    media_id = mediaId,
+                    media_type = mediaType,
                     name = name,
                     comment = comment,
                 )

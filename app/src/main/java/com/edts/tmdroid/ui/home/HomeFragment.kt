@@ -2,14 +2,11 @@ package com.edts.tmdroid.ui.home
 
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.viewmodel.initializer
-import androidx.lifecycle.viewmodel.viewModelFactory
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.edts.tmdroid.R
 import com.edts.tmdroid.data.common.MediaType
-import com.edts.tmdroid.data.local.AppDatabase
 import com.edts.tmdroid.databinding.FragmentHomeBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.on
@@ -21,22 +18,14 @@ import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
 import com.edts.tmdroid.ui.movie.list.MovieListType
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment<FragmentHomeBinding>(
     FragmentHomeBinding::inflate,
 ) {
 
-    private val viewModel by viewModels<HomeViewModel> {
-        viewModelFactory {
-            initializer {
-                val queueDao = AppDatabase
-                    .getInstance(requireContext())
-                    .queueDao()
-
-                HomeViewModel(queueDao)
-            }
-        }
-    }
+    private val viewModel by viewModels<HomeViewModel>()
 
     override fun FragmentHomeBinding.setup() {
         // Setup options menu

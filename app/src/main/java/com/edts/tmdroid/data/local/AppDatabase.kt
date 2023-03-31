@@ -25,6 +25,8 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
+        private const val DB_NAME = "tmdroid.db"
+
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
@@ -40,7 +42,7 @@ abstract class AppDatabase : RoomDatabase() {
             val databaseBuilder = Room.databaseBuilder(
                 context.applicationContext,
                 AppDatabase::class.java,
-                "tmdroid.db",
+                DB_NAME,
             )
 
             return databaseBuilder

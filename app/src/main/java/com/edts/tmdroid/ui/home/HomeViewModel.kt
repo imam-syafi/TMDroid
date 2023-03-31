@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.ui.model.Queue
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class HomeViewModel(
+@HiltViewModel
+class HomeViewModel @Inject constructor(
     queueDao: QueueDao,
 ) : ViewModel() {
 

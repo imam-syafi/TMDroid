@@ -2,8 +2,8 @@ package com.edts.tmdroid.ui.model
 
 import android.os.Parcelable
 import androidx.recyclerview.widget.DiffUtil
-import com.edts.tmdroid.data.remote.NetworkModule
 import com.edts.tmdroid.data.remote.response.MovieDto
+import com.edts.tmdroid.di.NetworkModule
 import kotlinx.parcelize.Parcelize
 
 @Parcelize

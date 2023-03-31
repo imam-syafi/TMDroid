@@ -4,7 +4,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
-import com.edts.tmdroid.databinding.FragmentMovieDetailBinding
+import com.edts.tmdroid.databinding.FragmentMediaDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
@@ -14,14 +14,14 @@ import com.edts.tmdroid.ui.review.ReviewListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding>(
-    FragmentMovieDetailBinding::inflate,
+class MovieDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
+    FragmentMediaDetailBinding::inflate,
 ) {
 
     private val args by navArgs<MovieDetailFragmentArgs>()
     private val viewModel by viewModels<MovieDetailViewModel>()
 
-    override fun FragmentMovieDetailBinding.setup() {
+    override fun FragmentMediaDetailBinding.setup() {
         btnToggle.setOnClickListener {
             val isSaved = viewModel.state.value?.isSaved == true
 

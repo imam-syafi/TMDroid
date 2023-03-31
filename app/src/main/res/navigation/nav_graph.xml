@@ -33,7 +33,7 @@
         android:id="@+id/movieListFragment"
         android:name="com.edts.tmdroid.ui.movie.list.MovieListFragment"
         android:label="{title}"
-        tools:layout="@layout/fragment_movie_list">
+        tools:layout="@layout/fragment_media_list">
 
         <argument
             android:name="title"
@@ -53,7 +53,7 @@
         android:id="@+id/movieDetailFragment"
         android:name="com.edts.tmdroid.ui.movie.detail.MovieDetailFragment"
         android:label="@string/movie_detail"
-        tools:layout="@layout/fragment_movie_detail">
+        tools:layout="@layout/fragment_media_detail">
 
         <argument
             android:name="movieId"

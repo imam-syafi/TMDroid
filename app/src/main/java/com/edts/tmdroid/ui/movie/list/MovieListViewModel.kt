@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.data.remote.response.GetMoviesResponse
 import com.edts.tmdroid.ui.model.Movie
+import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -20,8 +22,17 @@ class MovieListViewModel @Inject constructor(
 
     private val args = MovieListFragmentArgs.fromSavedStateHandle(savedStateHandle)
 
-    private val _state = MutableLiveData(MovieListState())
-    val state: LiveData<MovieListState> = _state
+    // Backing properties
+    private val isLoading = MutableLiveData<Boolean>()
+    private val movies = MutableLiveData<List<Movie>>()
+
+    val state: LiveData<MovieListState> = combineTuple(isLoading, movies)
+        .map { (isLoading, movies) ->
+            MovieListState(
+                isLoading = isLoading ?: false,
+                movies = movies ?: emptyList(),
+            )
+        }
 
     private val call: suspend () -> GetMoviesResponse
 
@@ -39,22 +50,20 @@ class MovieListViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _state.value = _state.value?.copy(isLoading = true)
+            isLoading.value = true
 
             // Call API service
             val response = call()
-            val movies = response.results.map(Movie::from)
 
             // Happy path
-            _state.value = _state.value?.copy(
-                isLoading = false,
-                movies = movies,
-            )
+            movies.value = response.results.map(Movie::from)
+
+            isLoading.value = false
         }
     }
 
     fun onRefresh() {
-        _state.value = _state.value?.copy(movies = emptyList())
+        movies.value = emptyList()
         fetchData()
     }
 }

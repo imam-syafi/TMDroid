@@ -74,6 +74,7 @@ dependencies {
     implementation(Square.retrofit2)
     implementation(Square.retrofit2.converter.gson)
 
+    implementation(libs.combineTupleLiveData)
     implementation(libs.glide)
     implementation(libs.shimmer)
 

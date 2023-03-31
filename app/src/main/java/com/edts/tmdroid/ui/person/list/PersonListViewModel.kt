@@ -3,9 +3,11 @@ package com.edts.tmdroid.ui.person.list
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.Person
+import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -15,8 +17,17 @@ class PersonListViewModel @Inject constructor(
     private val tmdbService: TmdbService,
 ) : ViewModel() {
 
-    private val _state = MutableLiveData(PersonListState())
-    val state: LiveData<PersonListState> = _state
+    // Backing properties
+    private val isLoading = MutableLiveData<Boolean>()
+    private val people = MutableLiveData<List<Person>>()
+
+    val state: LiveData<PersonListState> = combineTuple(isLoading, people)
+        .map { (isLoading, people) ->
+            PersonListState(
+                isLoading = isLoading ?: false,
+                people = people ?: emptyList(),
+            )
+        }
 
     init {
         fetchData()
@@ -24,22 +35,20 @@ class PersonListViewModel @Inject constructor(
 
     private fun fetchData() {
         viewModelScope.launch {
-            _state.value = _state.value?.copy(isLoading = true)
+            isLoading.value = true
 
             // Call API service
             val response = tmdbService.getPopularPeople()
-            val people = response.results.map(Person::from)
 
             // Happy path
-            _state.value = _state.value?.copy(
-                isLoading = false,
-                people = people,
-            )
+            people.value = response.results.map(Person::from)
+
+            isLoading.value = false
         }
     }
 
     fun onRefresh() {
-        _state.value = _state.value?.copy(people = emptyList())
+        people.value = emptyList()
         fetchData()
     }
 }

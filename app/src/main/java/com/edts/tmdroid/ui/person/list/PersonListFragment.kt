@@ -4,7 +4,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.databinding.FragmentPersonListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.bind
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.ext.showErrorAlert
+import com.zhuinden.liveevent.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +37,12 @@ class PersonListFragment : BaseFragment<FragmentPersonListBinding>(
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             loadingDialog.showDialog(state.isLoading)
+            vFallback.bind(state.fallback)
             personListAdapter.submitList(state.people)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorAlert(it, viewModel::onRefresh)
         }
     }
 }

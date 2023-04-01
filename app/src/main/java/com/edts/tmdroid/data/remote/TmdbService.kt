@@ -18,18 +18,6 @@ interface TmdbService {
     @GET("movie/{category}")
     suspend fun getMovies(@Path("category") category: String): GetMoviesResponse
 
-    @GET("movie/top_rated")
-    suspend fun getTopRatedMovies(): GetMoviesResponse
-
-    @GET("movie/upcoming")
-    suspend fun getUpcomingMovies(): GetMoviesResponse
-
-    @GET("movie/now_playing")
-    suspend fun getNowPlayingMovies(): GetMoviesResponse
-
-    @GET("movie/popular")
-    suspend fun getPopularMovies(): GetMoviesResponse
-
     @GET("search/movie")
     suspend fun searchMovies(@Query("query") query: String): GetMoviesResponse
 
@@ -38,18 +26,6 @@ interface TmdbService {
 
     @GET("tv/{category}")
     suspend fun getTvShows(@Path("category") category: String): GetTvShowsResponse
-
-    @GET("tv/popular")
-    suspend fun getPopularTvShows(): GetTvShowsResponse
-
-    @GET("tv/top_rated")
-    suspend fun getTopRatedTvShows(): GetTvShowsResponse
-
-    @GET("tv/on_the_air")
-    suspend fun getOnTheAirTvShows(): GetTvShowsResponse
-
-    @GET("tv/airing_today")
-    suspend fun getAiringTodayTvShows(): GetTvShowsResponse
 
     @GET("person/popular")
     suspend fun getPopularPeople(): GetPeopleResponse

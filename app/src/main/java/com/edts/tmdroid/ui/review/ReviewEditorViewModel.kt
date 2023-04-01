@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.edts.tmdroid.data.local.entity.ReviewDao
+import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.data.local.entity.ReviewEntity
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class ReviewEditorViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val reviewDao: ReviewDao,
+    private val mediaRepository: MediaRepository,
 ) : ViewModel() {
 
     private val args = ReviewEditorFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -50,7 +50,7 @@ class ReviewEditorViewModel @Inject constructor(
                     comment = comment,
                 )
 
-            reviewDao.upsert(entity)
+            mediaRepository.upsertReview(entity)
         }
     }
 
@@ -59,7 +59,7 @@ class ReviewEditorViewModel @Inject constructor(
             review
                 ?.toReviewEntity()
                 ?.let {
-                    reviewDao.delete(it)
+                    mediaRepository.deleteReview(it)
                 }
         }
     }

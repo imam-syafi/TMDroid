@@ -4,6 +4,7 @@ import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.QueueEntity
 import com.edts.tmdroid.data.local.entity.ReviewDao
+import com.edts.tmdroid.data.local.entity.ReviewEntity
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.Person
@@ -110,6 +111,14 @@ class MediaRepository(
     fun getWatchList(): Flow<List<Queue>> = queueDao
         .getLatest()
         .map(Queue::from)
+
+    suspend fun upsertReview(entity: ReviewEntity) {
+        reviewDao.upsert(entity)
+    }
+
+    suspend fun deleteReview(entity: ReviewEntity) {
+        reviewDao.delete(entity)
+    }
 
     fun getReviews(id: Int, type: MediaType): Flow<List<Review>> = reviewDao
         .getByMedia(id, type)

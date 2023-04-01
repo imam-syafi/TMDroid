@@ -18,9 +18,6 @@ interface TmdbService {
     @GET("movie/{category}")
     suspend fun getMovies(@Path("category") category: String): GetMoviesResponse
 
-    @GET("search/movie")
-    suspend fun searchMovies(@Query("query") query: String): GetMoviesResponse
-
     @GET("tv/{id}")
     suspend fun getTv(@Path("id") id: Int): TvDto
 
@@ -32,4 +29,13 @@ interface TmdbService {
 
     @GET("person/{id}")
     suspend fun getPerson(@Path("id") id: Int): PersonDetailDto
+
+    @GET("search/movie")
+    suspend fun searchMovies(@Query("query") query: String): GetMoviesResponse
+
+    @GET("search/tv")
+    suspend fun searchTvShows(@Query("query") query: String): GetTvShowsResponse
+
+    @GET("search/person")
+    suspend fun searchPeople(@Query("query") query: String): GetPeopleResponse
 }

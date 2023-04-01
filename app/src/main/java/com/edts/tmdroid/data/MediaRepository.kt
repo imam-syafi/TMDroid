@@ -38,6 +38,16 @@ class MediaRepository(
     suspend fun getNowPlayingMovies() = getMovies("now_playing")
     suspend fun getPopularMovies() = getMovies("popular")
 
+    suspend fun searchMovies(query: String): Result<List<Media.Movie>, String> {
+        return try {
+            val response = tmdbService.searchMovies(query)
+            val movies = response.results.map(Media::from)
+            Ok(movies)
+        } catch (e: Exception) {
+            e.toErr()
+        }
+    }
+
     private suspend fun getTvShows(category: String): Result<List<Media.Tv>, String> {
         return try {
             val response = tmdbService.getTvShows(category)
@@ -52,6 +62,16 @@ class MediaRepository(
     suspend fun getTopRatedTvShows() = getTvShows("top_rated")
     suspend fun getOnTheAirTvShows() = getTvShows("on_the_air")
     suspend fun getAiringTodayTvShows() = getTvShows("airing_today")
+
+    suspend fun searchTvShows(query: String): Result<List<Media.Tv>, String> {
+        return try {
+            val response = tmdbService.searchTvShows(query)
+            val tvShows = response.results.map(Media::from)
+            Ok(tvShows)
+        } catch (e: Exception) {
+            e.toErr()
+        }
+    }
 
     suspend fun getMediaDetail(id: Int, type: MediaType): Result<Media, String> {
         return try {
@@ -72,6 +92,16 @@ class MediaRepository(
             val people = response.results.map(Person::from)
 
             Ok(people)
+        } catch (e: Exception) {
+            e.toErr()
+        }
+    }
+
+    suspend fun searchPeople(query: String): Result<List<Person>, String> {
+        return try {
+            val response = tmdbService.searchPeople(query)
+            val tvShows = response.results.map(Person::from)
+            Ok(tvShows)
         } catch (e: Exception) {
             e.toErr()
         }

@@ -12,6 +12,10 @@
         tools:layout="@layout/fragment_home">
 
         <action
+            android:id="@+id/to_searchFragment"
+            app:destination="@id/searchFragment" />
+
+        <action
             android:id="@+id/to_mediaListFragment"
             app:destination="@id/mediaListFragment" />
 
@@ -26,6 +30,30 @@
         <action
             android:id="@+id/to_mediaDetailFragment"
             app:destination="@id/mediaDetailFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.edts.tmdroid.ui.search.SearchFragment"
+        android:label="{title}"
+        tools:layout="@layout/fragment_search">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="query"
+            app:argType="string" />
+
+        <action
+            android:id="@+id/to_mediaDetailFragment"
+            app:destination="@id/mediaDetailFragment" />
+
+        <action
+            android:id="@+id/to_personDetailFragment"
+            app:destination="@id/personDetailFragment" />
 
     </fragment>
 
@@ -80,8 +108,16 @@
     <fragment
         android:id="@+id/personListFragment"
         android:name="com.edts.tmdroid.ui.person.list.PersonListFragment"
-        android:label="@string/popular_people"
+        android:label="{title}"
         tools:layout="@layout/fragment_person_list">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="personListType"
+            app:argType="com.edts.tmdroid.ui.model.PersonListType" />
 
         <action
             android:id="@+id/to_personDetailFragment"

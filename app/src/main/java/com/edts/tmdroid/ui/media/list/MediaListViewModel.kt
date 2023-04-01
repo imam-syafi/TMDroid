@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.ui.model.Fallback
 import com.edts.tmdroid.ui.model.Media
+import com.edts.tmdroid.ui.model.MediaListType
 import com.edts.tmdroid.ui.model.MediaListType.MovieNowPlaying
 import com.edts.tmdroid.ui.model.MediaListType.MoviePopular
 import com.edts.tmdroid.ui.model.MediaListType.MovieTopRated
@@ -58,10 +59,12 @@ class MediaListViewModel @Inject constructor(
             MovieUpcoming -> mediaRepository::getUpcomingMovies
             MovieNowPlaying -> mediaRepository::getNowPlayingMovies
             MoviePopular -> mediaRepository::getPopularMovies
+            is MediaListType.SearchMovie -> suspend { mediaRepository.searchMovies(type.query) }
             TvPopular -> mediaRepository::getPopularTvShows
             TvTopRated -> mediaRepository::getTopRatedTvShows
             TvOnTheAir -> mediaRepository::getOnTheAirTvShows
             TvAiringToday -> mediaRepository::getAiringTodayTvShows
+            is MediaListType.SearchTv -> suspend { mediaRepository.searchTvShows(type.query) }
         }
 
     init {

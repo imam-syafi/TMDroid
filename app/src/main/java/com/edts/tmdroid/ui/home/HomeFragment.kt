@@ -19,6 +19,7 @@ import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
 import com.edts.tmdroid.ui.model.MediaListType
+import com.edts.tmdroid.ui.model.PersonListType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -142,7 +143,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                     title = R.string.popular,
                     icon = R.drawable.icons8_charlie_chaplin_64,
                     onClick = {
-                        val directions = HomeFragmentDirections.toPersonListFragment()
+                        val directions = HomeFragmentDirections.toPersonListFragment(
+                            title = getString(R.string.popular_people),
+                            personListType = PersonListType.Popular,
+                        )
+
                         findNavController().navigate(directions)
                     },
                 ),
@@ -194,7 +199,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     private fun handleSearch(query: String) {
         if (query.isNotBlank()) {
-            // TODO: Handle search
+            val directions = HomeFragmentDirections.toSearchFragment(
+                title = getString(R.string.search_result, query),
+                query = query,
+            )
+
+            findNavController().navigate(directions)
         } else {
             showToast(R.string.empty_query)
         }

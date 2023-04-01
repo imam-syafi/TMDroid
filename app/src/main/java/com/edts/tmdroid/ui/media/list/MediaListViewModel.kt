@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.MediaRepository
+import com.edts.tmdroid.ui.model.Fallback
 import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.MediaListType.MovieNowPlaying
 import com.edts.tmdroid.ui.model.MediaListType.MoviePopular
@@ -19,6 +20,8 @@ import com.edts.tmdroid.ui.model.MediaListType.TvTopRated
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import com.zhuinden.eventemitter.EventEmitter
+import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -34,15 +37,20 @@ class MediaListViewModel @Inject constructor(
 
     // Backing properties
     private val isLoading = MutableLiveData<Boolean>()
+    private val fallback = MutableLiveData<Fallback?>()
     private val media = MutableLiveData<List<Media>>()
 
-    val state: LiveData<MediaListState> = combineTuple(isLoading, media)
-        .map { (isLoading, media) ->
+    val state: LiveData<MediaListState> = combineTuple(isLoading, fallback, media)
+        .map { (isLoading, fallback, media) ->
             MediaListState(
                 isLoading = isLoading ?: false,
+                fallback = fallback,
                 media = media ?: emptyList(),
             )
         }
+
+    private val errorEmitter: EventEmitter<String> = EventEmitter()
+    val errorMessage: EventSource<String> = errorEmitter
 
     private val call: suspend () -> Result<List<Media>, String> =
         when (val type = args.mediaListType) {
@@ -65,9 +73,15 @@ class MediaListViewModel @Inject constructor(
             isLoading.value = true
 
             when (val result = call()) {
-                is Ok -> result.value.let(media::setValue)
+                is Ok -> {
+                    result.value.let {
+                        media.value = it
+                        fallback.value = if (it.isEmpty()) Fallback.NO_RESULT else null
+                    }
+                }
                 is Err -> {
-                    // TODO: Handle error
+                    fallback.value = Fallback.FETCH_ERROR
+                    errorEmitter.emit(result.error)
                 }
             }
 

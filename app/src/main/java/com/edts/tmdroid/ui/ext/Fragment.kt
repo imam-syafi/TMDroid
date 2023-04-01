@@ -10,6 +10,8 @@ import androidx.core.view.MenuHost
 import androidx.core.view.MenuProvider
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
+import com.edts.tmdroid.R
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun Fragment.setupOptionsMenu(
     @MenuRes menuRes: Int,
@@ -30,6 +32,19 @@ fun Fragment.setupOptionsMenu(
         viewLifecycleOwner,
         Lifecycle.State.RESUMED,
     )
+}
+
+fun Fragment.showErrorAlert(
+    message: String,
+    onRetry: () -> Unit,
+) {
+    MaterialAlertDialogBuilder(requireContext())
+        .setTitle(R.string.failed_to_load_data)
+        .setMessage(getString(R.string.cause, message))
+        .setPositiveButton(R.string.try_again) { _, _ ->
+            onRetry()
+        }
+        .show()
 }
 
 fun Fragment.showToast(message: String) {

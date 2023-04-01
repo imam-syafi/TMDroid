@@ -10,6 +10,8 @@ kotlinResult = "1.1.16"
 
 ktlint = "0.48.2"
 
+liveEvent = "1.3.0"
+
 secretsGradlePlugin = "2.0.1"
 
 shimmer = "0.5.0"
@@ -21,6 +23,8 @@ combineTupleLiveData = { group = "com.github.Zhuinden", name = "livedata-combine
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 
 kotlinResult = { group = "com.michael-bull.kotlin-result", name = "kotlin-result", version.ref = "kotlinResult" }
+
+liveEvent = { group = "com.github.Zhuinden", name = "live-event", version.ref = "liveEvent" }
 
 secretsGradlePlugin = { group = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", name = "secrets-gradle-plugin", version.ref = "secretsGradlePlugin" }
 

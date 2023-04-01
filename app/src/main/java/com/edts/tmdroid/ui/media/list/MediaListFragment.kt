@@ -7,8 +7,11 @@ import com.edts.tmdroid.R
 import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.databinding.FragmentMediaListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.bind
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.ext.showErrorAlert
 import com.edts.tmdroid.ui.model.Media
+import com.zhuinden.liveevent.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -49,6 +52,12 @@ class MediaListFragment : BaseFragment<FragmentMediaListBinding>(
 
             rvMedia.isVisible = !state.isLoading
             mediaListAdapter.submitList(state.media)
+
+            vFallback.bind(state.fallback)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorAlert(it, viewModel::onRefresh)
         }
     }
 }

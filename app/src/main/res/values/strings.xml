@@ -68,4 +68,9 @@
     <string name="edit_review">Edit Review</string>
     <string name="update">Update</string>
     <string name="tv_detail">TV Detail</string>
+    <string name="failed_to_load_data">Failed to load data</string>
+    <string name="try_again">Try Again</string>
+    <string name="cause">Cause: %1$s</string>
+    <string name="still_empty">Still Empty</string>
+    <string name="no_result">No Result</string>
 </resources>

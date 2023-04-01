@@ -77,6 +77,7 @@ dependencies {
     implementation(libs.combineTupleLiveData)
     implementation(libs.glide)
     implementation(libs.kotlinResult)
+    implementation(libs.liveEvent)
     implementation(libs.shimmer)
 
     testImplementation(Testing.junit4)

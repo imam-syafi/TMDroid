@@ -1,7 +1,6 @@
 package com.edts.tmdroid.ui.home
 
 import android.view.inputmethod.EditorInfo
-import androidx.annotation.StringRes
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
@@ -18,8 +17,7 @@ import com.edts.tmdroid.ui.home.menu.GridItem
 import com.edts.tmdroid.ui.home.menu.GridItem.Header
 import com.edts.tmdroid.ui.home.menu.GridItem.IconMenu
 import com.edts.tmdroid.ui.home.menu.IconMenuAdapter
-import com.edts.tmdroid.ui.movie.list.MovieListType
-import com.edts.tmdroid.ui.tv.list.TvListType
+import com.edts.tmdroid.ui.model.MediaListType
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -52,43 +50,91 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 IconMenu(
                     title = R.string.top_rated,
                     icon = R.drawable.icons8_imovie_50,
-                    onClick = { toMovieList(MovieListType.TopRated) },
+                    onClick = {
+                        val category = getString(R.string.top_rated)
+                        toMediaList(
+                            title = getString(R.string.movie_list_title, category),
+                            mediaListType = MediaListType.MovieTopRated,
+                        )
+                    },
                 ),
                 IconMenu(
                     title = R.string.upcoming,
                     icon = R.drawable.icons8_movie_projector_50,
-                    onClick = { toMovieList(MovieListType.Upcoming) },
+                    onClick = {
+                        val category = getString(R.string.upcoming)
+                        toMediaList(
+                            title = getString(R.string.movie_list_title, category),
+                            mediaListType = MediaListType.MovieUpcoming,
+                        )
+                    },
                 ),
                 IconMenu(
                     title = R.string.now_playing,
                     icon = R.drawable.icons8_movie_theater_64,
-                    onClick = { toMovieList(MovieListType.NowPlaying) },
+                    onClick = {
+                        val category = getString(R.string.now_playing)
+                        toMediaList(
+                            title = getString(R.string.movie_list_title, category),
+                            mediaListType = MediaListType.MovieNowPlaying,
+                        )
+                    },
                 ),
                 IconMenu(
                     title = R.string.popular,
                     icon = R.drawable.icons8_movie_ticket_50,
-                    onClick = { toMovieList(MovieListType.Popular) },
+                    onClick = {
+                        val category = getString(R.string.popular)
+                        toMediaList(
+                            title = getString(R.string.movie_list_title, category),
+                            mediaListType = MediaListType.MoviePopular,
+                        )
+                    },
                 ),
                 Header(title = R.string.tv_shows),
                 IconMenu(
                     title = R.string.popular,
                     icon = R.drawable.icons8_retro_tv_filled_50,
-                    onClick = { toTvList(TvListType.Popular, R.string.popular) },
+                    onClick = {
+                        val category = getString(R.string.popular)
+                        toMediaList(
+                            title = getString(R.string.tv_list_title, category),
+                            mediaListType = MediaListType.TvPopular,
+                        )
+                    },
                 ),
                 IconMenu(
                     title = R.string.top_rated,
                     icon = R.drawable.icons8_popcorn_64,
-                    onClick = { toTvList(TvListType.TopRated, R.string.top_rated) },
+                    onClick = {
+                        val category = getString(R.string.top_rated)
+                        toMediaList(
+                            title = getString(R.string.tv_list_title, category),
+                            mediaListType = MediaListType.TvTopRated,
+                        )
+                    },
                 ),
                 IconMenu(
                     title = R.string.on_the_air,
                     icon = R.drawable.icons8_clapperboard_50,
-                    onClick = { toTvList(TvListType.OnTheAir, R.string.on_the_air) },
+                    onClick = {
+                        val category = getString(R.string.on_the_air)
+                        toMediaList(
+                            title = getString(R.string.tv_list_title, category),
+                            mediaListType = MediaListType.TvOnTheAir,
+                        )
+                    },
                 ),
                 IconMenu(
                     title = R.string.airing_today,
                     icon = R.drawable.icons8_cinema_50,
-                    onClick = { toTvList(TvListType.AiringToday, R.string.airing_today) },
+                    onClick = {
+                        val category = getString(R.string.airing_today)
+                        toMediaList(
+                            title = getString(R.string.tv_list_title, category),
+                            mediaListType = MediaListType.TvAiringToday,
+                        )
+                    },
                 ),
                 Header(title = R.string.people),
                 IconMenu(
@@ -138,38 +184,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
     private fun handleSearch(query: String) {
         if (query.isNotBlank()) {
-            toMovieList(MovieListType.Search(query))
+            // TODO: Handle search
         } else {
             showToast(R.string.empty_query)
         }
     }
 
-    private fun toMovieList(movieListType: MovieListType) {
-        val title = when (movieListType) {
-            is MovieListType.Search -> getString(R.string.search_result, movieListType.query)
-            else -> {
-                val resId = when (movieListType) {
-                    MovieListType.TopRated -> R.string.top_rated
-                    MovieListType.Upcoming -> R.string.upcoming
-                    MovieListType.NowPlaying -> R.string.now_playing
-                    MovieListType.Popular -> R.string.popular
-                    else -> throw IllegalArgumentException("Invalid type")
-                }
-
-                getString(R.string.movie_list_title, getString(resId))
-            }
-        }
-
-        val directions = HomeFragmentDirections.toMovieListFragment(title, movieListType)
-        findNavController().navigate(directions)
-    }
-
-    private fun toTvList(tvListType: TvListType, @StringRes resId: Int) {
-        val title = getString(R.string.tv_list_title, getString(resId))
-
-        val directions = HomeFragmentDirections.toTvListFragment(
-            title = title,
-            tvListType = tvListType,
+    private fun toMediaList(title: String, mediaListType: MediaListType) {
+        val directions = HomeFragmentDirections.toMediaListFragment(
+            title,
+            mediaListType,
         )
 
         findNavController().navigate(directions)

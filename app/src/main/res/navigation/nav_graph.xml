@@ -12,12 +12,8 @@
         tools:layout="@layout/fragment_home">
 
         <action
-            android:id="@+id/to_movieListFragment"
-            app:destination="@id/movieListFragment" />
-
-        <action
-            android:id="@+id/to_tvListFragment"
-            app:destination="@id/tvListFragment" />
+            android:id="@+id/to_mediaListFragment"
+            app:destination="@id/mediaListFragment" />
 
         <action
             android:id="@+id/to_personListFragment"
@@ -38,8 +34,8 @@
     </fragment>
 
     <fragment
-        android:id="@+id/movieListFragment"
-        android:name="com.edts.tmdroid.ui.movie.list.MovieListFragment"
+        android:id="@+id/mediaListFragment"
+        android:name="com.edts.tmdroid.ui.media.list.MediaListFragment"
         android:label="{title}"
         tools:layout="@layout/fragment_media_list">
 
@@ -48,12 +44,8 @@
             app:argType="string" />
 
         <argument
-            android:name="movieListType"
-            app:argType="com.edts.tmdroid.ui.movie.list.MovieListType" />
-
-        <action
-            android:id="@+id/to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
+            android:name="mediaListType"
+            app:argType="com.edts.tmdroid.ui.model.MediaListType" />
 
     </fragment>
 
@@ -147,26 +139,6 @@
         <action
             android:id="@+id/to_movieDetailFragment"
             app:destination="@id/movieDetailFragment" />
-
-        <action
-            android:id="@+id/to_tvDetailFragment"
-            app:destination="@id/tvDetailFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/tvListFragment"
-        android:name="com.edts.tmdroid.ui.tv.list.TvListFragment"
-        android:label="{title}"
-        tools:layout="@layout/fragment_media_list">
-
-        <argument
-            android:name="title"
-            app:argType="string" />
-
-        <argument
-            android:name="tvListType"
-            app:argType="com.edts.tmdroid.ui.tv.list.TvListType" />
 
         <action
             android:id="@+id/to_tvDetailFragment"

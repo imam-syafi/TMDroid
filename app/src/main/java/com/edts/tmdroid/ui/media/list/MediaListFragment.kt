@@ -1,19 +1,18 @@
-package com.edts.tmdroid.ui.tv.list
+package com.edts.tmdroid.ui.media.list
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.databinding.FragmentMediaListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.showDialog
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TvListFragment : BaseFragment<FragmentMediaListBinding>(
+class MediaListFragment : BaseFragment<FragmentMediaListBinding>(
     FragmentMediaListBinding::inflate,
 ) {
 
-    private val viewModel by viewModels<TvListViewModel>()
+    private val viewModel by viewModels<MediaListViewModel>()
 
     override fun FragmentMediaListBinding.setup() {
         swipeRefreshLayout.setOnRefreshListener {
@@ -21,10 +20,9 @@ class TvListFragment : BaseFragment<FragmentMediaListBinding>(
             swipeRefreshLayout.isRefreshing = false
         }
 
-        val tvListAdapter = TvListAdapter(
-            onClick = { tv ->
-                val directions = TvListFragmentDirections.toTvDetailFragment(tv.id)
-                findNavController().navigate(directions)
+        val mediaListAdapter = MediaListAdapter(
+            onClick = {
+                // TODO: Navigate to detail screen
             },
         ).also(rvMedia::setAdapter)
 
@@ -35,7 +33,7 @@ class TvListFragment : BaseFragment<FragmentMediaListBinding>(
             loadingDialog.showDialog(state.isLoading)
 
             rvMedia.isVisible = !state.isLoading
-            tvListAdapter.submitList(state.tvShows)
+            mediaListAdapter.submitList(state.media)
         }
     }
 }

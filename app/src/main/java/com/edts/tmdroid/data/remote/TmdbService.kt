@@ -15,6 +15,9 @@ interface TmdbService {
     @GET("movie/{id}")
     suspend fun getMovie(@Path("id") id: Int): MovieDto
 
+    @GET("movie/{category}")
+    suspend fun getMovies(@Path("category") category: String): GetMoviesResponse
+
     @GET("movie/top_rated")
     suspend fun getTopRatedMovies(): GetMoviesResponse
 
@@ -32,6 +35,9 @@ interface TmdbService {
 
     @GET("tv/{id}")
     suspend fun getTv(@Path("id") id: Int): TvDto
+
+    @GET("tv/{category}")
+    suspend fun getTvShows(@Path("category") category: String): GetTvShowsResponse
 
     @GET("tv/popular")
     suspend fun getPopularTvShows(): GetTvShowsResponse

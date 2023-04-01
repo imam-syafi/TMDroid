@@ -25,17 +25,23 @@ object NetworkModule {
     private const val BASE_URL = "https://api.themoviedb.org/3/"
     const val BASE_IMG_URL = "https://image.tmdb.org/t/p/w500"
 
-    @Singleton
     @Provides
     fun provideTmdbService(
-        okHttpClient: OkHttpClient,
+        retrofit: Retrofit,
     ): TmdbService {
+        return retrofit.create()
+    }
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create()
     }
 
     @AuthInterceptor

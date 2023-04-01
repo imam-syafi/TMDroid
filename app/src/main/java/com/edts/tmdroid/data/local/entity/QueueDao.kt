@@ -18,7 +18,7 @@ interface QueueDao {
             ORDER BY ${QueueEntity.ID_COLUMN} DESC
         """,
     )
-    fun getLatest(): LiveData<List<QueueEntity>>
+    fun getLatest(): Flow<List<QueueEntity>>
 
     @Query(
         """

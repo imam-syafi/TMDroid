@@ -8,6 +8,7 @@ import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.Person
 import com.edts.tmdroid.ui.model.PersonDetail
+import com.edts.tmdroid.ui.model.Queue
 import com.edts.tmdroid.ui.model.Review
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -105,6 +106,10 @@ class MediaRepository(
     }
 
     fun isSaved(id: Int, type: MediaType): Flow<Boolean> = queueDao.isMediaSaved(id, type)
+
+    fun getWatchList(): Flow<List<Queue>> = queueDao
+        .getLatest()
+        .map(Queue::from)
 
     fun getReviews(id: Int, type: MediaType): Flow<List<Review>> = reviewDao
         .getByMedia(id, type)

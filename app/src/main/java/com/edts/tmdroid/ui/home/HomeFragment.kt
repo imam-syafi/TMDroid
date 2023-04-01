@@ -9,6 +9,7 @@ import com.edts.tmdroid.R
 import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.databinding.FragmentHomeBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.bind
 import com.edts.tmdroid.ui.ext.on
 import com.edts.tmdroid.ui.ext.onEndIconClick
 import com.edts.tmdroid.ui.ext.setupOptionsMenu
@@ -185,7 +186,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         }
 
         // UI = f(state)
-        viewModel.watchList.observe(viewLifecycleOwner, watchListAdapter::submitList)
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            watchListAdapter.submitList(state.queueList)
+            vFallback.bind(state.fallback)
+        }
     }
 
     private fun handleSearch(query: String) {

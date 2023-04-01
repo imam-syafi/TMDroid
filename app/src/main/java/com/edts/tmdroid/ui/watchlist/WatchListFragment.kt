@@ -7,6 +7,7 @@ import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.databinding.FragmentWatchListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.addDivider
+import com.edts.tmdroid.ui.ext.bind
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,6 +41,9 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>(
             adapter = watchListAdapter
         }
 
-        viewModel.watchList.observe(viewLifecycleOwner, watchListAdapter::submitList)
+        viewModel.state.observe(viewLifecycleOwner) { state ->
+            watchListAdapter.submitList(state.watchList)
+            vFallback.bind(state.fallback)
+        }
     }
 }

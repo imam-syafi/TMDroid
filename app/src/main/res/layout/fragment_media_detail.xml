@@ -142,6 +142,22 @@
             tools:itemCount="5"
             tools:listitem="@layout/item_review" />
 
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/contentGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:constraint_referenced_ids="ivBackdrop, cvPoster, tvTitle, tvRating, tvReleaseDate, btnToggle, tvOverview, vSeparator, tvCommentSection, tvWriteReview, rvReviews" />
+
+        <include
+            android:id="@+id/vFallback"
+            layout="@layout/view_fallback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </ScrollView>

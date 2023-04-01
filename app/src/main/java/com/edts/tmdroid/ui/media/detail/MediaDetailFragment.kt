@@ -1,17 +1,21 @@
 package com.edts.tmdroid.ui.media.detail
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.FragmentMediaDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
+import com.edts.tmdroid.ui.ext.bind
 import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.ext.showErrorAlert
 import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.Review
 import com.edts.tmdroid.ui.review.ReviewListAdapter
+import com.zhuinden.liveevent.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -82,6 +86,13 @@ class MediaDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
             }
 
             reviewListAdapter.submitList(state.reviews)
+
+            contentGroup.isVisible = state.fallback == null
+            vFallback.bind(state.fallback)
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorAlert(it, viewModel::fetchData)
         }
     }
 

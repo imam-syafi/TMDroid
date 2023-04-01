@@ -8,10 +8,13 @@ import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.MediaRepository
+import com.edts.tmdroid.ui.model.Fallback
 import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.Review
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
+import com.zhuinden.eventemitter.EventEmitter
+import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -29,6 +32,7 @@ class MediaDetailViewModel @Inject constructor(
 
     // Backing properties
     private val isLoading = MutableLiveData<Boolean>()
+    private val fallback = MutableLiveData<Fallback?>()
     private val media = MutableLiveData<Media>()
 
     private val isSaved: LiveData<Boolean> = mediaRepository
@@ -39,28 +43,44 @@ class MediaDetailViewModel @Inject constructor(
         .getReviews(mediaId, mediaType)
         .asLiveData()
 
-    val state: LiveData<MediaDetailState> = combineTuple(isLoading, isSaved, media, reviews)
-        .map { (isLoading, isSaved, media, reviews) ->
+    val state: LiveData<MediaDetailState> = combineTuple(
+        isLoading,
+        isSaved,
+        fallback,
+        media,
+        reviews,
+    )
+        .map { (isLoading, isSaved, fallback, media, reviews) ->
             MediaDetailState(
                 isLoading = isLoading ?: false,
                 isSaved = isSaved ?: false,
+                fallback = fallback,
                 media = media,
                 reviews = reviews ?: emptyList(),
             )
         }
 
+    private val errorEmitter: EventEmitter<String> = EventEmitter()
+    val errorMessage: EventSource<String> = errorEmitter
+
     init {
         fetchData()
     }
 
-    private fun fetchData() {
+    fun fetchData() {
         viewModelScope.launch {
             isLoading.value = true
 
             when (val result = mediaRepository.getMediaDetail(mediaId, mediaType)) {
-                is Ok -> result.value.let(media::setValue)
+                is Ok -> {
+                    result.value.let {
+                        media.value = it
+                        fallback.value = null
+                    }
+                }
                 is Err -> {
-                    // TODO: Handle error
+                    fallback.value = Fallback.FETCH_ERROR
+                    errorEmitter.emit(result.error)
                 }
             }
 

@@ -7,6 +7,7 @@ import com.edts.tmdroid.data.local.entity.ReviewDao
 import com.edts.tmdroid.data.remote.TmdbService
 import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.Person
+import com.edts.tmdroid.ui.model.PersonDetail
 import com.edts.tmdroid.ui.model.Review
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
@@ -67,6 +68,17 @@ class MediaRepository(
         return try {
             val response = tmdbService.getPopularPeople()
             val people = response.results.map(Person::from)
+
+            Ok(people)
+        } catch (e: Exception) {
+            e.toErr()
+        }
+    }
+
+    suspend fun getPersonDetail(id: Int): Result<PersonDetail, String> {
+        return try {
+            val response = tmdbService.getPerson(id)
+            val people = response.let(PersonDetail::from)
 
             Ok(people)
         } catch (e: Exception) {

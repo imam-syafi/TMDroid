@@ -6,8 +6,12 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
-import com.edts.tmdroid.data.remote.TmdbService
+import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.ui.model.PersonDetail
+import com.github.michaelbull.result.Err
+import com.github.michaelbull.result.Ok
+import com.zhuinden.eventemitter.EventEmitter
+import com.zhuinden.eventemitter.EventSource
 import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -16,7 +20,7 @@ import kotlinx.coroutines.launch
 @HiltViewModel
 class PersonDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
-    private val tmdbService: TmdbService,
+    private val mediaRepository: MediaRepository,
 ) : ViewModel() {
 
     private val args = PersonDetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -34,19 +38,21 @@ class PersonDetailViewModel @Inject constructor(
             )
         }
 
+    private val errorEmitter: EventEmitter<String> = EventEmitter()
+    val errorMessage: EventSource<String> = errorEmitter
+
     init {
         fetchData()
     }
 
-    private fun fetchData() {
+    fun fetchData() {
         viewModelScope.launch {
             isLoading.value = true
 
-            // Call API service
-            val response = tmdbService.getPerson(personId)
-
-            // Happy path
-            personDetail.value = response.let(PersonDetail::from)
+            when (val result = mediaRepository.getPersonDetail(personId)) {
+                is Ok -> result.value.let(personDetail::setValue)
+                is Err -> errorEmitter.emit(result.error)
+            }
 
             isLoading.value = false
         }

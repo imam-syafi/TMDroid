@@ -10,6 +10,8 @@ import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.setToggleMaxLines
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.ext.showErrorAlert
+import com.zhuinden.liveevent.observe
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -55,6 +57,10 @@ class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
                 tvAka.text = it.alsoKnownAs
                 tvBio.text = it.biography
             }
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) {
+            showErrorAlert(it, viewModel::fetchData)
         }
     }
 }

@@ -19,14 +19,16 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>(
     override fun FragmentWatchListBinding.setup() {
         val watchListAdapter = WatchListAdapter(
             onClick = { queue ->
-                val directions = when (queue.mediaType) {
-                    MediaType.Movie -> WatchListFragmentDirections.toMovieDetailFragment(
-                        movieId = queue.mediaId,
-                    )
-                    MediaType.Tv -> WatchListFragmentDirections.toTvDetailFragment(
-                        tvId = queue.mediaId,
-                    )
-                }
+                val directions = WatchListFragmentDirections.toMediaDetailFragment(
+                    title = getString(
+                        when (queue.mediaType) {
+                            MediaType.Movie -> R.string.movie_detail
+                            MediaType.Tv -> R.string.tv_detail
+                        },
+                    ),
+                    mediaId = queue.mediaId,
+                    mediaType = queue.mediaType,
+                )
 
                 findNavController().navigate(directions)
             },

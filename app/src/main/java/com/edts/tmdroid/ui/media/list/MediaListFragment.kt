@@ -2,9 +2,13 @@ package com.edts.tmdroid.ui.media.list
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.edts.tmdroid.R
+import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.databinding.FragmentMediaListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.model.Media
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -22,7 +26,18 @@ class MediaListFragment : BaseFragment<FragmentMediaListBinding>(
 
         val mediaListAdapter = MediaListAdapter(
             onClick = {
-                // TODO: Navigate to detail screen
+                val (title, type) = when (it) {
+                    is Media.Movie -> Pair(R.string.movie_detail, MediaType.Movie)
+                    is Media.Tv -> Pair(R.string.tv_detail, MediaType.Tv)
+                }
+
+                val directions = MediaListFragmentDirections.toMediaDetailFragment(
+                    title = getString(title),
+                    mediaId = it.id,
+                    mediaType = type,
+                )
+
+                findNavController().navigate(directions)
             },
         ).also(rvMedia::setAdapter)
 

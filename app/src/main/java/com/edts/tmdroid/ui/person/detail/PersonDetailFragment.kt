@@ -3,6 +3,7 @@ package com.edts.tmdroid.ui.person.detail
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.edts.tmdroid.R
 import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.databinding.FragmentPersonDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
@@ -28,14 +29,16 @@ class PersonDetailFragment : BaseFragment<FragmentPersonDetailBinding>(
 
         rvKnownFor.adapter = KnownForListAdapter(
             onClick = { knownFor ->
-                val directions = when (knownFor.type) {
-                    MediaType.Movie -> PersonDetailFragmentDirections.toMovieDetailFragment(
-                        movieId = knownFor.id,
-                    )
-                    MediaType.Tv -> PersonDetailFragmentDirections.toTvDetailFragment(
-                        tvId = knownFor.id,
-                    )
-                }
+                val directions = PersonDetailFragmentDirections.toMediaDetailFragment(
+                    title = getString(
+                        when (knownFor.mediaType) {
+                            MediaType.Movie -> R.string.movie_detail
+                            MediaType.Tv -> R.string.tv_detail
+                        },
+                    ),
+                    mediaId = knownFor.id,
+                    mediaType = knownFor.mediaType,
+                )
 
                 findNavController().navigate(directions)
             },

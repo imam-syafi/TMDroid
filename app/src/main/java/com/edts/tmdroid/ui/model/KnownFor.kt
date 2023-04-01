@@ -10,9 +10,9 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class KnownFor(
     val id: Int,
+    val mediaType: MediaType,
     val title: String,
     val posterUrl: String,
-    val type: MediaType,
 ) : Parcelable {
 
     companion object {
@@ -31,9 +31,9 @@ data class KnownFor(
         fun from(dto: KnownForDto): KnownFor {
             return KnownFor(
                 id = dto.id,
+                mediaType = dto.media_type,
                 title = dto.title ?: dto.name ?: "Title is undefined",
                 posterUrl = "${NetworkModule.BASE_IMG_URL}${dto.poster_path}",
-                type = dto.media_type,
             )
         }
     }

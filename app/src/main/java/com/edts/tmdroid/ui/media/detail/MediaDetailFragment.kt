@@ -1,26 +1,26 @@
-package com.edts.tmdroid.ui.tv.detail
+package com.edts.tmdroid.ui.media.detail
 
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.edts.tmdroid.R
-import com.edts.tmdroid.data.common.MediaType
 import com.edts.tmdroid.databinding.FragmentMediaDetailBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.buildSnack
 import com.edts.tmdroid.ui.ext.loadFromUrl
 import com.edts.tmdroid.ui.ext.showDialog
+import com.edts.tmdroid.ui.model.Media
 import com.edts.tmdroid.ui.model.Review
 import com.edts.tmdroid.ui.review.ReviewListAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class TvDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
+class MediaDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
     FragmentMediaDetailBinding::inflate,
 ) {
 
-    private val args by navArgs<TvDetailFragmentArgs>()
-    private val viewModel by viewModels<TvDetailViewModel>()
+    private val args by navArgs<MediaDetailFragmentArgs>()
+    private val viewModel by viewModels<MediaDetailViewModel>()
 
     override fun FragmentMediaDetailBinding.setup() {
         btnToggle.setOnClickListener {
@@ -36,7 +36,7 @@ class TvDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
 
             buildSnack(successMessage)
                 .setAction(R.string.show_all) {
-                    val directions = TvDetailFragmentDirections.toWatchListFragment()
+                    val directions = MediaDetailFragmentDirections.toWatchListFragment()
                     findNavController().navigate(directions)
                 }
                 .also { snackbar = it }
@@ -63,13 +63,22 @@ class TvDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
                 },
             )
 
-            state.tv?.let {
+            state.media?.let {
                 ivBackdrop.loadFromUrl(it.backdropUrl)
                 ivPoster.loadFromUrl(it.posterUrl)
-                tvTitle.text = it.name
-                tvReleaseDate.text = it.firstAirDate
                 tvRating.text = getString(R.string.rating, it.voteAverage.toString(), it.voteCount)
                 tvOverview.text = it.overview
+
+                when (it) {
+                    is Media.Movie -> {
+                        tvTitle.text = it.title
+                        tvReleaseDate.text = it.releaseDate
+                    }
+                    is Media.Tv -> {
+                        tvTitle.text = it.name
+                        tvReleaseDate.text = it.firstAirDate
+                    }
+                }
             }
 
             reviewListAdapter.submitList(state.reviews)
@@ -83,10 +92,10 @@ class TvDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
             R.string.add_new_review
         }
 
-        val directions = TvDetailFragmentDirections.toReviewEditorFragment(
+        val directions = MediaDetailFragmentDirections.toReviewEditorFragment(
             title = getString(resId),
-            mediaId = args.tvId,
-            mediaType = MediaType.Tv,
+            mediaId = args.mediaId,
+            mediaType = args.mediaType,
             review = review,
         )
 

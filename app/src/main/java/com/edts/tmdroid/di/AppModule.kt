@@ -1,6 +1,8 @@
 package com.edts.tmdroid.di
 
 import com.edts.tmdroid.data.MediaRepository
+import com.edts.tmdroid.data.local.entity.QueueDao
+import com.edts.tmdroid.data.local.entity.ReviewDao
 import com.edts.tmdroid.data.remote.TmdbService
 import dagger.Module
 import dagger.Provides
@@ -16,7 +18,9 @@ object AppModule {
     @Provides
     fun provideMediaRepository(
         tmdbService: TmdbService,
+        queueDao: QueueDao,
+        reviewDao: ReviewDao,
     ): MediaRepository {
-        return MediaRepository(tmdbService)
+        return MediaRepository(tmdbService, queueDao, reviewDao)
     }
 }

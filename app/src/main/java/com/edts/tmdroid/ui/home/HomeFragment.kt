@@ -164,10 +164,16 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         // Setup watchlist
         val watchListAdapter = WatchListAdapter(
             onClick = { queue ->
-                val directions = when (queue.mediaType) {
-                    MediaType.Movie -> HomeFragmentDirections.toMovieDetailFragment(queue.mediaId)
-                    MediaType.Tv -> HomeFragmentDirections.toTvDetailFragment(queue.mediaId)
-                }
+                val directions = HomeFragmentDirections.toMediaDetailFragment(
+                    title = getString(
+                        when (queue.mediaType) {
+                            MediaType.Movie -> R.string.movie_detail
+                            MediaType.Tv -> R.string.tv_detail
+                        },
+                    ),
+                    mediaId = queue.mediaId,
+                    mediaType = queue.mediaType,
+                )
 
                 findNavController().navigate(directions)
             },

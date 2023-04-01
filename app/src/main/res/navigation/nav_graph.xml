@@ -20,16 +20,12 @@
             app:destination="@id/personListFragment" />
 
         <action
-            android:id="@+id/to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
-
-        <action
-            android:id="@+id/to_tvDetailFragment"
-            app:destination="@id/tvDetailFragment" />
-
-        <action
             android:id="@+id/to_watchListFragment"
             app:destination="@id/watchListFragment" />
+
+        <action
+            android:id="@+id/to_mediaDetailFragment"
+            app:destination="@id/mediaDetailFragment" />
 
     </fragment>
 
@@ -47,17 +43,29 @@
             android:name="mediaListType"
             app:argType="com.edts.tmdroid.ui.model.MediaListType" />
 
+        <action
+            android:id="@+id/to_mediaDetailFragment"
+            app:destination="@id/mediaDetailFragment" />
+
     </fragment>
 
     <fragment
-        android:id="@+id/movieDetailFragment"
-        android:name="com.edts.tmdroid.ui.movie.detail.MovieDetailFragment"
-        android:label="@string/movie_detail"
+        android:id="@+id/mediaDetailFragment"
+        android:name="com.edts.tmdroid.ui.media.detail.MediaDetailFragment"
+        android:label="{title}"
         tools:layout="@layout/fragment_media_detail">
 
         <argument
-            android:name="movieId"
+            android:name="title"
+            app:argType="string" />
+
+        <argument
+            android:name="mediaId"
             app:argType="integer" />
+
+        <argument
+            android:name="mediaType"
+            app:argType="com.edts.tmdroid.data.common.MediaType" />
 
         <action
             android:id="@+id/to_reviewEditorFragment"
@@ -96,12 +104,8 @@
             app:argType="com.edts.tmdroid.ui.model.Person" />
 
         <action
-            android:id="@+id/to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
-
-        <action
-            android:id="@+id/to_tvDetailFragment"
-            app:destination="@id/tvDetailFragment" />
+            android:id="@+id/to_mediaDetailFragment"
+            app:destination="@id/mediaDetailFragment" />
 
     </fragment>
 
@@ -137,32 +141,8 @@
         tools:layout="@layout/fragment_watch_list">
 
         <action
-            android:id="@+id/to_movieDetailFragment"
-            app:destination="@id/movieDetailFragment" />
-
-        <action
-            android:id="@+id/to_tvDetailFragment"
-            app:destination="@id/tvDetailFragment" />
-
-    </fragment>
-
-    <fragment
-        android:id="@+id/tvDetailFragment"
-        android:name="com.edts.tmdroid.ui.tv.detail.TvDetailFragment"
-        android:label="@string/tv_detail"
-        tools:layout="@layout/fragment_media_detail">
-
-        <argument
-            android:name="tvId"
-            app:argType="integer" />
-
-        <action
-            android:id="@+id/to_reviewEditorFragment"
-            app:destination="@id/reviewEditorFragment" />
-
-        <action
-            android:id="@+id/to_watchListFragment"
-            app:destination="@id/watchListFragment" />
+            android:id="@+id/to_mediaDetailFragment"
+            app:destination="@id/mediaDetailFragment" />
 
     </fragment>
 

@@ -23,9 +23,9 @@ class MediaRepository(
     private val reviewDao: ReviewDao,
 ) {
 
-    private suspend fun getMovies(category: String): Result<List<Media.Movie>, String> {
+    private suspend fun getMovies(category: String, page: Int): Result<List<Media.Movie>, String> {
         return try {
-            val response = tmdbService.getMovies(category)
+            val response = tmdbService.getMovies(category, page)
             val movies = response.results.map(Media::from)
             Ok(movies)
         } catch (e: Exception) {
@@ -33,14 +33,14 @@ class MediaRepository(
         }
     }
 
-    suspend fun getTopRatedMovies() = getMovies("top_rated")
-    suspend fun getUpcomingMovies() = getMovies("upcoming")
-    suspend fun getNowPlayingMovies() = getMovies("now_playing")
-    suspend fun getPopularMovies() = getMovies("popular")
+    suspend fun getTopRatedMovies(page: Int) = getMovies("top_rated", page)
+    suspend fun getUpcomingMovies(page: Int) = getMovies("upcoming", page)
+    suspend fun getNowPlayingMovies(page: Int) = getMovies("now_playing", page)
+    suspend fun getPopularMovies(page: Int) = getMovies("popular", page)
 
-    suspend fun searchMovies(query: String): Result<List<Media.Movie>, String> {
+    suspend fun searchMovies(query: String, page: Int): Result<List<Media.Movie>, String> {
         return try {
-            val response = tmdbService.searchMovies(query)
+            val response = tmdbService.searchMovies(query, page)
             val movies = response.results.map(Media::from)
             Ok(movies)
         } catch (e: Exception) {
@@ -48,9 +48,9 @@ class MediaRepository(
         }
     }
 
-    private suspend fun getTvShows(category: String): Result<List<Media.Tv>, String> {
+    private suspend fun getTvShows(category: String, page: Int): Result<List<Media.Tv>, String> {
         return try {
-            val response = tmdbService.getTvShows(category)
+            val response = tmdbService.getTvShows(category, page)
             val tvShows = response.results.map(Media::from)
             Ok(tvShows)
         } catch (e: Exception) {
@@ -58,14 +58,14 @@ class MediaRepository(
         }
     }
 
-    suspend fun getPopularTvShows() = getTvShows("popular")
-    suspend fun getTopRatedTvShows() = getTvShows("top_rated")
-    suspend fun getOnTheAirTvShows() = getTvShows("on_the_air")
-    suspend fun getAiringTodayTvShows() = getTvShows("airing_today")
+    suspend fun getPopularTvShows(page: Int) = getTvShows("popular", page)
+    suspend fun getTopRatedTvShows(page: Int) = getTvShows("top_rated", page)
+    suspend fun getOnTheAirTvShows(page: Int) = getTvShows("on_the_air", page)
+    suspend fun getAiringTodayTvShows(page: Int) = getTvShows("airing_today", page)
 
-    suspend fun searchTvShows(query: String): Result<List<Media.Tv>, String> {
+    suspend fun searchTvShows(query: String, page: Int): Result<List<Media.Tv>, String> {
         return try {
-            val response = tmdbService.searchTvShows(query)
+            val response = tmdbService.searchTvShows(query, page)
             val tvShows = response.results.map(Media::from)
             Ok(tvShows)
         } catch (e: Exception) {
@@ -86,9 +86,9 @@ class MediaRepository(
         }
     }
 
-    suspend fun getPopularPeople(): Result<List<Person>, String> {
+    suspend fun getPopularPeople(page: Int): Result<List<Person>, String> {
         return try {
-            val response = tmdbService.getPopularPeople()
+            val response = tmdbService.getPopularPeople(page)
             val people = response.results.map(Person::from)
 
             Ok(people)
@@ -97,9 +97,9 @@ class MediaRepository(
         }
     }
 
-    suspend fun searchPeople(query: String): Result<List<Person>, String> {
+    suspend fun searchPeople(query: String, page: Int): Result<List<Person>, String> {
         return try {
-            val response = tmdbService.searchPeople(query)
+            val response = tmdbService.searchPeople(query, page)
             val tvShows = response.results.map(Person::from)
             Ok(tvShows)
         } catch (e: Exception) {

@@ -8,11 +8,21 @@ import com.edts.tmdroid.ui.model.Media
 
 class MediaListAdapter(
     onClick: (Media) -> Unit,
+    private val onLastItem: () -> Unit,
 ) : BaseListAdapter<Media, ItemMediaBinding>(
     inflate = ItemMediaBinding::inflate,
     onClick = onClick,
     differ = Media.DIFFER,
 ) {
+
+    override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+
+        val isLastItem = position == itemCount - 1
+        if (isLastItem) {
+            onLastItem()
+        }
+    }
 
     override fun ItemMediaBinding.bind(item: Media) {
         val resources = root.resources

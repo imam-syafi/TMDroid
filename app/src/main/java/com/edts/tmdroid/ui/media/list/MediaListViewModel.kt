@@ -53,34 +53,41 @@ class MediaListViewModel @Inject constructor(
     private val errorEmitter: EventEmitter<String> = EventEmitter()
     val errorMessage: EventSource<String> = errorEmitter
 
-    private val call: suspend () -> Result<List<Media>, String> =
+    private var page = 1
+    private val call: suspend (page: Int) -> Result<List<Media>, String> =
         when (val type = args.mediaListType) {
             MovieTopRated -> mediaRepository::getTopRatedMovies
             MovieUpcoming -> mediaRepository::getUpcomingMovies
             MovieNowPlaying -> mediaRepository::getNowPlayingMovies
             MoviePopular -> mediaRepository::getPopularMovies
-            is MediaListType.SearchMovie -> suspend { mediaRepository.searchMovies(type.query) }
+            is MediaListType.SearchMovie -> { p -> mediaRepository.searchMovies(type.query, p) }
             TvPopular -> mediaRepository::getPopularTvShows
             TvTopRated -> mediaRepository::getTopRatedTvShows
             TvOnTheAir -> mediaRepository::getOnTheAirTvShows
             TvAiringToday -> mediaRepository::getAiringTodayTvShows
-            is MediaListType.SearchTv -> suspend { mediaRepository.searchTvShows(type.query) }
+            is MediaListType.SearchTv -> { p -> mediaRepository.searchTvShows(type.query, p) }
         }
 
     init {
         fetchData()
     }
 
-    private fun fetchData() {
+    fun fetchData() {
         viewModelScope.launch {
             isLoading.value = true
 
-            when (val result = call()) {
+            when (val result = call(page)) {
                 is Ok -> {
                     result.value.let {
-                        media.value = it
-                        fallback.value = if (it.isEmpty()) Fallback.NO_RESULT else null
+                        media.value = media.value?.plus(it) ?: it
+
+                        fallback.value = if (media.value?.isEmpty() == true) {
+                            Fallback.NO_RESULT
+                        } else {
+                            null
+                        }
                     }
+                    page++
                 }
                 is Err -> {
                     fallback.value = Fallback.FETCH_ERROR
@@ -93,6 +100,7 @@ class MediaListViewModel @Inject constructor(
     }
 
     fun onRefresh() {
+        page = 1
         media.value = emptyList()
         fetchData()
     }

@@ -16,26 +16,43 @@ interface TmdbService {
     suspend fun getMovie(@Path("id") id: Int): MovieDto
 
     @GET("movie/{category}")
-    suspend fun getMovies(@Path("category") category: String): GetMoviesResponse
+    suspend fun getMovies(
+        @Path("category") category: String,
+        @Query("page") page: Int,
+    ): GetMoviesResponse
 
     @GET("tv/{id}")
     suspend fun getTv(@Path("id") id: Int): TvDto
 
     @GET("tv/{category}")
-    suspend fun getTvShows(@Path("category") category: String): GetTvShowsResponse
+    suspend fun getTvShows(
+        @Path("category") category: String,
+        @Query("page") page: Int,
+    ): GetTvShowsResponse
 
     @GET("person/popular")
-    suspend fun getPopularPeople(): GetPeopleResponse
+    suspend fun getPopularPeople(
+        @Query("page") page: Int,
+    ): GetPeopleResponse
 
     @GET("person/{id}")
     suspend fun getPerson(@Path("id") id: Int): PersonDetailDto
 
     @GET("search/movie")
-    suspend fun searchMovies(@Query("query") query: String): GetMoviesResponse
+    suspend fun searchMovies(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+    ): GetMoviesResponse
 
     @GET("search/tv")
-    suspend fun searchTvShows(@Query("query") query: String): GetTvShowsResponse
+    suspend fun searchTvShows(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+    ): GetTvShowsResponse
 
     @GET("search/person")
-    suspend fun searchPeople(@Query("query") query: String): GetPeopleResponse
+    suspend fun searchPeople(
+        @Query("query") query: String,
+        @Query("page") page: Int,
+    ): GetPeopleResponse
 }

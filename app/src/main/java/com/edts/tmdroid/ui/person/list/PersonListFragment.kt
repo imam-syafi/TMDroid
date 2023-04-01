@@ -1,5 +1,6 @@
 package com.edts.tmdroid.ui.person.list
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.databinding.FragmentPersonListBinding
@@ -32,13 +33,17 @@ class PersonListFragment : BaseFragment<FragmentPersonListBinding>(
 
                 findNavController().navigate(directions)
             },
+            onLastItem = viewModel::fetchData,
         ).also(rvPeople::setAdapter)
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
             loadingDialog.showDialog(state.isLoading)
-            vFallback.bind(state.fallback)
+
+            rvPeople.isVisible = state.fallback == null
             personListAdapter.submitList(state.people)
+
+            vFallback.bind(state.fallback)
         }
 
         viewModel.errorMessage.observe(viewLifecycleOwner) {

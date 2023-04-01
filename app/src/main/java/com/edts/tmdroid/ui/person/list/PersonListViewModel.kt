@@ -45,26 +45,33 @@ class PersonListViewModel @Inject constructor(
     private val errorEmitter: EventEmitter<String> = EventEmitter()
     val errorMessage: EventSource<String> = errorEmitter
 
-    private val call: suspend () -> Result<List<Person>, String> =
+    private var page = 1
+    private val call: suspend (Int) -> Result<List<Person>, String> =
         when (val type = args.personListType) {
             PersonListType.Popular -> mediaRepository::getPopularPeople
-            is PersonListType.SearchPeople -> suspend { mediaRepository.searchPeople(type.query) }
+            is PersonListType.SearchPeople -> { p -> mediaRepository.searchPeople(type.query, p) }
         }
 
     init {
         fetchData()
     }
 
-    private fun fetchData() {
+    fun fetchData() {
         viewModelScope.launch {
             isLoading.value = true
 
-            when (val result = call()) {
+            when (val result = call(page)) {
                 is Ok -> {
                     result.value.let {
-                        people.value = it
-                        fallback.value = if (it.isEmpty()) Fallback.NO_RESULT else null
+                        people.value = people.value?.plus(it) ?: it
+
+                        fallback.value = if (people.value?.isEmpty() == true) {
+                            Fallback.NO_RESULT
+                        } else {
+                            null
+                        }
                     }
+                    page++
                 }
                 is Err -> {
                     fallback.value = Fallback.FETCH_ERROR
@@ -77,6 +84,7 @@ class PersonListViewModel @Inject constructor(
     }
 
     fun onRefresh() {
+        page = 1
         people.value = emptyList()
         fetchData()
     }

@@ -42,15 +42,20 @@ class MediaListFragment : BaseFragment<FragmentMediaListBinding>(
 
                 findNavController().navigate(directions)
             },
+            onLastItem = viewModel::fetchData,
         ).also(rvMedia::setAdapter)
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
-            svShimmer.isVisible = state.isLoading
-            flShimmer.showShimmer(state.isLoading)
+            val isInitialLoad = mediaListAdapter.itemCount == 0
+
+            val shouldShowShimmer = isInitialLoad && state.isLoading
+            svShimmer.isVisible = shouldShowShimmer
+            flShimmer.showShimmer(shouldShowShimmer)
+
             loadingDialog.showDialog(state.isLoading)
 
-            rvMedia.isVisible = !state.isLoading
+            rvMedia.isVisible = state.fallback == null
             mediaListAdapter.submitList(state.media)
 
             vFallback.bind(state.fallback)

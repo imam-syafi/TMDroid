@@ -1,7 +1,6 @@
 package com.edts.tmdroid.data
 
-import android.content.SharedPreferences
-import androidx.core.content.edit
+import com.edts.tmdroid.data.local.SessionManager
 import com.edts.tmdroid.data.local.entity.AccountDao
 import com.edts.tmdroid.data.local.entity.AccountEntity
 import com.edts.tmdroid.ui.model.LoginResult
@@ -9,12 +8,12 @@ import javax.inject.Inject
 import kotlinx.coroutines.delay
 
 class AuthRepository @Inject constructor(
-    private val sharedPreferences: SharedPreferences,
     private val accountDao: AccountDao,
+    private val sessionManager: SessionManager,
 ) {
 
     fun getLoggedInUser(): String? {
-        return sharedPreferences.getString(LOGGED_IN_USER_KEY, null)
+        return sessionManager.current
     }
 
     suspend fun register(name: String, password: String) {
@@ -33,9 +32,7 @@ class AuthRepository @Inject constructor(
             accountDao.isRegistered(name).not() -> LoginResult.NOT_REGISTERED
             accountDao.isAuthenticated(name, password).not() -> LoginResult.PASSWORD_INCORRECT
             else -> {
-                sharedPreferences.edit(commit = true) {
-                    putString(LOGGED_IN_USER_KEY, name)
-                }
+                sessionManager.save(name)
 
                 LoginResult.OK
             }
@@ -43,12 +40,6 @@ class AuthRepository @Inject constructor(
     }
 
     fun logout() {
-        sharedPreferences.edit(commit = true) {
-            remove(LOGGED_IN_USER_KEY)
-        }
-    }
-
-    companion object {
-        private const val LOGGED_IN_USER_KEY = "LOGGED_IN_USER_KEY"
+        sessionManager.remove()
     }
 }

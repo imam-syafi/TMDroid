@@ -1,8 +1,8 @@
 package com.edts.tmdroid.di
 
-import android.content.SharedPreferences
 import com.edts.tmdroid.data.AuthRepository
 import com.edts.tmdroid.data.MediaRepository
+import com.edts.tmdroid.data.local.SessionManager
 import com.edts.tmdroid.data.local.entity.AccountDao
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.ReviewDao
@@ -30,9 +30,9 @@ object AppModule {
     @Singleton
     @Provides
     fun provideAuthRepository(
-        sharedPreferences: SharedPreferences,
         accountDao: AccountDao,
+        sessionManager: SessionManager,
     ): AuthRepository {
-        return AuthRepository(sharedPreferences, accountDao)
+        return AuthRepository(accountDao, sessionManager)
     }
 }

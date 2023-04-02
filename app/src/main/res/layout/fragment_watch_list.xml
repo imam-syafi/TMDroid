@@ -5,16 +5,36 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fade"
+    android:focusableInTouchMode="true"
     tools:context=".ui.watchlist.WatchListFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilMenu"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sort_by"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <AutoCompleteTextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sort_by"
+            android:inputType="none" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvWatchList"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipToPadding="false"
-        android:paddingVertical="8dp"
+        android:overScrollMode="never"
+        android:paddingTop="8dp"
+        android:paddingBottom="92dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tilMenu"
         tools:context=".ui.watchlist.WatchListFragment"
         tools:listitem="@layout/item_to_watch" />
 

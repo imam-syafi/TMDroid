@@ -19,5 +19,6 @@ data class QueueEntity(
         const val USER_COLUMN = "user"
         const val MEDIA_ID_COLUMN = "media_id"
         const val MEDIA_TYPE_COLUMN = "media_type"
+        const val TITLE_COLUMN = "title"
     }
 }

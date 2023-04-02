@@ -22,6 +22,36 @@ interface QueueDao {
 
     @Query(
         """
+            SELECT *
+            FROM ${QueueEntity.TABLE_NAME}
+            WHERE ${QueueEntity.USER_COLUMN} = :user
+            ORDER BY ${QueueEntity.ID_COLUMN} ASC
+        """,
+    )
+    fun getOldest(user: String): Flow<List<QueueEntity>>
+
+    @Query(
+        """
+            SELECT *
+            FROM ${QueueEntity.TABLE_NAME}
+            WHERE ${QueueEntity.USER_COLUMN} = :user
+            ORDER BY ${QueueEntity.TITLE_COLUMN} ASC
+        """,
+    )
+    fun getAlphabetically(user: String): Flow<List<QueueEntity>>
+
+    @Query(
+        """
+            SELECT *
+            FROM ${QueueEntity.TABLE_NAME}
+            WHERE ${QueueEntity.USER_COLUMN} = :user
+            ORDER BY ${QueueEntity.MEDIA_TYPE_COLUMN} ASC, ${QueueEntity.TITLE_COLUMN} ASC
+        """,
+    )
+    fun getByMediaType(user: String): Flow<List<QueueEntity>>
+
+    @Query(
+        """
             SELECT EXISTS(
                 SELECT *
                 FROM ${QueueEntity.TABLE_NAME}

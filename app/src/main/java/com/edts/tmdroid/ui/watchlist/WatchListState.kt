@@ -6,4 +6,5 @@ import com.edts.tmdroid.ui.model.Queue
 data class WatchListState(
     val watchList: List<Queue>,
     val fallback: Fallback?,
+    val selectedPosition: Int,
 )

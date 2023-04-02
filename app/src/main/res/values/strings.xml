@@ -80,4 +80,9 @@
     <string name="register_first">Would you like to register it first?</string>
     <string name="welcome">Welcome, %1$s!</string>
     <string name="read_review">Read Review</string>
+    <string name="sort_by">Sort By</string>
+    <string name="most_recently">Most recently added</string>
+    <string name="least_recently">Least recently added</string>
+    <string name="alphabetically">Alphabetically</string>
+    <string name="movie_then_tv">Movie first, then TV</string>
 </resources>

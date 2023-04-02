@@ -1,6 +1,11 @@
 package com.edts.tmdroid.data
 
 import com.edts.tmdroid.data.common.MediaType
+import com.edts.tmdroid.data.common.QueueSortOption
+import com.edts.tmdroid.data.common.QueueSortOption.ALPHABETICALLY
+import com.edts.tmdroid.data.common.QueueSortOption.MOVIE_THEN_TV
+import com.edts.tmdroid.data.common.QueueSortOption.NEWEST
+import com.edts.tmdroid.data.common.QueueSortOption.OLDEST
 import com.edts.tmdroid.data.local.SessionManager
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.QueueEntity
@@ -157,13 +162,19 @@ class MediaRepository @Inject constructor(
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
-    fun getWatchList(): Flow<List<Queue>> {
+    fun getWatchList(option: QueueSortOption = NEWEST): Flow<List<Queue>> {
+        val query: (String) -> Flow<List<QueueEntity>> =
+            when (option) {
+                NEWEST -> queueDao::getLatest
+                OLDEST -> queueDao::getOldest
+                ALPHABETICALLY -> queueDao::getAlphabetically
+                MOVIE_THEN_TV -> queueDao::getByMediaType
+            }
+
         return sessionManager.current
             .filterNotNull()
             .flatMapLatest { user ->
-                queueDao
-                    .getLatest(user)
-                    .map(Queue::from)
+                query(user).map(Queue::from)
             }
     }
 

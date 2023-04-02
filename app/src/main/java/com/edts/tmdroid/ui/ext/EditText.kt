@@ -2,6 +2,8 @@ package com.edts.tmdroid.ui.ext
 
 import android.content.Context
 import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.core.widget.doAfterTextChanged
@@ -50,6 +52,22 @@ inline fun TextInputLayout.bind(
 
 val TextInputLayout.value: String
     get() = editText?.text.toString()
+
+fun TextInputLayout.setMenu(
+    items: List<Int>,
+    selected: Int?,
+    onChange: (Int) -> Unit,
+) {
+    val strings = items.map(context::getString)
+    val adapter = ArrayAdapter(context, android.R.layout.simple_list_item_1, strings)
+    val autoCompleteTextView = editText as? AutoCompleteTextView
+
+    autoCompleteTextView?.setOnItemClickListener { _, _, position, _ ->
+        onChange(items[position])
+    }
+    autoCompleteTextView?.setText(strings[selected ?: 0], false)
+    autoCompleteTextView?.setAdapter(adapter)
+}
 
 fun EditText.on(
     actionId: Int,

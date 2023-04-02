@@ -8,6 +8,7 @@ import com.edts.tmdroid.databinding.FragmentWatchListBinding
 import com.edts.tmdroid.ui.common.BaseFragment
 import com.edts.tmdroid.ui.ext.addDivider
 import com.edts.tmdroid.ui.ext.bind
+import com.edts.tmdroid.ui.ext.setMenu
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -18,6 +19,17 @@ class WatchListFragment : BaseFragment<FragmentWatchListBinding>(
     private val viewModel by viewModels<WatchListViewModel>()
 
     override fun FragmentWatchListBinding.setup() {
+        tilMenu.setMenu(
+            items = listOf(
+                R.string.most_recently,
+                R.string.least_recently,
+                R.string.alphabetically,
+                R.string.movie_then_tv,
+            ),
+            selected = viewModel.state.value?.selectedPosition,
+            onChange = viewModel::onSortChange,
+        )
+
         val watchListAdapter = WatchListAdapter(
             onClick = { queue ->
                 val directions = WatchListFragmentDirections.toMediaDetailFragment(

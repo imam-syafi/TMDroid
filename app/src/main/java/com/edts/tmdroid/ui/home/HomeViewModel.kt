@@ -4,12 +4,15 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.AuthRepository
 import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.ui.model.Fallback
 import com.edts.tmdroid.ui.model.Queue
+import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
+import kotlinx.coroutines.launch
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -21,16 +24,26 @@ class HomeViewModel @Inject constructor(
         .getWatchList()
         .asLiveData()
 
-    val state: LiveData<HomeState> = watchList
-        .map {
+    private val currentUser: LiveData<String?> = authRepository
+        .getLoggedInUser()
+        .asLiveData()
+
+    val state: LiveData<HomeState> = combineTuple(watchList, currentUser)
+        .map { (watchList, currentUser) ->
             HomeState(
-                queueList = it,
-                fallback = if (it.isEmpty()) Fallback.EMPTY.copy(icon = null) else null,
-                currentUser = authRepository.getLoggedInUser(),
+                queueList = watchList ?: emptyList(),
+                fallback = if (watchList?.isEmpty() == true) {
+                    Fallback.EMPTY.copy(icon = null)
+                } else {
+                    null
+                },
+                currentUser = currentUser,
             )
         }
 
     fun onLogout() {
-        authRepository.logout()
+        viewModelScope.launch {
+            authRepository.logout()
+        }
     }
 }

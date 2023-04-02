@@ -2,7 +2,6 @@ package com.edts.tmdroid.ui.login
 
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.FragmentLoginBinding
 import com.edts.tmdroid.ui.common.BaseFragment
@@ -62,9 +61,6 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             when (result) {
                 OK -> {
                     showSnack(getString(R.string.welcome, cvName.value))
-
-                    val directions = LoginFragmentDirections.toHomeFragment()
-                    findNavController().navigate(directions)
                 }
                 NOT_REGISTERED -> {
                     MaterialAlertDialogBuilder(requireContext())

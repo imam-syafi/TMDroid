@@ -6,13 +6,14 @@ import com.edts.tmdroid.data.local.entity.AccountEntity
 import com.edts.tmdroid.ui.model.LoginResult
 import javax.inject.Inject
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
 
 class AuthRepository @Inject constructor(
     private val accountDao: AccountDao,
     private val sessionManager: SessionManager,
 ) {
 
-    fun getLoggedInUser(): String? {
+    fun getLoggedInUser(): Flow<String?> {
         return sessionManager.current
     }
 
@@ -39,7 +40,7 @@ class AuthRepository @Inject constructor(
         }
     }
 
-    fun logout() {
+    suspend fun logout() {
         sessionManager.remove()
     }
 }

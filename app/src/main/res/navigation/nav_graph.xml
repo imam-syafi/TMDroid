@@ -9,27 +9,13 @@
         android:id="@+id/loginFragment"
         android:name="com.edts.tmdroid.ui.login.LoginFragment"
         android:label="@string/login"
-        tools:layout="@layout/fragment_login">
-
-        <action
-            android:id="@+id/to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/loginFragment"
-            app:popUpToInclusive="true" />
-
-    </fragment>
+        tools:layout="@layout/fragment_login" />
 
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.edts.tmdroid.ui.home.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home">
-
-        <action
-            android:id="@+id/to_loginFragment"
-            app:destination="@id/loginFragment"
-            app:popUpTo="@id/homeFragment"
-            app:popUpToInclusive="true" />
 
         <action
             android:id="@+id/to_searchFragment"

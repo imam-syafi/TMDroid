@@ -1,5 +1,7 @@
 package com.edts.tmdroid.di
 
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
 import com.edts.tmdroid.data.AuthRepository
 import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.data.local.SessionManager
@@ -35,5 +37,12 @@ object AppModule {
         sessionManager: SessionManager,
     ): AuthRepository {
         return AuthRepository(accountDao, sessionManager)
+    }
+
+    @Provides
+    fun provideSessionManager(
+        dataStore: DataStore<Preferences>,
+    ): SessionManager {
+        return SessionManager(dataStore)
     }
 }

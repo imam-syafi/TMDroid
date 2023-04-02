@@ -1,10 +1,7 @@
 package com.edts.tmdroid.di
 
 import android.content.Context
-import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 import com.edts.tmdroid.data.local.AppDatabase
-import com.edts.tmdroid.data.local.SessionManager
 import com.edts.tmdroid.data.local.entity.AccountDao
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.ReviewDao
@@ -18,21 +15,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object DatabaseModule {
-
-    @Singleton
-    @Provides
-    fun provideSharedPreferences(
-        @ApplicationContext appContext: Context,
-    ): SharedPreferences {
-        return PreferenceManager.getDefaultSharedPreferences(appContext)
-    }
-
-    @Provides
-    fun provideSessionManager(
-        sharedPreferences: SharedPreferences
-    ): SessionManager {
-        return SessionManager(sharedPreferences)
-    }
 
     @Provides
     @Singleton

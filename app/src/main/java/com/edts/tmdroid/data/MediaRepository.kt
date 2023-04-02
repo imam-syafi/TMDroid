@@ -16,8 +16,11 @@ import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import javax.inject.Inject
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.map
 
 class MediaRepository @Inject constructor(
@@ -123,7 +126,7 @@ class MediaRepository @Inject constructor(
     }
 
     suspend fun addToQueue(media: Media, type: MediaType) {
-        val user = sessionManager.current ?: return
+        val user = sessionManager.current.first() ?: return
 
         val entity = QueueEntity(
             media_id = media.id,
@@ -140,21 +143,28 @@ class MediaRepository @Inject constructor(
     }
 
     suspend fun removeFromQueue(id: Int, type: MediaType) {
-        val user = sessionManager.current ?: return
+        val user = sessionManager.current.first() ?: return
         queueDao.deleteMedia(id, type, user)
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun isSaved(id: Int, type: MediaType): Flow<Boolean> {
-        val user = sessionManager.current ?: return flow { emit(false) }
-        return queueDao.isMediaSaved(id, type, user)
+        return sessionManager.current
+            .filterNotNull()
+            .flatMapLatest { user ->
+                queueDao.isMediaSaved(id, type, user)
+            }
     }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     fun getWatchList(): Flow<List<Queue>> {
-        val user = sessionManager.current ?: return flow { emit(emptyList()) }
-
-        return queueDao
-            .getLatest(user)
-            .map(Queue::from)
+        return sessionManager.current
+            .filterNotNull()
+            .flatMapLatest { user ->
+                queueDao
+                    .getLatest(user)
+                    .map(Queue::from)
+            }
     }
 
     suspend fun upsertReview(entity: ReviewEntity) {

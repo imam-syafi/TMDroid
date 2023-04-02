@@ -57,6 +57,8 @@ dependencies {
     implementation(AndroidX.constraintLayout)
     implementation(Google.android.material)
 
+    implementation(AndroidX.dataStore.preferences)
+
     implementation(AndroidX.lifecycle.runtime.ktx)
 
     implementation(AndroidX.navigation.fragmentKtx)

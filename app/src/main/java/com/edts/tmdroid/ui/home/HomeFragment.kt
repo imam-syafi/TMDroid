@@ -34,7 +34,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
         setupOptionsMenu(R.menu.menu_main) { menuId ->
             when (menuId) {
                 R.id.action_logout -> {
-                    // TODO: Handle logout
+                    viewModel.onLogout()
+
+                    val directions = HomeFragmentDirections.toLoginFragment()
+                    findNavController().navigate(directions)
+
                     true
                 }
                 else -> false

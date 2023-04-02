@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.edts.tmdroid.data.local.entity.AccountDao
+import com.edts.tmdroid.data.local.entity.AccountEntity
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.QueueEntity
 import com.edts.tmdroid.data.local.entity.ReviewDao
@@ -11,6 +13,7 @@ import com.edts.tmdroid.data.local.entity.ReviewEntity
 
 @Database(
     entities = [
+        AccountEntity::class,
         ReviewEntity::class,
         QueueEntity::class,
     ],
@@ -18,6 +21,8 @@ import com.edts.tmdroid.data.local.entity.ReviewEntity
     exportSchema = false,
 )
 abstract class AppDatabase : RoomDatabase() {
+
+    abstract fun accountDao(): AccountDao
 
     abstract fun reviewDao(): ReviewDao
 

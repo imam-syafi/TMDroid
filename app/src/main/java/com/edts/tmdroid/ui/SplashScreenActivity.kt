@@ -1,11 +1,9 @@
 package com.edts.tmdroid.ui
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.edts.tmdroid.R
 import com.edts.tmdroid.databinding.ActivitySplashScreenBinding
-import com.edts.tmdroid.ui.ext.getPrefs
-import com.edts.tmdroid.ui.login.LoginActivity
 
 class SplashScreenActivity : AppCompatActivity() {
 
@@ -26,23 +24,11 @@ class SplashScreenActivity : AppCompatActivity() {
             .setDuration(1500)
             .alpha(1f)
             .withEndAction {
-                authenticate()
+                val intent = Intent(this@SplashScreenActivity, MainActivity::class.java)
+                startActivity(intent)
+
                 overridePendingTransition(android.R.anim.fade_in, android.R.anim.fade_out)
                 finish()
             }
-    }
-
-    private fun authenticate() {
-        val prefs = getPrefs()
-        val isLoggedIn = prefs.getBoolean(
-            getString(R.string.is_logged_in_key),
-            false,
-        )
-
-        if (isLoggedIn) {
-            // TODO: Navigate to home screen
-        } else {
-            LoginActivity.open(this, getString(R.string.login))
-        }
     }
 }

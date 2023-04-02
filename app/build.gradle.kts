@@ -62,6 +62,8 @@ dependencies {
     implementation(AndroidX.navigation.fragmentKtx)
     implementation(AndroidX.navigation.uiKtx)
 
+    implementation(AndroidX.preference.ktx)
+
     implementation(AndroidX.room.ktx)
     kapt(AndroidX.room.compiler)
 

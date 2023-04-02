@@ -63,7 +63,7 @@
     <string name="enter_your_comment">Enter your comment</string>
     <string name="submit">Submit</string>
     <string name="delete">Delete</string>
-    <string name="name_invalid">Name invalid</string>
+    <string name="name_invalid">Name can not be blank</string>
     <string name="comment_invalid">Comment invalid</string>
     <string name="edit_review">Edit Review</string>
     <string name="update">Update</string>
@@ -73,4 +73,9 @@
     <string name="cause">Cause: %1$s</string>
     <string name="still_empty">Still Empty</string>
     <string name="no_result">No Result</string>
+    <string name="password_incorrect">Password incorrect</string>
+    <string name="register">Register</string>
+    <string name="account_not_found">Account Not Found</string>
+    <string name="register_first">Would you like to register it first?</string>
+    <string name="welcome">Welcome, %1$s!</string>
 </resources>

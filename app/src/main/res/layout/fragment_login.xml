@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
-    tools:context=".ui.login.LoginActivity">
+    tools:context=".ui.login.LoginFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -14,37 +14,25 @@
         android:focusableInTouchMode="true">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:contentDescription="@null"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bottom"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="64dp"
             android:layout_height="64dp"
+            android:layout_marginVertical="32dp"
             android:contentDescription="@null"
             android:src="@drawable/logo"
-            app:layout_constraintBottom_toTopOf="@id/cvEmail"
+            app:layout_constraintBottom_toTopOf="@id/cvName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
-        <com.edts.tmdroid.ui.login.view.EmailInputView
-            android:id="@+id/cvEmail"
+        <com.edts.tmdroid.ui.login.view.NameInputView
+            android:id="@+id/cvName"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="32dp"
-            android:textColorHint="@android:color/darker_gray"
             android:theme="@style/TextInputThemeOverlay"
-            app:boxStrokeColor="?attr/colorOnPrimary"
-            app:hintTextColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@id/cvPassword"
             app:layout_constraintTop_toBottomOf="@id/ivLogo" />
 
@@ -54,25 +42,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
-            android:layout_marginTop="8dp"
-            android:textColorHint="@android:color/darker_gray"
+            android:layout_marginTop="16dp"
             android:theme="@style/TextInputThemeOverlay"
-            app:boxStrokeColor="?attr/colorOnPrimary"
-            app:hintTextColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@id/btnLogin"
-            app:layout_constraintTop_toBottomOf="@id/cvEmail" />
+            app:layout_constraintTop_toBottomOf="@id/cvName" />
 
         <Button
             android:id="@+id/btnLogin"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:backgroundTint="@android:color/darker_gray"
-            android:enabled="false"
+            android:layout_margin="16dp"
             android:text="@string/login"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/cvPassword" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

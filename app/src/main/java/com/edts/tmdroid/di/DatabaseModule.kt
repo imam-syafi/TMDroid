@@ -1,7 +1,10 @@
 package com.edts.tmdroid.di
 
 import android.content.Context
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.edts.tmdroid.data.local.AppDatabase
+import com.edts.tmdroid.data.local.entity.AccountDao
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.ReviewDao
 import dagger.Module
@@ -15,10 +18,23 @@ import javax.inject.Singleton
 @Module
 object DatabaseModule {
 
+    @Singleton
+    @Provides
+    fun provideSharedPreferences(
+        @ApplicationContext appContext: Context,
+    ): SharedPreferences {
+        return PreferenceManager.getDefaultSharedPreferences(appContext)
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext appContext: Context): AppDatabase {
         return AppDatabase.getInstance(appContext)
+    }
+
+    @Provides
+    fun provideAccountDao(database: AppDatabase): AccountDao {
+        return database.accountDao()
     }
 
     @Provides

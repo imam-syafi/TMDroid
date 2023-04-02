@@ -2,20 +2,19 @@ package com.edts.tmdroid.ui.login.view
 
 import android.content.Context
 import android.text.InputType
-import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import com.edts.tmdroid.R
 import com.google.android.material.textfield.TextInputEditText
 import com.google.android.material.textfield.TextInputLayout
 
-class PasswordInputView @JvmOverloads constructor(
+class NameInputView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
 ) : TextInputLayout(context, attrs) {
 
     init {
-        hint = context.getString(R.string.password)
-        endIconMode = END_ICON_PASSWORD_TOGGLE
+        hint = context.getString(R.string.name)
+        endIconMode = END_ICON_CLEAR_TEXT
 
         addView(
             /**
@@ -23,8 +22,7 @@ class PasswordInputView @JvmOverloads constructor(
              * TextInputLayout to pass along the appropriate styling to the TextInputEditText.
              */
             TextInputEditText(this.context).apply {
-                inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
-                transformationMethod = PasswordTransformationMethod.getInstance()
+                inputType = InputType.TYPE_TEXT_VARIATION_PERSON_NAME
             },
         )
     }

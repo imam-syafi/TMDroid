@@ -19,6 +19,9 @@ fun TextInputLayout.onEndIconClick(
     }
 }
 
+/**
+ * Sync up text input with state holder, akin to controlled components in React
+ */
 inline fun TextInputLayout.bind(
     initialValue: String?,
     @StringRes errorText: Int,
@@ -33,6 +36,7 @@ inline fun TextInputLayout.bind(
             val text = editable.toString()
             val isValid = validate(text)
 
+            isErrorEnabled = !isValid
             error = if (isValid) null else context.getString(errorText)
 
             onChange(text, isValid)
@@ -43,6 +47,9 @@ inline fun TextInputLayout.bind(
         }
     }
 }
+
+val TextInputLayout.value: String
+    get() = editText?.text.toString()
 
 fun EditText.on(
     actionId: Int,

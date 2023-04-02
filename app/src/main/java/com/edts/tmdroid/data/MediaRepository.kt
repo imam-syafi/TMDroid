@@ -1,6 +1,7 @@
 package com.edts.tmdroid.data
 
 import com.edts.tmdroid.data.common.MediaType
+import com.edts.tmdroid.data.local.SessionManager
 import com.edts.tmdroid.data.local.entity.QueueDao
 import com.edts.tmdroid.data.local.entity.QueueEntity
 import com.edts.tmdroid.data.local.entity.ReviewDao
@@ -16,12 +17,14 @@ import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 class MediaRepository @Inject constructor(
     private val tmdbService: TmdbService,
     private val queueDao: QueueDao,
     private val reviewDao: ReviewDao,
+    private val sessionManager: SessionManager,
 ) {
 
     private suspend fun getMovies(category: String, page: Int): Result<List<Media.Movie>, String> {
@@ -120,8 +123,11 @@ class MediaRepository @Inject constructor(
     }
 
     suspend fun addToQueue(media: Media, type: MediaType) {
+        val user = sessionManager.current ?: return
+
         val entity = QueueEntity(
             media_id = media.id,
+            user = user,
             title = when (media) {
                 is Media.Movie -> media.title
                 is Media.Tv -> media.name
@@ -134,14 +140,22 @@ class MediaRepository @Inject constructor(
     }
 
     suspend fun removeFromQueue(id: Int, type: MediaType) {
-        queueDao.deleteMedia(id, type)
+        val user = sessionManager.current ?: return
+        queueDao.deleteMedia(id, type, user)
     }
 
-    fun isSaved(id: Int, type: MediaType): Flow<Boolean> = queueDao.isMediaSaved(id, type)
+    fun isSaved(id: Int, type: MediaType): Flow<Boolean> {
+        val user = sessionManager.current ?: return flow { emit(false) }
+        return queueDao.isMediaSaved(id, type, user)
+    }
 
-    fun getWatchList(): Flow<List<Queue>> = queueDao
-        .getLatest()
-        .map(Queue::from)
+    fun getWatchList(): Flow<List<Queue>> {
+        val user = sessionManager.current ?: return flow { emit(emptyList()) }
+
+        return queueDao
+            .getLatest(user)
+            .map(Queue::from)
+    }
 
     suspend fun upsertReview(entity: ReviewEntity) {
         reviewDao.upsert(entity)

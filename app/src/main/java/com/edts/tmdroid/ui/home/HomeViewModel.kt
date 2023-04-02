@@ -26,6 +26,7 @@ class HomeViewModel @Inject constructor(
             HomeState(
                 queueList = it,
                 fallback = if (it.isEmpty()) Fallback.EMPTY.copy(icon = null) else null,
+                currentUser = authRepository.getLoggedInUser(),
             )
         }
 

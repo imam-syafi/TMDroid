@@ -36,8 +36,22 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         navController = navHostFragment.navController
 
-        val isLoggedIn = authRepository.getLoggedInUser() != null
-        val startDestId = if (isLoggedIn) R.id.homeFragment else R.id.loginFragment
+        val currentUser = authRepository.getLoggedInUser()
+
+        val startDestId: Int
+        if (currentUser != null) {
+            startDestId = R.id.homeFragment
+
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                when (destination.id) {
+                    R.id.watchListFragment -> {
+                        destination.label = getString(R.string.user_watch_list, currentUser)
+                    }
+                }
+            }
+        } else {
+            startDestId = R.id.loginFragment
+        }
 
         navController.navInflater
             .inflate(R.navigation.nav_graph)

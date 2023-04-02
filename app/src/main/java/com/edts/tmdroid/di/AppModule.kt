@@ -23,8 +23,9 @@ object AppModule {
         tmdbService: TmdbService,
         queueDao: QueueDao,
         reviewDao: ReviewDao,
+        sessionManager: SessionManager,
     ): MediaRepository {
-        return MediaRepository(tmdbService, queueDao, reviewDao)
+        return MediaRepository(tmdbService, queueDao, reviewDao, sessionManager)
     }
 
     @Singleton

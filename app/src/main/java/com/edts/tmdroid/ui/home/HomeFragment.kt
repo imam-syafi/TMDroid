@@ -196,6 +196,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
+            state.currentUser?.let {
+                tvWatchList.text = getString(R.string.user_watch_list, it)
+            }
+
             watchListAdapter.submitList(state.queueList)
             vFallback.bind(state.fallback)
         }

@@ -13,6 +13,7 @@ data class Review(
     val mediaType: MediaType,
     val name: String,
     val comment: String,
+    val isEditable: Boolean,
 ) : Parcelable {
 
     fun toReviewEntity(): ReviewEntity = ReviewEntity(
@@ -35,14 +36,13 @@ data class Review(
             }
         }
 
-        fun from(entity: ReviewEntity): Review = Review(
+        fun from(entity: ReviewEntity, isEditable: Boolean): Review = Review(
             id = entity.id,
             mediaId = entity.media_id,
             mediaType = entity.media_type,
             name = entity.name,
             comment = entity.comment,
+            isEditable = isEditable,
         )
-
-        fun from(entities: List<ReviewEntity>): List<Review> = entities.map(Review::from)
     }
 }

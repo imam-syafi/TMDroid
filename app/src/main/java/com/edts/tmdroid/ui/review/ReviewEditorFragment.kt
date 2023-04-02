@@ -20,7 +20,7 @@ class ReviewEditorFragment : BaseFragment<FragmentReviewBinding>(
 
     override fun FragmentReviewBinding.setup() {
         tilName.bind(
-            initialValue = viewModel.state.value?.name ?: args.review?.name,
+            initialValue = viewModel.state.value?.name ?: args.review?.name ?: args.currentUser,
             errorText = R.string.name_invalid,
             validate = String::isNotBlank,
             onChange = viewModel::onNameChange,
@@ -43,9 +43,13 @@ class ReviewEditorFragment : BaseFragment<FragmentReviewBinding>(
         }
 
         if (args.review != null) {
-            btnSubmit.setText(R.string.update)
+            val isEditable = args.review?.isEditable == true
 
-            btnDelete.isVisible = true
+            tilComment.isEnabled = isEditable
+            btnSubmit.isVisible = isEditable
+            btnDelete.isVisible = isEditable
+
+            btnSubmit.setText(R.string.update)
             btnDelete.setOnClickListener {
                 viewModel.onDelete()
                 findNavController().navigateUp()

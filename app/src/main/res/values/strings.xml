@@ -79,4 +79,5 @@
     <string name="account_not_found">Account Not Found</string>
     <string name="register_first">Would you like to register it first?</string>
     <string name="welcome">Welcome, %1$s!</string>
+    <string name="read_review">Read Review</string>
 </resources>

@@ -162,6 +162,10 @@
             app:argType="string" />
 
         <argument
+            android:name="currentUser"
+            app:argType="string" />
+
+        <argument
             android:name="mediaId"
             app:argType="integer" />
 
@@ -179,8 +183,12 @@
     <fragment
         android:id="@+id/watchListFragment"
         android:name="com.edts.tmdroid.ui.watchlist.WatchListFragment"
-        android:label="@string/your_watch_list"
+        android:label="{title}"
         tools:layout="@layout/fragment_watch_list">
+
+        <argument
+            android:name="title"
+            app:argType="string" />
 
         <action
             android:id="@+id/to_mediaDetailFragment"

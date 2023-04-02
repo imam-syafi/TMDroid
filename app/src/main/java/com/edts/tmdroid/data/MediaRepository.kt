@@ -175,9 +175,20 @@ class MediaRepository @Inject constructor(
         reviewDao.delete(entity)
     }
 
-    fun getReviews(id: Int, type: MediaType): Flow<List<Review>> = reviewDao
-        .getByMedia(id, type)
-        .map(Review::from)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    fun getReviews(id: Int, type: MediaType): Flow<List<Review>> {
+        return sessionManager.current
+            .filterNotNull()
+            .flatMapLatest { user ->
+                reviewDao
+                    .getByMedia(id, type)
+                    .map { list ->
+                        list.map {
+                            Review.from(it, isEditable = it.name == user)
+                        }
+                    }
+            }
+    }
 
     private fun Exception.toErr(): Err<String> {
         val message = localizedMessage

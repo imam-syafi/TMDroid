@@ -10,4 +10,5 @@ data class MediaDetailState(
     val fallback: Fallback?,
     val media: Media?,
     val reviews: List<Review>,
+    val currentUser: String?,
 )

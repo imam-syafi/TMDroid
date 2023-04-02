@@ -19,16 +19,15 @@ class ReviewEditorFragment : BaseFragment<FragmentReviewBinding>(
     private val viewModel by viewModels<ReviewEditorViewModel>()
 
     override fun FragmentReviewBinding.setup() {
-        // Sync up text input with view model, akin to controlled components in React
         tilName.bind(
-            initialValue = viewModel.state.value?.name,
+            initialValue = viewModel.state.value?.name ?: args.review?.name,
             errorText = R.string.name_invalid,
             validate = String::isNotBlank,
             onChange = viewModel::onNameChange,
         )
 
         tilComment.bind(
-            initialValue = viewModel.state.value?.comment,
+            initialValue = viewModel.state.value?.comment ?: args.review?.comment,
             errorText = R.string.comment_invalid,
             validate = String::isNotBlank,
             onChange = viewModel::onCommentChange,

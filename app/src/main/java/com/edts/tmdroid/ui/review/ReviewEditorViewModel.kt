@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
 import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.data.local.entity.ReviewEntity
+import com.zhuinden.livedatacombinetuplekt.combineTuple
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.launch
@@ -22,20 +24,34 @@ class ReviewEditorViewModel @Inject constructor(
     private val mediaType = args.mediaType
     private val review = args.review
 
-    private val _state = MutableLiveData(
-        ReviewEditorState(
-            name = review?.name ?: "",
-            comment = review?.comment ?: "",
-        ),
-    )
-    val state: LiveData<ReviewEditorState> = _state
+    private val initialName = review?.name ?: ""
+    private val initialComment = review?.comment ?: ""
+
+    // Backing properties
+    private val name = MutableLiveData<String>()
+    private val isNameValid = MutableLiveData<Boolean>()
+    private val comment = MutableLiveData<String>()
+    private val isCommentValid = MutableLiveData<Boolean>()
+
+    val state: LiveData<ReviewEditorState> =
+        combineTuple(name, isNameValid, comment, isCommentValid)
+            .map { (name, isNameValid, comment, isCommentValid) ->
+                ReviewEditorState(
+                    name = name ?: initialName,
+                    isNameValid = isNameValid ?: false,
+                    comment = comment ?: initialComment,
+                    isCommentValid = isCommentValid ?: false,
+                )
+            }
 
     fun onNameChange(name: String, isNameValid: Boolean) {
-        _state.value = _state.value?.copy(name = name, isNameValid = isNameValid)
+        this.name.value = name
+        this.isNameValid.value = isNameValid
     }
 
     fun onCommentChange(comment: String, isCommentValid: Boolean) {
-        _state.value = _state.value?.copy(comment = comment, isCommentValid = isCommentValid)
+        this.comment.value = comment
+        this.isCommentValid.value = isCommentValid
     }
 
     fun onSubmit(name: String, comment: String) {

@@ -14,10 +14,11 @@ import com.edts.tmdroid.ui.model.Review
 import com.github.michaelbull.result.Err
 import com.github.michaelbull.result.Ok
 import com.github.michaelbull.result.Result
+import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-class MediaRepository(
+class MediaRepository @Inject constructor(
     private val tmdbService: TmdbService,
     private val queueDao: QueueDao,
     private val reviewDao: ReviewDao,

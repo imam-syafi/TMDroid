@@ -35,20 +35,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         viewModel.currentUser.observe(this) { currentUser ->
-            val startDestId: Int
-            if (currentUser != null) {
-                startDestId = R.id.homeFragment
-
-                navController.addOnDestinationChangedListener { _, destination, _ ->
-                    when (destination.id) {
-                        R.id.watchListFragment -> {
-                            destination.label = getString(R.string.user_watch_list, currentUser)
-                        }
-                    }
-                }
-            } else {
-                startDestId = R.id.loginFragment
-            }
+            val startDestId = if (currentUser != null) R.id.homeFragment else R.id.loginFragment
 
             navController.navInflater
                 .inflate(R.navigation.nav_graph)

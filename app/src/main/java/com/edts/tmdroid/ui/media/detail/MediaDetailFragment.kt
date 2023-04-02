@@ -40,7 +40,12 @@ class MediaDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
 
             buildSnack(successMessage)
                 .setAction(R.string.show_all) {
-                    val directions = MediaDetailFragmentDirections.toWatchListFragment()
+                    val currentUser = viewModel.state.value?.currentUser ?: ""
+
+                    val directions = MediaDetailFragmentDirections.toWatchListFragment(
+                        title = getString(R.string.user_watch_list, currentUser),
+                    )
+
                     findNavController().navigate(directions)
                 }
                 .also { snackbar = it }
@@ -97,10 +102,10 @@ class MediaDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
     }
 
     private fun toReviewEditorFragment(review: Review? = null) {
-        val resId = if (review != null) {
-            R.string.edit_review
-        } else {
-            R.string.add_new_review
+        val resId = when (review?.isEditable) {
+            true -> R.string.edit_review
+            false -> R.string.read_review
+            else -> R.string.add_new_review
         }
 
         val directions = MediaDetailFragmentDirections.toReviewEditorFragment(
@@ -108,6 +113,7 @@ class MediaDetailFragment : BaseFragment<FragmentMediaDetailBinding>(
             mediaId = args.mediaId,
             mediaType = args.mediaType,
             review = review,
+            currentUser = viewModel.state.value?.currentUser ?: "",
         )
 
         findNavController().navigate(directions)

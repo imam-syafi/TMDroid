@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.map
 import androidx.lifecycle.viewModelScope
+import com.edts.tmdroid.data.AuthRepository
 import com.edts.tmdroid.data.MediaRepository
 import com.edts.tmdroid.ui.model.Fallback
 import com.edts.tmdroid.ui.model.Media
@@ -24,6 +25,7 @@ import kotlinx.coroutines.launch
 class MediaDetailViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     private val mediaRepository: MediaRepository,
+    private val authRepository: AuthRepository,
 ) : ViewModel() {
 
     private val args = MediaDetailFragmentArgs.fromSavedStateHandle(savedStateHandle)
@@ -43,20 +45,26 @@ class MediaDetailViewModel @Inject constructor(
         .getReviews(mediaId, mediaType)
         .asLiveData()
 
+    private val currentUser: LiveData<String?> = authRepository
+        .getLoggedInUser()
+        .asLiveData()
+
     val state: LiveData<MediaDetailState> = combineTuple(
         isLoading,
         isSaved,
         fallback,
         media,
         reviews,
+        currentUser,
     )
-        .map { (isLoading, isSaved, fallback, media, reviews) ->
+        .map { (isLoading, isSaved, fallback, media, reviews, currentUser) ->
             MediaDetailState(
                 isLoading = isLoading ?: false,
                 isSaved = isSaved ?: false,
                 fallback = fallback,
                 media = media,
                 reviews = reviews ?: emptyList(),
+                currentUser = currentUser,
             )
         }
 

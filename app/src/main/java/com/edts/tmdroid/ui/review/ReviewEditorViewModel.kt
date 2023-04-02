@@ -23,8 +23,9 @@ class ReviewEditorViewModel @Inject constructor(
     private val mediaId = args.mediaId
     private val mediaType = args.mediaType
     private val review = args.review
+    private val currentUser = args.currentUser
 
-    private val initialName = review?.name ?: ""
+    private val initialName = review?.name ?: currentUser
     private val initialComment = review?.comment ?: ""
 
     // Backing properties

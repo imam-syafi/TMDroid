@@ -1,5 +1,6 @@
 package com.edts.tmdroid.ui.login
 
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.edts.tmdroid.R
@@ -46,6 +47,11 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
 
         // UI = f(state)
         viewModel.state.observe(viewLifecycleOwner) { state ->
+            loading.isVisible = state.isLoading
+
+            cvName.isEnabled = !state.isLoading
+            cvPassword.isEnabled = !state.isLoading
+
             btnLogin.isEnabled = state.canSubmit
         }
 

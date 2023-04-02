@@ -20,20 +20,27 @@ class LoginViewModel @Inject constructor(
 ) : ViewModel() {
 
     // Backing properties
+    private val isLoading = MutableLiveData<Boolean>()
     private val name = MutableLiveData<String>()
     private val isNameValid = MutableLiveData<Boolean>()
     private val password = MutableLiveData<String>()
     private val isPasswordValid = MutableLiveData<Boolean>()
 
-    val state: LiveData<LoginState> = combineTuple(name, isNameValid, password, isPasswordValid)
-        .map { (name, isNameValid, password, isPasswordValid) ->
-            LoginState(
-                name = name ?: "",
-                isNameValid = isNameValid ?: false,
-                password = password ?: "",
-                isPasswordValid = isPasswordValid ?: false,
-            )
-        }
+    val state: LiveData<LoginState> = combineTuple(
+        isLoading,
+        name,
+        isNameValid,
+        password,
+        isPasswordValid,
+    ).map { (isLoading, name, isNameValid, password, isPasswordValid) ->
+        LoginState(
+            isLoading = isLoading ?: false,
+            name = name ?: "",
+            isNameValid = isNameValid ?: false,
+            password = password ?: "",
+            isPasswordValid = isPasswordValid ?: false,
+        )
+    }
 
     private val emitter: EventEmitter<LoginResult> = EventEmitter()
     val event: EventSource<LoginResult> = emitter
@@ -50,15 +57,24 @@ class LoginViewModel @Inject constructor(
 
     fun onSubmit(name: String, password: String) {
         viewModelScope.launch {
+            isLoading.value = true
+
             val result = authRepository.login(name, password)
             emitter.emit(result)
+
+            isLoading.value = false
         }
     }
 
     fun onRegister(name: String, password: String) {
         viewModelScope.launch {
+            isLoading.value = true
+
             authRepository.register(name, password)
-            onSubmit(name, password)
+            val result = authRepository.login(name, password)
+            emitter.emit(result)
+
+            isLoading.value = false
         }
     }
 }

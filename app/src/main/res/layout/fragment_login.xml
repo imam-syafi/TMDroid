@@ -13,6 +13,13 @@
         android:focusable="true"
         android:focusableInTouchMode="true">
 
+        <com.google.android.material.progressindicator.LinearProgressIndicator
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            app:layout_constraintTop_toTopOf="parent" />
+
         <ImageView
             android:id="@+id/ivLogo"
             android:layout_width="64dp"

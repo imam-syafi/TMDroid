@@ -51,7 +51,7 @@ class LoginFragment : BaseFragment<FragmentLoginBinding>(
             cvName.isEnabled = !state.isLoading
             cvPassword.isEnabled = !state.isLoading
 
-            btnLogin.isEnabled = state.canSubmit
+            btnLogin.isEnabled = state.canSubmit && !state.isLoading
         }
 
         // Handle one-off events

@@ -4,8 +4,8 @@
     <string name="poster">Poster</string>
     <string name="rating">%1$s 🌟 from %2$d votes</string>
     <string name="footer">TDP Batch 3 - Android Session</string>
-    <string name="cta">Find Your Favorite Movie Here</string>
-    <string name="search_movie">Search Movie</string>
+    <string name="cta">Find Your Favorite Media Here</string>
+    <string name="search_movie">Search</string>
     <string name="movie_detail">Movie Detail</string>
     <string name="top_rated">Top Rated</string>
     <string name="search_result">Search Result for: %s</string>
